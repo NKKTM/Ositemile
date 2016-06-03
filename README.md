@@ -18,17 +18,17 @@
 ##Java
 
 ####コメントの書き方
-/*   
-*	クラスの説明   
-*	@author 作者   
-*/   
+/\*   
+\*	クラスの説明   
+\*	@author 作者   
+\*/   
 public void クラス名(){   
-	/*   
-	*	メソッドの説明   
-	*	@params 引数   
-	*	@return 戻り値   
-	*	@author 作者   
-	*/	   
+	/\*   
+	\*	メソッドの説明   
+	\*	@params 引数   
+	\*	@return 戻り値   
+	\*	@author 作者   
+	\*/	   
 	public void メソッド名(){   
 		if(条件){   
 			//条件の説明   
