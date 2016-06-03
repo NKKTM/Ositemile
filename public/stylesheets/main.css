@@ -1,0 +1,72 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat+Subrayada);
+@import url(https://fonts.googleapis.com/css?family=Londrina+Outline);
+@import url(https://fonts.googleapis.com/css?family=Plaster);
+@import url(https://fonts.googleapis.com/css?family=Monoton);
+@import url(https://fonts.googleapis.com/css?family=Sigmar+One);
+@import url(https://fonts.googleapis.com/css?family=Chango);
+
+
+#header{
+	background-color: #49d385;
+	color: white;
+}
+
+a.navbar-brand{
+	color: white;
+}
+
+ul>li>a{
+	color: white;
+}
+
+body > div > div.posts{
+	float: left;
+}
+
+span.icon-bar{
+	background-color: white;
+}
+
+a.navbar-brand:hover{
+	color: white;
+	background-color: #ffb9a6;
+}
+
+.navbar-nav>li{
+	border-left:solid 1px white;
+}
+
+.nav-username{
+	height: 50px;
+	border-left: 0px !important;
+}
+
+.nav-username>p{
+	padding-top: 20px;
+	padding-right: 15px;
+}
+
+.nav-last-item{
+	border-right:solid 1px white;
+}
+
+body
+{
+	/*font-family: 'Montserrat Subrayada', sans-serif;*/
+	/*font-family: 'Sigmar One', cursive;*/
+
+}
+
+.navbar-brand{
+
+	font-family: 'Londrina Outline', cursive;
+	/*font-family: 'Chango', cursive;*/
+	font-size: 32px !important;
+}
+
+/*#navbar1 > ul.nav.navbar-nav.nav-right-item{
+	float: right;
+}*/
+/*body > div.posts{
+	float: left;
+}*/

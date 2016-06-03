@@ -1,15 +1,55 @@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Ositemile</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- 読み込み -->
+<link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet">
+<!-- 自作css -->
+<link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
 
-<html>
-    <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-    </head>
-    <body>
-        @content
-    </body>
+
+</head>
+<body>
+<nav class="navbar navbar-new" role="navigation">
+    <div class="container-fluid" id="header">
+        <!-- logo -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Ositemile</a>
+        </div>
+        <!-- menu -->
+        <div class="collapse navbar-collapse navbar-left" id="navbar1">
+            <ul class="nav navbar-nav nav-tabs">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Blog</a></li>
+                <li class="nav-last-item"><a href="#">Contact</a></li>
+
+            </ul>
+
+        </div>
+        <div class="collapse navbar-collapse navbar-right">
+            <ul class="nav navbar-nav nav-right-item">
+                <li class="nav-username"><p>からあげ さん</p></li>
+                <li><a href="#">ログアウト</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+@content
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</body>
 </html>
