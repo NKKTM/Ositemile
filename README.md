@@ -23,19 +23,19 @@
 \*	@author 作者   
 \*/   
 public void クラス名(){   
-	/\*   
-	\*	メソッドの説明   
-	\*	@params 引数   
-	\*	@return 戻り値   
-	\*	@author 作者   
-	\*/	   
-	public void メソッド名(){   
-		if(条件){   
-			//条件の説明   
-		}else{   
-			//elseの条件の説明   
-		}   
-	}   
+ /\*   
+ \* メソッドの説明   
+ \* @params 引数   
+ \* @return 戻り値   
+ \* @author 作者   
+ \*/    
+ public void メソッド名(){   
+ if(条件){   
+ //条件の説明   
+ }else{   
+ //elseの条件の説明   
+ }   
+ }   
 }   
 
 ####クラス名
