@@ -1,0 +1,13 @@
+▼アクセスキーID
+AKIAIHIRD4XM673PCLQQ
+
+▼シークレットキー
+IRnJGBzfc8LcC4UXZb8VgANSDzQrGAI+pMnyhqb+
+
+▼アソシエイトID（トラッキングID）
+ositemile-22
+
+▼APIの使い方、参考サイト
+https://affiliate.amazon.co.jp/gp/advertising/api/detail/main.html（公式ドキュメント）
+http://www.ajaxtower.jp/ecs/
+https://www.panzee.biz/archives/1121
