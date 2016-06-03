@@ -18,25 +18,27 @@
 ##Java
 
 ####コメントの書き方
+<pre><code>
 /\*   
 \*	クラスの説明   
 \*	@author 作者   
 \*/   
 public void クラス名(){   
- /\*   
- \* メソッドの説明   
- \* @params 引数   
- \* @return 戻り値   
- \* @author 作者   
- \*/    
- public void メソッド名(){   
- if(条件){   
- //条件の説明   
- }else{   
- //elseの条件の説明   
- }   
- }   
-}   
+	/\*   
+	\*	メソッドの説明   
+	\*	@params 引数   
+	\*	@return 戻り値   
+	\*	@author 作者   
+	\*/	   
+	public void メソッド名(){   
+		if(条件){   
+			//条件の説明   
+		}else{   
+			//elseの条件の説明   
+		}   
+	}   
+}
+</code></pre>
 
 ####クラス名
 - AaaaAaaa（頭大文字＋区切り大文字）
