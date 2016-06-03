@@ -20,23 +20,23 @@
 ####コメントの書き方
 <p>
 /*<br/>
-*	クラスの説明<br/>
-*	@author 作者<br/>
+*    クラスの説明<br/>
+*    @author 作者<br/>
 */<br/>
 public void クラス名(){<br/>
-	/*<br/>
-	*	メソッドの説明<br/>
-	*	@params 引数<br/>
-	*	@return 戻り値<br/>
-	*	@author 作者<br/>
-	*/	<br/>
-	public void メソッド名(){<br/>
-		if(条件){<br/>
-			//条件の説明<br/>
-		}else{<br/>
-			//elseの条件の説明<br/>
-		}<br/>
-	}<br/>
+    /*<br/>
+    *    メソッドの説明<br/>
+    *    @params 引数<br/>
+    *    @return 戻り値<br/>
+    *    @author 作者<br/>
+    */    <br/>
+    public void メソッド名(){<br/>
+    if(条件){<br/>
+    //条件の説明<br/>
+    }else{<br/>
+    //elseの条件の説明<br/>
+    }<br/>
+    }<br/>
 }<br/>
 </p>
 
