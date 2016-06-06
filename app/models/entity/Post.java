@@ -13,8 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.db.ebean.Model;
+
 @Entity
-public class Post {
+public class Post  extends Model{
 
 	@Id
 	private Long			_id;				// ID

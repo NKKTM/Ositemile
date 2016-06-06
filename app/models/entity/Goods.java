@@ -11,8 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import play.db.ebean.Model;
+
 @Entity
-public class Goods {
+public class Goods  extends Model{
 
 	@Id
 	private Long			_id;				// ID
