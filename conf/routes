@@ -8,10 +8,11 @@ GET     /                           controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
-# ログイン
+# ログイン・ログアウト
 GET		/login						controllers.Application.login()
 GET		/authenticate				controllers.Application.authenticate()
 GET		/authenticateSuccess		controllers.Application.authenticateSuccess()
+GET		/logout						controllers.Application.logout()
 
 
 # 新規登録

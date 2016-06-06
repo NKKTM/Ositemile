@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(loginId: String)(content: Html)
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -40,8 +40,13 @@
 
             </ul>
                 <ul class="nav navbar-nav navbar-right">
-                <li class="nav-username"><p>からあげ さん</p></li>
-                <li><a href="#">ログアウト</a></li>
+                @if(loginId == null){                
+                    <li class="nav-username"><p>名無しのからあげ さん</p></li>
+                    <li><a href="@routes.Application.login().absoluteURL()">ログイン</a></li>
+                }else{
+                    <li class="nav-username"><p>@loginId さん</p></li>
+                    <li><a href="@routes.Application.logout().absoluteURL()">ログアウト</a></li>                
+                }
             </ul>
 
         </div>
