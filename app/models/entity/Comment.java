@@ -6,15 +6,25 @@ package models.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import play.db.ebean.Model;
 
 @Entity
-public class Comment {
+public class Comment  extends Model{
 
 	@Id
 	private Long	_id;			// ID
 	private String	_comment;		// コメント内容
+
+	@ManyToOne
+	@JoinColumn(name = "_comment")
 	private User	_user;			// コメントしたユーザ情報
-	// 投稿情報
+
+	@ManyToOne
+	@JoinColumn(name = "_comment")
+	private Post	_post;			// 投稿情報
 
 	//*****セッター・ゲッター*****
 
