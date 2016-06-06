@@ -16,7 +16,9 @@ import models.login.*;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        String loginId = session().get("loginId");
+        System.out.println("loginId:"+loginId);
+        return ok(index.render(loginId));
     }
 
     //ログイン画面
@@ -36,12 +38,16 @@ public class Application extends Controller {
         Form<RegisterForm> registerForm = form(RegisterForm.class).bindFromRequest();
         if(!registerForm.hasErrors()){
         	//ユーザー情報がフォームから取得できた場合
+            //DBにuserを登録
         	User user = new User();
             user.setUserName(registerForm.get().userName);
             user.setPassword(registerForm.get().password);
             user.setLoginId(registerForm.get().loginId);            
             user.save();
             System.out.println("DB登録に成功しました！");
+            //セッションにloginIdを登録
+            session().clear();
+            session("loginId", user.getLoiginId());            
             return redirect("/");            
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
@@ -72,7 +78,7 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result authenticateSuccess() {
             System.out.println("認証成功");
-            return redirect(routes.Application.index().absoluteURL(request()));
+            return redirect("/");
     }
 
     // ログアウト
@@ -80,7 +86,7 @@ public class Application extends Controller {
     public static Result logout() {
         session().clear();
         flash("success", "You've been logged out");
-        return redirect(routes.Application.index().absoluteURL(request()));
+        return redirect("/");
     }        
 
 }
