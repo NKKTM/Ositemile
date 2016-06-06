@@ -4,6 +4,8 @@
  */
 package models.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,7 +17,7 @@ import play.db.ebean.Model;
 public class Comment  extends Model{
 
 	@Id
-	private Long	id;			// ID
+	private Long	id;				// ID
 	private String	comment;		// コメント内容
 
 	@ManyToOne
@@ -25,6 +27,8 @@ public class Comment  extends Model{
 	@ManyToOne
 	@JoinColumn(name = "comment")
 	private Post	post;			// 投稿情報
+
+	Date			date;			// 日付
 
 	//*****セッター・ゲッター*****
 
