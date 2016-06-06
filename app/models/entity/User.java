@@ -58,5 +58,13 @@ public class User {
 		return _loginId;
 	}
 
+	// コメント
+	public void setComment(List<Comment> comment){
+		this._comment = comment;
+	}
+	public List<Comment> getComment(){
+		return _comment;
+	}
+
 	// 投稿
 }
