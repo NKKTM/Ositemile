@@ -16,64 +16,64 @@ import play.db.ebean.Model;
 @Entity
 public class User extends Model{
 	@Id
-	private Long			_id;		// ID
-	private String			_userName;	// ユーザー名
-	private String			_passward;	// パスワード
-	private String			_loginId;	// ログインID
+	private Long			id;		// ID
+	private String			userName;	// ユーザー名
+	private String			passward;	// パスワード
+	private String			loginId;	// ログインID
 
-	@OneToMany(mappedBy="_user",cascade = CascadeType.ALL)
-	private List<Comment>	_comment;	// コメント情報
+	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	private List<Comment>	comment;	// コメント情報
 
-	@OneToMany(mappedBy="_user",cascade = CascadeType.ALL)
-	private List<Post>		_post;		// 投稿した情報
+	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	private List<Post>		post;		// 投稿した情報
 
 	//*****セッター・ゲッター*****
 
 	// ID
 	public void setId(Long id){
-		this._id = id;
+		this.id = id;
 	}
 	public Long getId(){
-		return _id;
+		return id;
 	}
 
 	// ユーザー名
 	public void setUserName(String name){
-		this._userName = name;
+		this.userName = name;
 	}
 	public String getUserName(){
-		return _userName;
+		return userName;
 	}
 
 	// パスワード
 	public void setPassward(String passward){
-		this._passward = passward;
+		this.passward = passward;
 	}
 	public String getPassward(){
-		return _passward;
+		return passward;
 	}
 
 	// ログイン
 	public void setLoginId(String loginId){
-		this._loginId = loginId;
+		this.loginId = loginId;
 	}
 	public String getLoiginId(){
-		return _loginId;
+		return loginId;
 	}
 
 	// コメント
 	public void setComment(List<Comment> comment){
-		this._comment = comment;
+		this.comment = comment;
 	}
 	public List<Comment> getComment(){
-		return _comment;
+		return comment;
 	}
 
 	// 投稿
 	public void setPost( List<Post> post ){
-		this._post = post;
+		this.post = post;
 	}
 	public List<Post> getPost(){
-		return _post;
+		return post;
 	}
 }
