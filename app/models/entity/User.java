@@ -13,6 +13,7 @@ public class User {
 	private Long _id;			// ID
 	private String _name;		// ユーザー名
 	private String _passward;	// パスワード
+	private String _loginId;	// ログインID
 	// 投稿した情報
 
 	//*****セッター・ゲッター*****
@@ -39,6 +40,14 @@ public class User {
 	}
 	public String getPassward(){
 		return _passward;
+	}
+
+	// ログイン
+	public void setLoginId(String loginId){
+		this._loginId = loginId;
+	}
+	public String getLoiginId(){
+		return _loginId;
 	}
 
 	// 投稿
