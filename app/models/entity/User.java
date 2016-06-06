@@ -13,6 +13,9 @@ import javax.persistence.OneToMany;
 
 import play.db.ebean.Model;
 
+import play.db.ebean.*;
+
+
 @Entity
 public class User extends Model{
 	@Id

@@ -1,0 +1,18 @@
+@(registerForm: Form[models.form.RegisterForm])
+
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }  
+
+@import helper._
+
+  <div class="register">
+    <h3>Ositemile新規登録</h3>
+  @form(action = routes.Application.registerDB()){
+      <p>ユーザー名</p>
+  	@inputText(registerForm("userName"))<br>
+      <p>ログインID</p>
+    @inputText(registerForm("loginId"))<br>  
+      <p>Password</p>
+  	@inputPassword(registerForm("passward"))
+      <p class="submit"><input type="submit" value="登録"></p>
+  }
+  </div>
