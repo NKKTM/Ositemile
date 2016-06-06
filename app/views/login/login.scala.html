@@ -6,7 +6,7 @@
 
   <div class="login">
     <h3>Ositemileログイン</h3>
-	@form(routes.Application.index()){
+	@form(routes.Application.authenticate()){
     <p>ログインID</p>
   	@inputText(loginForm("loginId"))<br>
     <p>Password</p>

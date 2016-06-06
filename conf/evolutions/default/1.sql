@@ -6,6 +6,7 @@
 create table comment (
   id                        bigint not null,
   comment                   varchar(255),
+  date                      timestamp,
   constraint pk_comment primary key (id))
 ;
 
@@ -19,15 +20,17 @@ create table goods (
 
 create table post (
   id                        bigint not null,
+  post_title                varchar(255),
   post_comment              varchar(255),
   post                      bigint,
+  date                      timestamp,
   constraint pk_post primary key (id))
 ;
 
 create table user (
   id                        bigint not null,
   user_name                 varchar(255),
-  passward                  varchar(255),
+  password                  varchar(255),
   login_id                  varchar(255),
   constraint pk_user primary key (id))
 ;
