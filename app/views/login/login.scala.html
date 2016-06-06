@@ -6,13 +6,13 @@
 
   <div class="login">
     <h3>Ositemileログイン</h3>
-	@form(routes.Application.index()) {
+	@form(routes.Application.index()){
     <p>ログインID</p>
-	@inputText(loginForm("_loginId"))<br>
+  	@inputText(loginForm("loginId"))<br>
     <p>Password</p>
-	@inputPassword(loginForm("_password"))
+  	@inputPassword(loginForm("password"))
     <p class="submit"><input type="submit" value="ログイン"></p>
-    }
+  }
   </div> 
 
   <div class="go-register">
