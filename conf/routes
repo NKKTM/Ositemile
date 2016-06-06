@@ -10,6 +10,9 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # ログイン
 GET		/login						controllers.Application.login()
+GET		/authenticate				controllers.Application.authenticate()
+GET		/authenticateSuccess		controllers.Application.authenticateSuccess()
+
 
 # 新規登録
 GET		/register					controllers.Application.register()

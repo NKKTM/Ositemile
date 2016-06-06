@@ -6,6 +6,6 @@ package models.form;
 
 public class RegisterForm {
 	public String userName;	
-	public String passward;
+	public String password;
 	public String loginId;
 }
