@@ -4,6 +4,7 @@
  */
 package models.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,8 @@ public class Post  extends Model{
 
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
 	private List<Comment>	comment;			// コメント
+
+	Date					date;				// 日付
 
 	//*****セッター・ゲッター*****
 
