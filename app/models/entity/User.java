@@ -4,16 +4,24 @@
  */
 package models.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
 	@Id
-	private Long	_id;		// ID
-	private String	_name;		// ユーザー名
-	private String	_passward;	// パスワード
-	private String	_loginId;	// ログインID
+	private Long			_id;		// ID
+	private String			_name;		// ユーザー名
+	private String			_passward;	// パスワード
+	private String			_loginId;	// ログインID
+
+	@OneToMany(mappedBy="_user",cascade = CascadeType.ALL)
+	private List<Comment>	_comment;	// コメント情報
 	// 投稿した情報
 
 	//*****セッター・ゲッター*****

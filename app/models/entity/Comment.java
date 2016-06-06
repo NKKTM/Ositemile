@@ -6,6 +6,8 @@ package models.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Comment {
@@ -13,6 +15,9 @@ public class Comment {
 	@Id
 	private Long	_id;			// ID
 	private String	_comment;		// コメント内容
+
+	@ManyToOne
+	@JoinColumn(name = "_comment")
 	private User	_user;			// コメントしたユーザ情報
 	// 投稿情報
 
