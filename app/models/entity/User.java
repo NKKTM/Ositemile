@@ -16,7 +16,7 @@ import play.db.ebean.Model;
 @Entity
 public class User extends Model{
 	@Id
-	private Long			id;		// ID
+	private Long			id;			// ID
 	private String			userName;	// ユーザー名
 	private String			passward;	// パスワード
 	private String			loginId;	// ログインID
