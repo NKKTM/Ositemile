@@ -17,54 +17,54 @@ import play.db.ebean.Model;
 public class Goods  extends Model{
 
 	@Id
-	private Long			_id;				// ID
-	private String			_goodsName;			// 商品名
-	private String			_imageUrl;			// 画像URL
-	private String			_amazonUrl;			// AmazonのURL
-	private List<String>	_category;			// カテゴリリスト名
+	private Long			id;				// ID
+	private String			goodsName;			// 商品名
+	private String			imageUrl;			// 画像URL
+	private String			amazonUrl;			// AmazonのURL
+	private List<String>	category;			// カテゴリリスト名
 
-	@OneToMany(mappedBy="_goods",cascade = CascadeType.ALL)
-	private Post			_post;				// 投稿情報
+	@OneToMany(mappedBy="goods",cascade = CascadeType.ALL)
+	private Post			post;				// 投稿情報
 
 	//*****セッター・ゲッター*****
 
 	// ID
 	public void setId(Long id){
-		this._id = id;
+		this.id = id;
 	}
 	public Long getId(){
-		return _id;
+		return id;
 	}
 
 	// 商品名
 	public void setGoodsName(String name){
-		this._goodsName = name;
+		this.goodsName = name;
 	}
 	public String getGoodsName(){
-		return _goodsName;
+		return goodsName;
 	}
 
 	// 画像URL
 	public void setImageUrl(String imageUrl){
-		this._imageUrl = imageUrl;
+		this.imageUrl = imageUrl;
 	}
 	public String getImageUrl(){
-		return _imageUrl;
+		return imageUrl;
 	}
 
 	// AmazonURL
 	public void setAmazonUrl(String amazonUrl){
-		this._amazonUrl = amazonUrl;
+		this.amazonUrl = amazonUrl;
 	}
 	public String getAmazonUrl(){
-		return _amazonUrl;
+		return amazonUrl;
 	}
 
 	// カテゴリーリスト
 	public void setCategory(List<String> category){
-		this._category = category;
+		this.category = category;
 	}
 	public List<String> getCategory(){
-		return _category;
+		return category;
 	}
 }

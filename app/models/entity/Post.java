@@ -19,60 +19,60 @@ import play.db.ebean.Model;
 public class Post  extends Model{
 
 	@Id
-	private Long			_id;				// ID
-	private String			_postComment;		// 投稿したユーザーのコメント
+	private Long			id;				// ID
+	private String			postComment;		// 投稿したユーザーのコメント
 
 	@ManyToOne
-	@JoinColumn(name = "_post")
-	private Goods			_goods;				// 商品
+	@JoinColumn(name = "post")
+	private Goods			goods;				// 商品
 
 	@ManyToOne
-	@JoinColumn(name = "_post")
-	private User			_user;				// ユーザー
+	@JoinColumn(name = "post")
+	private User			user;				// ユーザー
 
-	@OneToMany(mappedBy="_post",cascade = CascadeType.ALL)
-	private List<Comment>	_comment;			// コメント
+	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
+	private List<Comment>	comment;			// コメント
 
 	//*****セッター・ゲッター*****
 
 	// ID
 	public void setId( Long id ){
-		this._id = id;
+		this.id = id;
 	}
 	public Long getId(){
-		return _id;
+		return id;
 	}
 
 	// 商品
 	public void setGoods(Goods goods){
-		this._goods = goods;
+		this.goods = goods;
 	}
 	public Goods getGoods(){
-		return _goods;
+		return goods;
 	}
 
 	// ユーザー
 	public void setUser(User user){
-		this._user = user;
+		this.user = user;
 	}
 	public User getUser(){
-		return _user;
+		return user;
 	}
 
 	// コメント
 	public void setComment(List<Comment> comment){
-		this._comment = comment;
+		this.comment = comment;
 	}
 	public List<Comment> getComment(){
-		return _comment;
+		return comment;
 	}
 
 	// 投稿コメント
 	public void setPostComment(String postComment){
-		this._postComment = postComment;
+		this.postComment = postComment;
 	}
 	public String getPostComment(){
-		return _postComment;
+		return postComment;
 	}
 
 }

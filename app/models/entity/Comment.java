@@ -15,41 +15,41 @@ import play.db.ebean.Model;
 public class Comment  extends Model{
 
 	@Id
-	private Long	_id;			// ID
-	private String	_comment;		// コメント内容
+	private Long	id;			// ID
+	private String	comment;		// コメント内容
 
 	@ManyToOne
-	@JoinColumn(name = "_comment")
-	private User	_user;			// コメントしたユーザ情報
+	@JoinColumn(name = "comment")
+	private User	user;			// コメントしたユーザ情報
 
 	@ManyToOne
-	@JoinColumn(name = "_comment")
-	private Post	_post;			// 投稿情報
+	@JoinColumn(name = "comment")
+	private Post	post;			// 投稿情報
 
 	//*****セッター・ゲッター*****
 
 	// ID
 	public void setId(Long id){
-		this._id = id;
+		this.id = id;
 	}
 	public Long getId(){
-		return _id;
+		return id;
 	}
 
 	// コメント内容
 	public void setComment(String comment){
-		this._comment = comment;
+		this.comment = comment;
 	}
 	public String getComment(){
-		return _comment;
+		return comment;
 	}
 
 	// コメントしたユーザ情報
 	public void setUser(User user){
-		this._user = user;
+		this.user = user;
 	}
 	public User getUser(){
-		return _user;
+		return user;
 	}
 
 	// 投稿情報
