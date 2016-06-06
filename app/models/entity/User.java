@@ -49,10 +49,10 @@ public class User extends Model{
 	}
 
 	// パスワード
-	public void setPassward(String passward){
+	public void setPassword(String passward){
 		this.password = passward;
 	}
-	public String getPassward(){
+	public String getPassword(){
 		return password;
 	}
 
