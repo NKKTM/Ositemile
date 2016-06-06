@@ -32,12 +32,15 @@ public class Application extends Controller {
 
     //新規ユーザーをDBに登録
     public static Result registerDB(){
-        Form<User> userForm = form(User.class).bindFromRequest();
-        if(!userForm.hasErrors()){
+        Form<RegisterForm> registerForm = form(RegisterForm.class).bindFromRequest();
+        if(!registerForm.hasErrors()){
         	//ユーザー情報がフォームから取得できた場合
-            User user = userForm.get();
+        	User user = new User();
+            user.setUserName(registerForm.get().userName);
+            user.setPassward(registerForm.get().password);
+            user.setLoginId(registerForm.get().loginId);            
             user.save();
-            System.out.println("DB登録に成功しました！");
+            System.out.println("DB登録に成功しました！"+" userName"+registerForm.get().userName);
             return redirect("/");            
         }else{
         	//ユーザー情報がフォームから取得できなかった場合

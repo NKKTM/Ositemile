@@ -5,7 +5,7 @@
 package models.form;
 
 public class RegisterForm {
-	public String _name;	
-	public String _passward;
-	public String _loginId;
+	public String userName;	
+	public String passward;
+	public String loginId;
 }

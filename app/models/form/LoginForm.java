@@ -5,6 +5,6 @@
 package models.form;
 
 public class LoginForm {
-	public String _loginId;
-	public String _passward;
+	public String loginId;
+	public String passward;
 }
