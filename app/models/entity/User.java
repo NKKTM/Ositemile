@@ -7,8 +7,11 @@ package models.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import play.db.ebean.*;
+
+
 @Entity
-public class User {
+public class User extends Model{
 	@Id
 	private Long	_id;		// ID
 	private String	_name;		// ユーザー名
