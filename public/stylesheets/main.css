@@ -39,11 +39,13 @@ a.navbar-brand:hover{
 .nav-username{
 	height: 50px;
 	border-left: 0px !important;
+	padding-left:10px;
 }
 
 .nav-username>p{
-	padding-top: 20px;
+	padding-top: 15px;
 	padding-right: 15px;
+	padding-left:8px;
 }
 
 .nav-last-item{
@@ -64,7 +66,18 @@ body
 	font-size: 32px !important;
 }
 
+.navbar-right{
+	padding-right:10px;
+}
 
+.text-muted{
+	text-align:center;
+	color:white;
+}
+
+.footer{
+	background-color: #49d385;
+}
 
 /*#navbar1 > ul.nav.navbar-nav.nav-right-item{
 	float: right;

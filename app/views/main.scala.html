@@ -7,7 +7,7 @@
 <title>Ositemile</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!-- 読み込み -->
 <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet">
 <!-- 自作css -->
@@ -29,7 +29,7 @@
             <a class="navbar-brand" href="#">Ositemile</a>
         </div>
         <!-- menu -->
-        <div class="collapse navbar-collapse navbar-left" id="navbar1">
+        <div class="collapse navbar-collapse" id="navbar1">
             <ul class="nav navbar-nav">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
@@ -38,19 +38,28 @@
                 <li class="nav-last-item"><a href="#">Contact</a></li>
 
             </ul>
-
-        </div>
-        <div class="collapse navbar-collapse navbar-right">
-            <ul class="nav navbar-nav nav-right-item">
+                <ul class="nav navbar-nav navbar-right">
                 <li class="nav-username"><p>からあげ さん</p></li>
                 <li><a href="#">ログアウト</a></li>
             </ul>
+
+        </div>
+        <div class="collapse navbar-collapse navbar-right">
+
         </div>
     </div>
 </nav>
 @content
 
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">Created By Team NKK 2016</p>
+  </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
 </body>
 </html>
