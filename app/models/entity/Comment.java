@@ -19,7 +19,10 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "_comment")
 	private User	_user;			// コメントしたユーザ情報
-	// 投稿情報
+
+	@ManyToOne
+	@JoinColumn(name = "_comment")
+	private Post	_post;			// 投稿情報
 
 	//*****セッター・ゲッター*****
 

@@ -6,18 +6,23 @@ package models.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Goods {
 
 	@Id
 	private Long			_id;				// ID
-	private String			_name;				// 商品名
+	private String			_goodsName;			// 商品名
 	private String			_imageUrl;			// 画像URL
 	private String			_amazonUrl;			// AmazonのURL
 	private List<String>	_category;			// カテゴリリスト名
+
+	@OneToMany(mappedBy="_goods",cascade = CascadeType.ALL)
+	private Post			_post;				// 投稿情報
 
 	//*****セッター・ゲッター*****
 
@@ -30,11 +35,11 @@ public class Goods {
 	}
 
 	// 商品名
-	public void setName(String name){
-		this._name = name;
+	public void setGoodsName(String name){
+		this._goodsName = name;
 	}
-	public String getName(){
-		return _name;
+	public String getGoodsName(){
+		return _goodsName;
 	}
 
 	// 画像URL
