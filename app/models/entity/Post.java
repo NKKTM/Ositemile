@@ -20,7 +20,8 @@ import play.db.ebean.Model;
 public class Post  extends Model{
 
 	@Id
-	private Long			id;				// ID
+	private Long			id;					// ID
+	private String 			postTitle;			// 投稿タイトル
 	private String			postComment;		// 投稿したユーザーのコメント
 
 	@ManyToOne
@@ -76,6 +77,14 @@ public class Post  extends Model{
 	}
 	public String getPostComment(){
 		return postComment;
+	}
+
+	// タイトル
+	public void setPostTitle(String postTitle){
+		this.postTitle = postTitle;
+	}
+	public String getPostTitle(){
+		return postTitle;
 	}
 
 }

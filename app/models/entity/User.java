@@ -19,9 +19,9 @@ import play.db.ebean.*;
 @Entity
 public class User extends Model{
 	@Id
-	private Long			id;		// ID
+	private Long			id;			// ID
 	private String			userName;	// ユーザー名
-	private String			passward;	// パスワード
+	private String			password;	// パスワード
 	private String			loginId;	// ログインID
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
@@ -50,10 +50,10 @@ public class User extends Model{
 
 	// パスワード
 	public void setPassward(String passward){
-		this.passward = passward;
+		this.password = passward;
 	}
 	public String getPassward(){
-		return passward;
+		return password;
 	}
 
 	// ログイン
