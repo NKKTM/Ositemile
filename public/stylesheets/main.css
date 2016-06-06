@@ -67,7 +67,7 @@ body
 }
 
 .navbar-right{
-	padding-right:10px;
+	margin-right: 0px;
 }
 
 .text-muted{
@@ -75,6 +75,9 @@ body
 	color:white;
 }
 
+.container-fluid>.navbar-header{
+	margin-right: 0px !important;
+}
 .footer{
 	background-color: #49d385;
 }
