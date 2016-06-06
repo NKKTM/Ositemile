@@ -10,10 +10,10 @@ import javax.persistence.Id;
 @Entity
 public class User {
 	@Id
-	private Long _id;			// ID
-	private String _name;		// ユーザー名
-	private String _passward;	// パスワード
-	private String _loginId;	// ログインID
+	private Long	_id;		// ID
+	private String	_name;		// ユーザー名
+	private String	_passward;	// パスワード
+	private String	_loginId;	// ログインID
 	// 投稿した情報
 
 	//*****セッター・ゲッター*****

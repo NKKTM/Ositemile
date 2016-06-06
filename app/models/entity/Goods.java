@@ -13,11 +13,11 @@ import javax.persistence.Id;
 public class Goods {
 
 	@Id
-	private Long _id;					// ID
-	private String _name;				// 商品名
-	private String _imageUrl;			// 画像URL
-	private String _amazonUrl;			// AmazonのURL
-	private List<String> _category;		// カテゴリリスト名
+	private Long			_id;				// ID
+	private String			_name;				// 商品名
+	private String			_imageUrl;			// 画像URL
+	private String			_amazonUrl;			// AmazonのURL
+	private List<String>	_category;			// カテゴリリスト名
 
 	//*****セッター・ゲッター*****
 
