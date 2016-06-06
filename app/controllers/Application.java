@@ -37,10 +37,10 @@ public class Application extends Controller {
         	//ユーザー情報がフォームから取得できた場合
         	User user = new User();
             user.setUserName(registerForm.get().userName);
-            user.setPassward(registerForm.get().password);
+            user.setPassward(registerForm.get().passward);
             user.setLoginId(registerForm.get().loginId);            
             user.save();
-            System.out.println("DB登録に成功しました！"+" userName"+registerForm.get().userName);
+            System.out.println("DB登録に成功しました！"+registerForm.get().passward);
             return redirect("/");            
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
