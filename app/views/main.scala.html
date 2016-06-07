@@ -27,7 +27,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Ositemile</a>
+            <a class="navbar-brand" href="#"><img src="@routes.Assets.at("images/ositemile04.png")" alt="..." class="img-rounded">Ositemile</a>
         </div>
         <!-- menu -->
         <div class="collapse navbar-collapse" id="navbar1">
@@ -40,12 +40,12 @@
 
             </ul>
                 <ul class="nav navbar-nav navbar-right">
-                @if(loginId == null){                
+                @if(loginId == null){
                     <li class="nav-username"><p>名無しのからあげ さん</p></li>
                     <li><a href="@routes.Application.login().absoluteURL()">ログイン</a></li>
                 }else{
                     <li class="nav-username"><p>@loginId さん</p></li>
-                    <li><a href="@routes.Application.logout().absoluteURL()">ログアウト</a></li>                
+                    <li><a href="@routes.Application.logout().absoluteURL()">ログアウト</a></li>
                 }
             </ul>
 
@@ -55,8 +55,10 @@
         </div>
     </div>
 </nav>
+<div class="content-container">
 @content
 
+</div>
 <!-- <footer class="footer">
   <div class="container">
     <p class="text-muted">Created By Team NKK </p>
