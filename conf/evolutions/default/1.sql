@@ -32,6 +32,8 @@ create table user (
   user_name                 varchar(255),
   password                  varchar(255),
   login_id                  varchar(255),
+  profile                   varchar(255),
+  department                varchar(255),
   constraint pk_user primary key (id))
 ;
 
