@@ -1,6 +1,7 @@
 package controllers;
 
 import play.*;
+
 import play.mvc.*;
 
 import play.data.Form;
@@ -15,6 +16,8 @@ import models.entity.*;
 import models.form.*;
 import models.login.*;
 import models.amazon.*;
+
+
 
 
 public class Application extends Controller {
@@ -124,5 +127,15 @@ public class Application extends Controller {
          return ok(user_page.render(loginId));
     }
 
+    // 商品ページ
+    public static Result introduction(){
+    	Form<CommentForm> commentForm = new Form(CommentForm.class);
+    	return ok(introduction.render( commentForm ));
+    }
+
+    // コメント登録
+    public static Result commentCreate(){
+    	return null;
+    }
 
 }

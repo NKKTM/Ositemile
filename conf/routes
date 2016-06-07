@@ -21,7 +21,8 @@ GET		/registerDB					controllers.Application.registerDB()
 
 
 # 商品ページ
-GET		/introduction				controllersApplication.introduction()
+GET		/introduction				controllers.Application.introduction()
+GET		/commentCreate				controllers.Application.commentCreate()
 
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
