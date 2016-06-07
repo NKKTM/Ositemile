@@ -37,6 +37,62 @@ public class Post  extends Model{
 
 	Date					date;				// 日付
 
+	/*
+	 *	デフォルトコンストラクタ
+	 *	@param　なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Post(){
+		this.id = 0L;
+		this.postTitle ="";
+		this.postComment = "";
+		this.goods = null;
+		this.user = null;
+		this.comment = null;
+		this.date = new Date();
+	}
+
+	/*
+	 *	コンストラクタ(パラメーター)
+	 *	@param String postTitle：投稿タイトル
+	 *			String postComment：投稿コメント
+	 *			Goods goods：商品
+	 *			User user：ユーザー
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Post(String postTitle,
+				String postComment,
+				Goods goods,
+				User user){
+		this.postTitle = postTitle;
+		this.postComment = postComment;
+		this.goods = goods;
+		this.user = user;
+		this.date = new Date();
+	}
+
+	/*
+	 *	パラメータの設定
+	 *	@param	String postTitle：投稿タイトル
+	 *			String postComment：投稿コメント
+	 *			Goods goods：商品
+	 *			User user：ユーザー
+	 *	@return Postのオブジェクト
+	 *	@author Kotaro Nishida
+	 */
+	public Post setParameter(String postTitle,
+							 String postComment,
+							 Goods goods,
+							 User user){
+		this.setPostTitle(postTitle);
+		this.setPostComment(postComment);
+		this.setGoods(goods);
+		this.setUser(user);
+		return this;
+	}
+
 	//*****セッター・ゲッター*****
 
 	// ID

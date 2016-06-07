@@ -30,6 +30,51 @@ public class Comment  extends Model{
 
 	Date			date;			// 日付
 
+	/*
+	 *	デフォルトコンストラクタ
+	 *	@param なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Comment(){
+		this.id = 0L;
+		this.comment = "";
+		this.user = null;
+		this.post = null;
+		this.date = new Date();
+	}
+
+	/*
+	 *	コンストラクタ(パラメーター)
+	 *	@param  String comment： コメントの内容
+	 *			User user：コメントしたユーザー情報
+	 *			Post post：投稿情報
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Comment(String comment, User user, Post post){
+		this.comment = comment;
+		this.user = user;
+		this.post = post;
+		this.date = new Date();
+	}
+
+	/*
+	 *	パラメーターの設定
+	 *	@param  String comment： コメントの内容
+	 *			User user：コメントしたユーザー情報
+	 *			Post post：投稿情報
+	 *			：
+	 *	@return Commentオブジェクト
+	 *	@author Kotaro Nishida
+	 */
+	public Comment setParameter( String comment, User user, Post post ){
+		this.setComment(comment);
+		this.setUser(user);
+		this.setPost(post);
+		return this;
+	}
+
 	//*****セッター・ゲッター*****
 
 	// ID
@@ -57,4 +102,10 @@ public class Comment  extends Model{
 	}
 
 	// 投稿情報
+	public void setPost(Post post){
+		this.post = post;
+	}
+	public Post getPost(){
+		return post;
+	}
 }
