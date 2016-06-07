@@ -27,3 +27,7 @@ GET		/introduction				controllersApplication.introduction()
 GET		/postSearchItem				controllers.Application.postSearchItem()
 
 
+#ユーザーページ
+GET    /userPage                    controllers.Application.userPage()
+
+

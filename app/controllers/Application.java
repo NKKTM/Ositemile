@@ -51,17 +51,17 @@ public class Application extends Controller {
         	User user = new User();
             user.setUserName(registerForm.get().userName);
             user.setPassword(registerForm.get().password);
-            user.setLoginId(registerForm.get().loginId);            
+            user.setLoginId(registerForm.get().loginId);
             user.save();
             System.out.println("DB登録に成功しました！");
             //セッションにloginIdを登録
             session().clear();
-            session("loginId", user.getLoiginId());            
-            return redirect("/");            
+            session("loginId", user.getLoiginId());
+            return redirect("/");
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
             System.out.println("DB登録に失敗しました！");
-            return redirect("/");             	
+            return redirect("/");
         }
     }
 
@@ -104,7 +104,7 @@ public class Application extends Controller {
         String[] params = {"searchWord"};
         DynamicForm searchWord = Form.form();
         searchWord = searchWord.bindFromRequest(params);
-        String searchWordStr = searchWord.data().get("searchWord").toString();        
+        String searchWordStr = searchWord.data().get("searchWord").toString();
         // URLと結合
         String searchUrl = AMAZON_URL + searchWordStr;
         System.out.println("searchUrl："+searchUrl);
@@ -115,6 +115,14 @@ public class Application extends Controller {
             System.out.println(e);
         }
         return ok(postSearchItem.render(session().get("loginId")));
-    }        
+    }
+
+    //ユーザーページ *未実装
+    public static Result userPage(){
+    	 String loginId = session().get("loginId");
+         System.out.println("loginId:"+loginId);
+         return ok(user_page.render(loginId));
+    }
+
 
 }
