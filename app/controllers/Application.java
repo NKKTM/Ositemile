@@ -3,17 +3,26 @@ package controllers;
 import play.*;
 import play.mvc.*;
 
-import views.html.*;
-import views.html.login.*;
-
 import play.data.Form;
 import static play.data.Form.*;
+import play.data.DynamicForm;
+
+import views.html.*;
+import views.html.login.*;
+import views.html.post.*;
 
 import models.entity.*;
 import models.form.*;
 import models.login.*;
+import models.amazon.*;
+
 
 public class Application extends Controller {
+
+    // 定数
+    // AmazonAPIにリクエストするURLの固定部分
+    private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=-reviewCount&keyword=";
+
 
     public static Result index() {
         String loginId = session().get("loginId");
@@ -87,6 +96,25 @@ public class Application extends Controller {
         session().clear();
         flash("success", "You've been logged out");
         return redirect("/");
+    }
+
+    // POSTするアイテムを検索する
+    public static Result postSearchItem(){
+        // アイテムを探すワードを取得
+        String[] params = {"searchWord"};
+        DynamicForm searchWord = Form.form();
+        searchWord = searchWord.bindFromRequest(params);
+        String searchWordStr = searchWord.data().get("searchWord").toString();        
+        // URLと結合
+        String searchUrl = AMAZON_URL + searchWordStr;
+        System.out.println("searchUrl："+searchUrl);
+        // APIの処理を行う
+        try{
+            System.out.println("API処理"+AmazonModelService.use().http(searchUrl));
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return ok(postSearchItem.render(session().get("loginId")));
     }        
 
 }

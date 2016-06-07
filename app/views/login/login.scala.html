@@ -4,18 +4,35 @@
 
 @import helper._
 
-  <div class="login">
-    <h3>Ositemileログイン</h3>
-	@form(routes.Application.authenticate()){
-    <p>ログインID</p>
-  	@inputText(loginForm("loginId"))<br>
-    <p>Password</p>
-  	@inputPassword(loginForm("password"))
-    <p class="submit"><input type="submit" value="ログイン"></p>
-  }
-  </div> 
+@* ログインページのみに適応させるstylesheet（+bootstrap）を読み込む *@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="@routes.Assets.at("stylesheets/login/login.css")" rel="stylesheet">
 
-  <div class="go-register">
-    <h3>新規登録はこちら</h3>
-    <p><a href="@routes.Application.register()">新規登録する</a></p>
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-6">
+        <div class="login-box">
+          <h3>Ositemileログイン</h3>
+          <div class="login">
+            @form(routes.Application.authenticate()){
+              <p>ログインID</p>
+            	@inputText(loginForm("loginId"))<br>
+              <p>Password</p>
+            	@inputPassword(loginForm("password"))
+              <p class="submit"><input type="submit" value="ログイン"></p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="go-register">
+          <h3>新規登録はこちら</h3>
+          <p class="register-button"><a href="@routes.Application.register()">新規登録する</a></p>
+        </div>
+      </div>
+
   </div>
+</div>

@@ -1,3 +1,12 @@
+#heroku実行URL
+- https://mysterious-bastion-67235.herokuapp.com/
+
+#楽天API情報
+- アプリID/デベロッパーID(applicationId/developerId)：1084889951156254811
+- application_secret：99ecdfa01f08c4cafde96a71f6ec83e91adec9f6
+- アフィリエイトID(affiliateId)：14fa0111.d141fce2.14fa0112.d325820f
+- コールバック許可ドメイン：mysterious-bastion-67235.herokuapp.com
+
 #コード規約
 
 ##Play

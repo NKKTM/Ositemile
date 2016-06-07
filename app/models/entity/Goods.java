@@ -17,7 +17,7 @@ import play.db.ebean.Model;
 public class Goods  extends Model{
 
 	@Id
-	private Long			id;				// ID
+	private Long			id;					// ID
 	private String			goodsName;			// 商品名
 	private String			imageUrl;			// 画像URL
 	private String			amazonUrl;			// AmazonのURL
@@ -25,6 +25,65 @@ public class Goods  extends Model{
 
 	@OneToMany(mappedBy="goods",cascade = CascadeType.ALL)
 	private Post			post;				// 投稿情報
+
+	/*
+	 *	デフォルトコンストラクタ
+	 *	@param なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Goods(){
+		this.id = 0L;
+		this.goodsName = "";
+		this.imageUrl = "";
+		this.amazonUrl = "";
+		this.category = null;
+	}
+
+	/*
+	 *	コンストラクタ(パラメーター)
+	 *	@param  String goodsName：商品名
+	 *			String imageUrl;：画像URL
+	 *			String amazonUrl：AmazonのURL
+	 *			List<String> category：カテゴリー
+	 *			Post post：投稿情報
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Goods(String goodsName,
+				 String imageUrl,
+				 String amazonUrl,
+				 List<String> category,
+				 Post post){
+		this.goodsName = goodsName;
+		this.imageUrl = imageUrl;
+		this.amazonUrl = amazonUrl;
+		this.category = category;
+		this.post = post;
+	}
+
+	/*
+	 *	パラメーターの設定
+	 *	@param  String goodsName：商品名
+	 *			String imageUrl;：画像URL
+	 *			String amazonUrl：AmazonのURL
+	 *			List<String> category：カテゴリー
+	 *			Post post：投稿情報
+	 *	@return Goodsオブジェクト
+	 *	@author Kotaro Nishida
+	 */
+	public Goods setParameter(String goodsName,
+							 String imageUrl,
+							 String amazonUrl,
+							 List<String> category,
+							 Post post){
+		this.setGoodsName(goodsName);
+		this.setImageUrl(imageUrl);
+		this.setAmazonUrl(amazonUrl);
+		this.setCategory(category);
+		this.setPost(post);
+		return this;
+	}
 
 	//*****セッター・ゲッター*****
 
@@ -66,5 +125,13 @@ public class Goods  extends Model{
 	}
 	public List<String> getCategory(){
 		return category;
+	}
+
+	// 投稿
+	public void setPost(Post post){
+		this.post = post;
+	}
+	public Post getPost(){
+		return post;
 	}
 }
