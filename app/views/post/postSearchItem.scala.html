@@ -1,0 +1,17 @@
+@(loginId: String)
+
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }  
+
+@import helper._
+
+@main(loginId) {
+
+  <div class="search-item">
+  	<form action="" method="GET">
+    	<p>検索ワードを入力してください</p>
+    	<input type="text" name="searchWord">
+    	<p class="submit"><input type="submit" value="検索"></p>
+    </form>
+  </div>
+
+}

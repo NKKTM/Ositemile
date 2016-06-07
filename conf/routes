@@ -19,6 +19,11 @@ GET		/logout						controllers.Application.logout()
 GET		/register					controllers.Application.register()
 GET		/registerDB					controllers.Application.registerDB()
 
+
 # 商品ページ
 GET		/introduction				controllersApplication.introduction()
+
+# POST
+GET		/postSearchItem				controllers.Application.postSearchItem()
+
 
