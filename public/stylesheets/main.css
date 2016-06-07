@@ -5,6 +5,8 @@
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
 @import url(https://fonts.googleapis.com/css?family=Chango);
 @import url(https://fonts.googleapis.com/css?family=Raleway:600);
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);/* google fonts “ú–{Œê */
+
 
 
 
@@ -56,8 +58,7 @@ a.navbar-brand:hover{
 
 body
 {
-	/*font-family: 'Montserrat Subrayada', sans-serif;*/
-	/*font-family: 'Sigmar One', cursive;*/
+/* font-family: 'Noto Sans JP', sans-serif; */@/* google fonts “ú–{Œê */
 
 }
 
@@ -187,9 +188,84 @@ body{
 	padding-top:6px;
 }
 
-/*#navbar1 > ul.nav.navbar-nav.nav-right-item{
-	float: right;
-}*/
-/*body > div.posts{
-	float: left;
-}*/
+div{
+	margin:solid 1px black;
+}
+
+
+
+
+/*user-page•”•ª*/
+.user-info-box{
+	height: auto;
+	/*border:solid 1px black;*/
+}
+
+.post-container{
+	height: 800px;
+	/*border:solid 1px black;*/
+	padding-right: 0px;
+	padding-left: 11px;
+}
+
+.post-one{
+	/*border:solid 1px black;*/
+	height:auto;
+}
+
+.name-dep{
+	text-align: center;
+	border-radius: 8px;
+	background-color: white;
+}
+.plofile{
+	background-color: white;
+}
+
+hr{
+	margin-bottom: 0px;
+	margin-top: 0px;
+	border-top: 1px dotted green;
+}
+
+.post-count{
+	width: 100%;
+	text-align: center;
+	margin-top: 10px;
+	border-radius: 8px;
+}
+
+.post-count>div.panel-heading>p{
+	margin: 0px;
+}
+
+.post-count>div.panel-heading{
+	background-color: #ffb9a6;
+	color: white;
+	border-bottom: 0px;
+}
+
+.post-count>div.panel-body{
+	padding-bottom: 0px;
+}
+
+.user-page-wrap{
+	margin-top: 30px;
+}
+
+.post-list-title{
+	padding: .25em 0 .25em .75em;
+	border-left: 6px solid #ffb9a6;
+	color: gray;
+	font-weight:500;
+}
+
+.profile-panel{
+	margin-bottom: 5px;
+	border-radius: 8px;
+}
+
+.profile-panel>div.panel-footer{
+	border-bottom-right-radius:8px;
+	border-bottom-left-radius:8px;
+}
