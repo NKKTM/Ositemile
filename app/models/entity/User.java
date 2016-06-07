@@ -23,6 +23,8 @@ public class User extends Model{
 	private String			userName;	// ユーザー名
 	private String			password;	// パスワード
 	private String			loginId;	// ログインID
+	private String			profile;	// プロフィール
+	private String			department;	// 部署名
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private List<Comment>	comment;	// コメント情報
@@ -41,6 +43,8 @@ public class User extends Model{
 		this.userName = "";
 		this.password = "";
 		this.loginId = "";
+		this.profile = "よろしくお願いします。";
+		this.department = "未設定";
 	}
 
 	/*
@@ -51,10 +55,24 @@ public class User extends Model{
 	 *	@return
 	 *	@author Kotaro Nishida
 	 */
-	public User( String userName,String password,String loginId ){
+	public User( String userName,String password,String loginId ,String profile,String department){
 		this.userName = userName;
 		this.password = password;
 		this.loginId = loginId;
+		if(this.profile == ""){
+			// プロフィールがない
+			this.profile = "よろしくお願いします。";
+		}else{
+			// プロフィールがある
+			this.profile = profile;
+		}
+		if( department == "" ){
+			// 部署がない
+			this.department = "未設定";
+		}else{
+			// 部署がある
+			this.department = department;
+		}
 	}
 
 	/*
@@ -120,5 +138,21 @@ public class User extends Model{
 	}
 	public List<Post> getPost(){
 		return post;
+	}
+
+	// プロフィール
+	public void setProfile(String profile){
+		this.profile = profile;
+	}
+	public String getProfile(){
+		return profile;
+	}
+
+	// 部署
+	public void setDepartment(String department){
+		this.department = department;
+	}
+	public String getDepartment(){
+		return department;
 	}
 }
