@@ -159,6 +159,19 @@ body{
 	margin-bottom:10px;
 }
 
+.navbar{
+	position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    z-index: 1001;
+}
+
+.content-container{
+	top:50px;
+	position: relative;
+}
+
 /*#navbar1 > ul.nav.navbar-nav.nav-right-item{
 	float: right;
 }*/
