@@ -16,7 +16,7 @@ h3{
 
 .login{
 	width: 350px;
-	height: 150px;
+	height: 180px;
     padding: 20px;
     margin: 20px auto 10px auto;
     border: 1px solid #555;
@@ -38,7 +38,7 @@ h3{
 
 .login .submit{
     text-align: right;
-    margin: 0 10px 0 0;
+    margin: 10px 10px 0 0;
 }
 
 .login .submit>input{
