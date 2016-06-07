@@ -31,6 +31,19 @@ public class User extends Model{
 	private List<Post>		post;		// 投稿した情報
 
 	/*
+	 *	デフォルトコンストラクタ
+	 *	@param なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public User(){
+		this.id = 0L;
+		this.userName = "";
+		this.password = "";
+		this.loginId = "";
+	}
+
+	/*
 	 *　コンストラクタ(パラメーター)
 	 *	@param  String userName：ユーザー名
 	 *			String password：パスワード

@@ -27,6 +27,20 @@ public class Goods  extends Model{
 	private Post			post;				// 投稿情報
 
 	/*
+	 *	デフォルトコンストラクタ
+	 *	@param なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Goods(){
+		this.id = 0L;
+		this.goodsName = "";
+		this.imageUrl = "";
+		this.amazonUrl = "";
+		this.category = null;
+	}
+
+	/*
 	 *	コンストラクタ(パラメーター)
 	 *	@param  String goodsName：商品名
 	 *			String imageUrl;：画像URL

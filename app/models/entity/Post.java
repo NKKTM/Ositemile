@@ -38,6 +38,22 @@ public class Post  extends Model{
 	Date					date;				// 日付
 
 	/*
+	 *	デフォルトコンストラクタ
+	 *	@param　なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Post(){
+		this.id = 0L;
+		this.postTitle ="";
+		this.postComment = "";
+		this.goods = null;
+		this.user = null;
+		this.comment = null;
+		this.date = new Date();
+	}
+
+	/*
 	 *	コンストラクタ(パラメーター)
 	 *	@param String postTitle：投稿タイトル
 	 *			String postComment：投稿コメント

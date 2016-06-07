@@ -31,6 +31,20 @@ public class Comment  extends Model{
 	Date			date;			// 日付
 
 	/*
+	 *	デフォルトコンストラクタ
+	 *	@param なし
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public Comment(){
+		this.id = 0L;
+		this.comment = "";
+		this.user = null;
+		this.post = null;
+		this.date = new Date();
+	}
+
+	/*
 	 *	コンストラクタ(パラメーター)
 	 *	@param  String comment： コメントの内容
 	 *			User user：コメントしたユーザー情報
