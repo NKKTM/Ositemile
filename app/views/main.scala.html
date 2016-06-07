@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(loginId: String)(content: Html)
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -12,6 +12,7 @@
 <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet">
 <!-- 自作css -->
 <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
+<link href="@routes.Assets.at("stylesheets/simple-sidebar.css")" rel="stylesheet">
 
 
 </head>
@@ -26,7 +27,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Ositemile</a>
+            <a class="navbar-brand" href="#"><img src="@routes.Assets.at("images/ositemile04.png")" alt="..." class="img-rounded">Ositemile</a>
         </div>
         <!-- menu -->
         <div class="collapse navbar-collapse" id="navbar1">
@@ -39,8 +40,13 @@
 
             </ul>
                 <ul class="nav navbar-nav navbar-right">
-                <li class="nav-username"><p>からあげ さん</p></li>
-                <li><a href="#">ログアウト</a></li>
+                @if(loginId == null){
+                    <li class="nav-username"><p>名無しのからあげ さん</p></li>
+                    <li><a href="@routes.Application.login().absoluteURL()">ログイン</a></li>
+                }else{
+                    <li class="nav-username"><p>@loginId さん</p></li>
+                    <li><a href="@routes.Application.logout().absoluteURL()">ログアウト</a></li>
+                }
             </ul>
 
         </div>
@@ -49,17 +55,26 @@
         </div>
     </div>
 </nav>
+<div class="content-container">
 @content
 
-<footer class="footer">
+</div>
+<!-- <footer class="footer">
   <div class="container">
-    <p class="text-muted">Created By Team NKK 2016</p>
+    <p class="text-muted">Created By Team NKK </p>
   </div>
-</footer>
+</footer> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
 <script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
+<!-- スライドバーの動き用js -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 </body>
 </html>

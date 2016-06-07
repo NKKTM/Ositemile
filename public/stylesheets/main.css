@@ -4,6 +4,8 @@
 @import url(https://fonts.googleapis.com/css?family=Monoton);
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
 @import url(https://fonts.googleapis.com/css?family=Chango);
+@import url(https://fonts.googleapis.com/css?family=Raleway:600);
+
 
 
 #header{
@@ -60,14 +62,14 @@ body
 }
 
 .navbar-brand{
-
-	font-family: 'Londrina Outline', cursive;
-	/*font-family: 'Chango', cursive;*/
-	font-size: 32px !important;
+	/* font-family: 'Londrina Outline', cursive; */ /*‚P “ñdü‰Âˆ¤‚¢Š´‚¶ */
+	font-family: 'Raleway', sans-serif; /*‚Q Š„‚ÆD‚«@ŠÛ‚¢‚¯‚ÇƒVƒ“ƒvƒ‹ */
+	/* font-family: 'Quantico', sans-serif; */ /*‚R ­‚µlŠp‚¢Š´‚¶ ‚Å‚à‰Âˆ¤‚¢@‚Q‚Ì•û‚ªD‚« */
+	font-size: 28px !important;@
 }
 
 .navbar-right{
-	padding-right:10px;
+	margin-right: 0px;
 }
 
 .text-muted{
@@ -75,8 +77,114 @@ body
 	color:white;
 }
 
+.container-fluid>.navbar-header{
+	margin-right: 0px !important;
+}
 .footer{
 	background-color: #49d385;
+}
+
+.col-xs-12,.col-sm-6,.col-md-4{
+	/* border: solid 1px black; */
+	border-radius:8px;
+	padding-right:10px;
+	padding-left:0px;
+}
+
+.contributor{
+	color:gray;
+	font-weight:500;
+}
+
+a.contributor:hover{
+	color:gray;
+	text-decoration:underline;
+}
+
+.post-title{
+	border-radius: 5px;
+	background-color:#dedede;
+}
+
+.post-img{
+	border: solid 1px black;
+	max-width: 100%;
+    height: auto;
+}
+
+.panel-body{
+	padding-top:0px;
+}
+
+a.category-label:hover{
+	text-decoration: none;
+	opacity:0.5;
+}
+
+.panel-heading{
+	/* background-color:#dedede; */
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-bottom:solid 1px #a4a4a4;
+
+	position:relative;
+}
+
+.panel-heading a{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+
+.panel-heading a:hover{
+	background-color:#999999;
+
+	opacity:0.1;
+}
+
+body{
+	background-color:rgba(150, 231, 185,0.3);
+}
+
+.row{
+	margin-right:0px;
+	margin-left:0px;
+}
+
+.panel{
+	border:0px;
+}
+
+.content-info-label{
+	margin-bottom:10px;
+}
+
+.navbar{
+	position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    z-index: 1001;
+}
+
+.content-container{
+	top:50px;
+	position: relative;
+}
+
+#header > div.navbar-header > a > img{
+	max-height:45px;
+	width:auto;
+	display:inline;
+	padding-right:4px;
+	margin-bottom:2px;
+}
+
+.navbar-brand{
+	padding-bottom:0px;
+	padding-top:6px;
 }
 
 /*#navbar1 > ul.nav.navbar-nav.nav-right-item{
