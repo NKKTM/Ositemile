@@ -23,3 +23,6 @@ GET		/registerDB					controllers.Application.registerDB()
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
 
+#ユーザーページ
+GET    /userPage                    controllers.Application.userPage()
+
