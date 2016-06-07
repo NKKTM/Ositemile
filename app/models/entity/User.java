@@ -30,6 +30,35 @@ public class User extends Model{
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private List<Post>		post;		// 投稿した情報
 
+	/*
+	 *　コンストラクタ(パラメーター)
+	 *	@param  String userName：ユーザー名
+	 *			String password：パスワード
+	 *			String loginId：ログインID
+	 *	@return
+	 *	@author Kotaro Nishida
+	 */
+	public User( String userName,String password,String loginId ){
+		this.userName = userName;
+		this.password = password;
+		this.loginId = loginId;
+	}
+
+	/*
+	 *	パラメーターの設定
+	 *	@param  String userName：ユーザー名
+	 *			String password：パスワード
+	 *			String loginId：ログインID
+	 *	@return Userのオブジェクト
+	 *	@author Kotaro Nishida
+	 */
+	public User setParameter( String userName,String password,String loginId ){
+		this.setUserName(userName);
+		this.setPassword(password);
+		this.setLoginId(loginId);
+		return this;
+	}
+
 	//*****セッター・ゲッター*****
 
 	// ID
@@ -49,8 +78,8 @@ public class User extends Model{
 	}
 
 	// パスワード
-	public void setPassword(String passward){
-		this.password = passward;
+	public void setPassword(String password){
+		this.password = password;
 	}
 	public String getPassword(){
 		return password;
