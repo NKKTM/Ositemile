@@ -1,12 +1,15 @@
 @* @(goods: models.entity.Goods, post : model.entity.Post, commentForm: Form[models.form.CommentForm]) *@
-@(commentList : List[models.entity.Comment] , commentForm: Form[models.form.CommentForm])
+@(loginId: String,commentList : List[models.entity.Comment] , commentForm: Form[models.form.CommentForm])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
 @import helper._
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+@(loginId: String)
+
+@main(loginId) {
+
+
 <link href="@routes.Assets.at("stylesheets/introduction/introduction.css")" rel="stylesheet">
 
 <div class="container-fluid">
@@ -56,3 +59,4 @@
 		</div>
 	</div>
 </div>
+}

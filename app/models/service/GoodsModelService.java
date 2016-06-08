@@ -42,7 +42,7 @@ public class GoodsModelService {
 	 *	@return Goodsオブジェクト
 	 *	@author Kotaro Nishida
 	 */
-	public Goods getGoodsListById(Long goodsId){
+	public Goods getGoodsById(Long goodsId){
 		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 		Goods goods = find.byId(goodsId);
 		return goods;

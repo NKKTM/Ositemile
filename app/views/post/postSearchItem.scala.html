@@ -1,11 +1,11 @@
-@(loginId: String,goodsList:List[models.entity.Goods])
+@(loginId: String,goodsList:List[models.entity.Goods],goodsForm: Form[models.entity.Goods])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
 @import helper._
 
 @main(loginId) {
-
+<link href="@routes.Assets.at("stylesheets/post_item/post_search_item.css")" rel="stylesheet">
   <div class="search-item">
   	<form action="" method="GET">
     	<p>検索ワードを入力してください</p>
@@ -19,12 +19,21 @@
   		<div class="row sampleRow">
   	@for(item <- goodsList){
 
-	  		<div class="col-xs-4 col-sm-2 col-md-2">
+	  		<div class="col-xs-6 col-sm-2 col-md-2 searched-item">
 	  			<p style="overflow:hidden;">@item.getGoodsName()</p>
-	  			<p style="overflow:hidden;">@item.getImageUrl()</p>
+	  			<img class="search-item-image" alt="..." src="@item.getImageUrl()">
 	  			<p style="overflow:hidden;">@item.getAmazonUrl()</p>
 	  			<p style="overflow:hidden;">@item.getGenreId()</p>
+			@form(action=routes.Application.postInput(),'enctype->"multipart/form-data") {
+				<input type="hidden" name="goodsName" value="@item.getGoodsName()">
+				<input type="hidden" name="imageUrl" value="@item.getImageUrl()">
+				<input type="hidden" name="amazonUrl" value="@item.getAmazonUrl()">
+				<input type="hidden" name="genreId" value="@item.getGenreId()">
+				<button type="submit" class="btn btn-default">この商品を投稿する</button>
+			}
+	  			<a class="btn btn-default" href="@item.getAmazonUrl()" role="button">楽天市場の商品ページへ</a>
 	  		</div>
+
 
   	}
   	</div>

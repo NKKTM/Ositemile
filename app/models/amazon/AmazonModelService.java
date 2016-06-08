@@ -64,7 +64,7 @@ public class AmazonModelService {
 	}
 
 	/*
-	 * キーワードでヒットした商品のリストを返す
+	 * キーワード検索でxmlを取得し、大枠のxmlの情報を返す
 	 * @param 　楽天apiのurl
 	 * @return Element型 一番大きな外枠(root)のxml
 	 * @author yuki kawakami
@@ -85,7 +85,7 @@ public class AmazonModelService {
 
 	/*
 	 * キーワードでヒットした商品のリストを返す
-	 * @param
+	 * @param　Element型 一番大きな外枠(root)のxml
 	 * @return List<Goods>
 	 * @author yuki kawakami
 	 */
@@ -115,12 +115,30 @@ public class AmazonModelService {
 	       	 item.setAmazonUrl(itemUrl);
 	       	 item.setImageUrl(imageUrl);
 	       	 item.setGenreId(genreId);
-	       	 System.out.println("itemName"+i+":"+itemName);
-	       	 System.out.println("画像URL"+i+":"+imageUrl);
-	       	 System.out.println("itemURL"+i+":"+itemUrl);
-	       	 System.out.println("ジャンルid"+i+":"+genreId);
 	       	goodsList.add(item);
        	}
     	return goodsList;
+	}
+
+	/*
+	 * ジャンルの情報をlist<String>で返す
+	 * @param　Element型 一番大きな外枠(root)のxml
+	 * @return List<String>
+	 * @author yuki kawakami
+	 */
+
+	public List<String> getCategoryList(Element elementRoot){
+		NodeList localNodeList =
+				((Element) elementRoot.getElementsByTagName("parents").item(0)).getElementsByTagName("parent");
+		List<String> categoryList = new ArrayList<String>();
+		for (int i = 0; i < localNodeList.getLength(); i++) {
+			Element elementItem = (Element) localNodeList.item(i);
+			//genreNameを取得
+			Element elementGenreName = (Element) elementItem.getElementsByTagName("genreName").item(0);
+			String itemName = elementGenreName.getFirstChild().getNodeValue();
+			System.out.println(itemName);
+			categoryList.add(itemName);
+		}
+		return categoryList;
 	}
 }

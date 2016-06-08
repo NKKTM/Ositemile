@@ -57,6 +57,19 @@ public class Post  extends Model{
 	 *	コンストラクタ(パラメーター)
 	 *	@param String postTitle：投稿タイトル
 	 *			String postComment：投稿コメント
+	 *	@return
+	 *	@author yuki kawakami
+	 */
+	public Post(String postTitle,
+				String postComment){
+		this.postTitle = postTitle;
+		this.postComment = postComment;
+	}
+
+	/*
+	 *	コンストラクタ(パラメーター)
+	 *	@param String postTitle：投稿タイトル
+	 *			String postComment：投稿コメント
 	 *			Goods goods：商品
 	 *			User user：ユーザー
 	 *	@return

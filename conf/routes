@@ -26,6 +26,8 @@ GET		/commentCreate				controllers.Application.commentCreate()
 
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
+GET     /postInput                  controllers.Application.postInput()
+GET     /postCreate                 controllers.Application.postCreate()
 
 #ユーザーページ
 GET    /userPage                    controllers.Application.userPage()

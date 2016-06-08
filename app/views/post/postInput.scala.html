@@ -1,0 +1,17 @@
+@(loginId:String, goodsForm:Form[models.entity.Goods], postForm:Form[models.entity.Post])
+
+@import helper._
+
+@main(loginId) {
+	@form(action=routes.Application.postCreate(),'enctype->"multipart/form-data"){
+	@* goods情報をhiddenで送る *@
+		@inputText(goodsForm("goodsName"),args='_label->"商品の名前",'type->"hidden")
+		@inputText(goodsForm("imageUrl"),args='_label->"画像url",'type->"hidden")
+		@inputText(goodsForm("amazonUrl"),args='_label->"楽天のurl",'type->"hidden")
+		@inputText(goodsForm("genreId"),args='_label->"ジャンルid",'type->"hidden")
+
+		@inputText(postForm("postTitle"),'_label->"投稿のタイトル")
+		@textarea(postForm("postComment"),'_label->"コメント")
+		<button type="submit" class="btn btn-default">この商品をPUSHする。</button>
+	}
+}
