@@ -10,6 +10,7 @@ import static play.data.Form.*;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import org.w3c.dom.*;
 import org.w3c.dom.Element;
@@ -24,8 +25,10 @@ import views.html.login.*;
 import views.html.post.*;
 
 import models.entity.*;
+import models.entity.Comment;
 import models.form.*;
 import models.login.*;
+import models.service.CommentModelService;
 import models.amazon.*;
 
 
@@ -190,11 +193,31 @@ public class Application extends Controller {
     // 商品ページ
     public static Result introduction(){
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
-    	return ok(introduction.render( commentForm ));
+
+    	// コメントデーターの参照
+    	CommentModelService commnetService = CommentModelService.use();
+    	List<Comment> commentList = commnetService.getCommnetList();
+    	if( commentList != null ){
+    		return ok(introduction.render( commentForm ));
+    	}else{
+    		return ok(introduction.render( commentForm ));
+    	}
+
+
     }
 
     // コメント登録
     public static Result commentCreate(){
+    	Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
+    	if( !commnetForm.hasErrors() ){
+    		// エラーがない
+    		// コメント登録
+    		Comment comment = new Comment(commnetForm.get().comment,null,null);
+    		CommentModelService.use().save(comment);
+
+    		return redirect(controllers.routes.Application.introduction());
+    	}else{
+    	}
     	return null;
     }
 
