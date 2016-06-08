@@ -197,10 +197,11 @@ public class Application extends Controller {
     	// コメントデーターの参照
     	CommentModelService commnetService = CommentModelService.use();
     	List<Comment> commentList = commnetService.getCommnetList();
+    	System.out.println("内容："+commentList.get(0).getComment());
     	if( commentList != null ){
-    		return ok(introduction.render( commentForm ));
+    		return ok(introduction.render(commentList ,commentForm));
     	}else{
-    		return ok(introduction.render( commentForm ));
+    		return ok(introduction.render( null,commentForm));
     	}
 
 

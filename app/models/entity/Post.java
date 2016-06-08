@@ -25,11 +25,11 @@ public class Post  extends Model{
 	private String			postComment;		// 投稿したユーザーのコメント
 
 	@ManyToOne
-	@JoinColumn(name = "post")
+	@JoinColumn(name = "goods")
 	private Goods			goods;				// 商品
 
 	@ManyToOne
-	@JoinColumn(name = "post")
+	@JoinColumn(name = "user")
 	private User			user;				// ユーザー
 
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)

@@ -1,5 +1,5 @@
 @* @(goods: models.entity.Goods, post : model.entity.Post, commentForm: Form[models.form.CommentForm]) *@
-@(commentForm: Form[models.form.CommentForm])
+@(comment : List[models.entity.Comment] , commentForm: Form[models.form.CommentForm])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
@@ -43,17 +43,13 @@
 					<hr class="introduction-hr">
 					<div class="introduction-commnet-box2 ">
 						<div class="introduction-commnet-box3 introduction-commnet">
-							ちょうーさいこー
+							@if(comment != null){
+								@comment.get(0).getComment()
+							}
 						</div>
 					</div>
 				</div>
-
-
-
 			</div>
-
-
-
 		</div>
 	</div>
 </div>

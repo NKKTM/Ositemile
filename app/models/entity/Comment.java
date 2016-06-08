@@ -21,11 +21,11 @@ public class Comment  extends Model{
 	private String	comment;		// コメント内容
 
 	@ManyToOne
-	@JoinColumn(name = "comment")
+	@JoinColumn(name = "user")
 	private User	user;			// コメントしたユーザ情報
 
 	@ManyToOne
-	@JoinColumn(name = "comment")
+	@JoinColumn(name = "post")
 	private Post	post;			// 投稿情報
 
 	Date			date;			// 日付

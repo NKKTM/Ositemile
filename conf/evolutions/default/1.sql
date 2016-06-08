@@ -6,6 +6,8 @@
 create table comment (
   id                        bigint not null,
   comment                   varchar(255),
+  user                      bigint,
+  post                      bigint,
   date                      timestamp,
   constraint pk_comment primary key (id))
 ;
@@ -45,10 +47,10 @@ create sequence post_seq;
 
 create sequence user_seq;
 
-alter table comment add constraint fk_comment_user_1 foreign key (comment) references user (id) on delete restrict on update restrict;
-create index ix_comment_user_1 on comment (comment);
-alter table comment add constraint fk_comment_post_2 foreign key (comment) references post (id) on delete restrict on update restrict;
-create index ix_comment_post_2 on comment (comment);
+alter table comment add constraint fk_comment_user_1 foreign key (user) references user (id) on delete restrict on update restrict;
+create index ix_comment_user_1 on comment (user);
+alter table comment add constraint fk_comment_post_2 foreign key (post) references post (id) on delete restrict on update restrict;
+create index ix_comment_post_2 on comment (post);
 alter table post add constraint fk_post_goods_3 foreign key (post) references goods (id) on delete restrict on update restrict;
 create index ix_post_goods_3 on post (post);
 alter table post add constraint fk_post_user_4 foreign key (post) references user (id) on delete restrict on update restrict;
