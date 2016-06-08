@@ -21,6 +21,7 @@ public class Goods  extends Model{
 	private String			goodsName;			// 商品名
 	private String			imageUrl;			// 画像URL
 	private String			amazonUrl;			// AmazonのURL
+	private String          genreId;            //楽天のジャンルid
 	private List<String>	category;			// カテゴリリスト名
 
 	@OneToMany(mappedBy="goods",cascade = CascadeType.ALL)
@@ -133,5 +134,13 @@ public class Goods  extends Model{
 	}
 	public Post getPost(){
 		return post;
+	}
+
+	//ジャンルid
+	public void setGenreId(String genreId){
+		this.genreId = genreId;
+	}
+	public String getGenreId(){
+		return this.genreId;
 	}
 }

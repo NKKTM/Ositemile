@@ -27,9 +27,6 @@ GET		/commentCreate				controllers.Application.commentCreate()
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
 
-
 #ユーザーページ
 GET    /userPage                    controllers.Application.userPage()
 
-#お試しxmlから情報取得
-GET		/testGetItemInfo			controllers.Application.testGetItemInfo()

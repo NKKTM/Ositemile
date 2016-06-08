@@ -17,6 +17,7 @@ create table goods (
   goods_name                varchar(255),
   image_url                 varchar(255),
   amazon_url                varchar(255),
+  genre_id                  varchar(255),
   constraint pk_goods primary key (id))
 ;
 
@@ -24,7 +25,8 @@ create table post (
   id                        bigint not null,
   post_title                varchar(255),
   post_comment              varchar(255),
-  post                      bigint,
+  goods                     bigint,
+  user                      bigint,
   date                      timestamp,
   constraint pk_post primary key (id))
 ;
@@ -51,10 +53,10 @@ alter table comment add constraint fk_comment_user_1 foreign key (user) referenc
 create index ix_comment_user_1 on comment (user);
 alter table comment add constraint fk_comment_post_2 foreign key (post) references post (id) on delete restrict on update restrict;
 create index ix_comment_post_2 on comment (post);
-alter table post add constraint fk_post_goods_3 foreign key (post) references goods (id) on delete restrict on update restrict;
-create index ix_post_goods_3 on post (post);
-alter table post add constraint fk_post_user_4 foreign key (post) references user (id) on delete restrict on update restrict;
-create index ix_post_user_4 on post (post);
+alter table post add constraint fk_post_goods_3 foreign key (goods) references goods (id) on delete restrict on update restrict;
+create index ix_post_goods_3 on post (goods);
+alter table post add constraint fk_post_user_4 foreign key (user) references user (id) on delete restrict on update restrict;
+create index ix_post_user_4 on post (user);
 
 
 
