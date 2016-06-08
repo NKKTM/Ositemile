@@ -117,72 +117,22 @@ public class Application extends Controller {
     }
 
     // POSTするアイテムを検索する
-    public static Result postSearchItem(){
+    public static Result postSearchItem() throws Exception{
         // アイテムを探すワードを取得
         String[] params = {"searchWord"};
         DynamicForm searchWord = Form.form();
         searchWord = searchWord.bindFromRequest(params);
+        if(searchWord.data().get("searchWord") == null){
+        	return ok(postSearchItem.render(session().get("loginId"),null));
+        }
         String searchWordStr = searchWord.data().get("searchWord").toString();
         // URLと結合
         String searchUrl = AMAZON_URL + searchWordStr;
         System.out.println("searchUrl："+searchUrl);
-        // APIの処理を行う
-        try{
-            System.out.println("API処理"+AmazonModelService.use().http(searchUrl));
-        }catch(Exception e){
-            System.out.println(e);
-        }
-        return ok(postSearchItem.render(session().get("loginId")));
+        Element elementRoot = AmazonModelService.use().getElement(searchUrl);
+        List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
+        return ok(postSearchItem.render(session().get("loginId"),goodsList));
     }
-
-    //***お試しテスト***商品情報をxmlから取得する
-    public static Result testGetItemInfo() throws Exception{
-
-    	String url = AMAZON_URL +"海辺のカフカ"+"&genreInformationFlag=1";
-    	Element elementRoot=testGetElement(url);
-    	//count要素取得
-    	Element elementCount = (Element) elementRoot.getElementsByTagName("count").item(0);
-    	String count = elementCount.getFirstChild().getNodeValue();
-    	System.out.println("count:"+count);
-    	//itemsリスト取得
-    	NodeList localNodeList =
-    			 ((Element) elementRoot.getElementsByTagName("Items").item(0)).getElementsByTagName("Item");
-
-    	//itemName取得
-    	for (int i = 0; i < localNodeList.getLength(); i++) {
-    	 //itemを取得
-    	 Element elementItem = (Element) localNodeList.item(i);
-    	 //itemNameを取得
-    	 Element elementItemName = (Element) elementItem.getElementsByTagName("itemName").item(0);
-    	 String itemName = elementItemName.getFirstChild().getNodeValue();
-    	 //itemUrlを取得
-    	 Element elementItemUrl = (Element) elementItem.getElementsByTagName("itemUrl").item(0);
-    	 String itemUrl = elementItemUrl.getFirstChild().getNodeValue();
-    	 //imageUrlの1個目を取得
-    	 Element elementImageUrl = (Element) elementItem.getElementsByTagName("imageUrl").item(0);
-    	 String imageUrl = elementImageUrl.getFirstChild().getNodeValue();
-    	 System.out.println("itemName"+i+":"+itemName);
-    	 System.out.println("画像URL"+i+":"+imageUrl);
-    	 System.out.println("itemURL"+i+":"+itemUrl);
-    	}
-    	return TODO;
-    }
-
-    //****お試しテストメソッド***エレメントを返す
-    public static Element testGetElement(String url) throws Exception {
-
-    	// リクエスト送信
-		URL requestUrl = new URL(url);
-		HttpURLConnection connection = (HttpURLConnection)requestUrl.openConnection();
-		InputStream input = connection.getInputStream();
-		//DOMを使うためのインスタンス取得
-		Document document= DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
-
-		//root要素取得
-		Element elementRoot = document.getDocumentElement();
-		return elementRoot;
-    }
-
 
     //ユーザーページ *中の処理未実装
     public static Result userPage(){

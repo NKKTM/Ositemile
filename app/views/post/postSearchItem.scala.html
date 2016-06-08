@@ -1,6 +1,6 @@
-@(loginId: String)
+@(loginId: String,goodsList:List[models.entity.Goods])
 
-@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }  
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
 @import helper._
 
@@ -13,5 +13,22 @@
     	<p class="submit"><input type="submit" value="検索"></p>
     </form>
   </div>
+
+@if(goodsList != null){
+	<div class="container-fluid">
+  		<div class="row sampleRow">
+  	@for(item <- goodsList){
+
+	  		<div class="col-xs-4 col-sm-2 col-md-2">
+	  			<p style="text-overflow:clip;">@item.getGoodsName()</p>
+	  			<p style="text-overflow:clip;">@item.getImageUrl()</p>
+	  			<p style="text-overflow:clip;">@item.getAmazonUrl()</p>
+	  			<p style="text-overflow:clip;">@item.getGenreId()</p>
+	  		</div>
+
+  	}
+  	</div>
+  </div>
+}
 
 }
