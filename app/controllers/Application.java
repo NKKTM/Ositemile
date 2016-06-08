@@ -6,6 +6,17 @@ import play.mvc.*;
 
 import play.data.Form;
 import static play.data.Form.*;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.w3c.dom.*;
+import org.w3c.dom.Element;
+
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import play.data.DynamicForm;
 
 import views.html.*;
@@ -120,7 +131,56 @@ public class Application extends Controller {
         return ok(postSearchItem.render(session().get("loginId")));
     }
 
-    //ユーザーページ *未実装
+    //***お試しテスト***商品情報をxmlから取得する
+    public static Result testGetItemInfo() throws Exception{
+
+    	String url = AMAZON_URL +"海辺のカフカ"+"&genreInformationFlag=1";
+    	Element elementRoot=testGetElement(url);
+    	//count要素取得
+    	Element elementCount = (Element) elementRoot.getElementsByTagName("count").item(0);
+    	String count = elementCount.getFirstChild().getNodeValue();
+    	System.out.println("count:"+count);
+    	//itemsリスト取得
+    	NodeList localNodeList =
+    			 ((Element) elementRoot.getElementsByTagName("Items").item(0)).getElementsByTagName("Item");
+
+    	//itemName取得
+    	for (int i = 0; i < localNodeList.getLength(); i++) {
+    	 //itemを取得
+    	 Element elementItem = (Element) localNodeList.item(i);
+    	 //itemNameを取得
+    	 Element elementItemName = (Element) elementItem.getElementsByTagName("itemName").item(0);
+    	 String itemName = elementItemName.getFirstChild().getNodeValue();
+    	 //itemUrlを取得
+    	 Element elementItemUrl = (Element) elementItem.getElementsByTagName("itemUrl").item(0);
+    	 String itemUrl = elementItemUrl.getFirstChild().getNodeValue();
+    	 //imageUrlの1個目を取得
+    	 Element elementImageUrl = (Element) elementItem.getElementsByTagName("imageUrl").item(0);
+    	 String imageUrl = elementImageUrl.getFirstChild().getNodeValue();
+    	 System.out.println("itemName"+i+":"+itemName);
+    	 System.out.println("画像URL"+i+":"+imageUrl);
+    	 System.out.println("itemURL"+i+":"+itemUrl);
+    	}
+    	return TODO;
+    }
+
+    //****お試しテストメソッド***エレメントを返す
+    public static Element testGetElement(String url) throws Exception {
+
+    	// リクエスト送信
+		URL requestUrl = new URL(url);
+		HttpURLConnection connection = (HttpURLConnection)requestUrl.openConnection();
+		InputStream input = connection.getInputStream();
+		//DOMを使うためのインスタンス取得
+		Document document= DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
+
+		//root要素取得
+		Element elementRoot = document.getDocumentElement();
+		return elementRoot;
+    }
+
+
+    //ユーザーページ *中の処理未実装
     public static Result userPage(){
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
