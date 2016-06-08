@@ -10,23 +10,50 @@
 <link href="@routes.Assets.at("stylesheets/introduction/introduction.css")" rel="stylesheet">
 
 <div class="container-fluid">
-	<div class="row">
-		@*商品紹介*@
-		<h1>商品ページ</h1>
+	<div class="row introduction-color-box">
+		<div class="col-sm-12">
+			<h1>商品ページ</h1>
+		</div>
+	</div>
+	<div class="row introduction-full-box">
 		<div class="col-sm-4">
-		<h2>商品タイトル@* @goods.getGoodsName()* @</h2>
+			<h2>商品タイトル</h2>
 		</div>
 
 		@*コメント表示*@
-		<div class="col-sm-8">
-			<div class="introduction-postcomment-box">
+		<div class="col-sm-8 introduction-color-box">
+			<div class="introduction-postcommnet-box">
 				<h3>投稿者コメント</h3>
-				この商品最高！！！！！！！！@* @post.getComment(); *@
+				<h4>この商品最高！！！！！！！</h4>
 			</div>
 
-			<div class="introduction-postcomment-box">
-			@textarea(commentForm("comment"),args='_label->"あなたもコメントしよう！",'class->"comment_input" ,'cols -> "80",'rows -> "10")
+
+			<div class="introduction-commnet-box ">
+				<h3>あなたもコメントしよう！！</h3>
+				@form(action = routes.Application.commentCreate(),'enctype->"multipart/form-data") {
+					@textarea(commentForm("comment"),args='_label->"あなたもコメントしよう！",'class->"comment_input" ,'cols -> "80",'rows -> "3")
+					<div class="introduction-button">
+						<button type="submit" class="btn btn-success btn-lg">投稿する</button>
+					</div>
+				}
+
+
+				<div class="introduction-commnet-title">
+					<h3>ーーコメントーー</h3>
+					<hr class="introduction-hr">
+					<div class="introduction-commnet-box2 ">
+						<div class="introduction-commnet-box3 introduction-commnet">
+							ちょうーさいこー
+						</div>
+					</div>
+				</div>
+
+
+
 			</div>
+
+
+
 		</div>
 	</div>
 </div>
