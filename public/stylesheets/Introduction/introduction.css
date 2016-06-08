@@ -16,6 +16,10 @@
     overflow: hidden;
 }
 
+body{
+	background-color:#d8f6e5;
+}
+
 .introduction-commnet-title{
     margin-bottom: 10px;
     text-align: center;
