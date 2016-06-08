@@ -120,7 +120,7 @@ public class Application extends Controller {
         return ok(postSearchItem.render(session().get("loginId")));
     }
 
-    //ユーザーページ *未実装
+    //ユーザーページ *中の処理未実装
     public static Result userPage(){
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
