@@ -62,6 +62,18 @@ public class UserModelService {
 	}
 
 	/*
+	 *	loginIdでユーザ情報を取得
+	 *	@param String longId
+	 *	@return ユーザーオブジェクト
+	 *	@author Kotaro Nishida
+	 */
+	public User getUserByLoginId(String loginId){
+		Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
+		List<User> userList = find.where().ilike("loginId", loginId).findList();
+		return userList.get(0);
+	}
+
+	/*
 	 *	引数のリストがnullまたは空かどうかのチェック
 	 *	@param Userのリスト
 	 *	@return 成功時：Userのリスト

@@ -29,6 +29,7 @@ import models.entity.Comment;
 import models.form.*;
 import models.login.*;
 import models.service.CommentModelService;
+import models.service.UserModelService;
 import models.amazon.*;
 
 
@@ -197,7 +198,6 @@ public class Application extends Controller {
     	// コメントデーターの参照
     	CommentModelService commnetService = CommentModelService.use();
     	List<Comment> commentList = commnetService.getCommnetList();
-    	System.out.println("内容："+commentList.get(0).getComment());
     	if( commentList != null ){
     		return ok(introduction.render(commentList ,commentForm));
     	}else{
@@ -209,17 +209,17 @@ public class Application extends Controller {
 
     // コメント登録
     public static Result commentCreate(){
-    	Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
-    	if( !commnetForm.hasErrors() ){
-    		// エラーがない
-    		// コメント登録
-    		Comment comment = new Comment(commnetForm.get().comment,null,null);
-    		CommentModelService.use().save(comment);
+        Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
+        if( !commnetForm.hasErrors() ){
+            // エラーがない
+            // コメント登録
+            Comment comment = new Comment(commnetForm.get().comment,null,null);
+            CommentModelService.use().save(comment);
 
-    		return redirect(controllers.routes.Application.introduction());
-    	}else{
-    	}
-    	return null;
+            return redirect(controllers.routes.Application.introduction());
+        }else{
+        }
+        return null;
     }
 
 }

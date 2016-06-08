@@ -47,7 +47,7 @@ public class CommentModelService {
 	 */
 	public List<Comment> getCommnetList(){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
-		List<Comment> commentList = find.all();
+		List<Comment> commentList = find.orderBy("date desc").findList();
 		return commentList;
 	}
 
