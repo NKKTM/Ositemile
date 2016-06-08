@@ -162,8 +162,15 @@ public class Application extends Controller {
         Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
         if( !commnetForm.hasErrors() ){
             // エラーがない
+            String loginId = loginId = session().get("loginId");
+            if(loginId == null){
+                System.out.println("ログインするか、新規登録をお願いします。");
+                return redirect(controllers.routes.Application.introduction());
+            }
+
             // コメント登録
-            Comment comment = new Comment(commnetForm.get().comment,null,null);
+            commnetForm.get().comment = commnetForm.get().comment.replaceAll("\n","<br />");
+            Comment comment = new Comment(commnetForm.get().comment,UserModelService.use().getUserByLoginId(loginId),null);
             CommentModelService.use().save(comment);
 
             return redirect(controllers.routes.Application.introduction());
