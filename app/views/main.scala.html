@@ -27,17 +27,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="@routes.Assets.at("images/ositemile04.png")" alt="..." class="img-rounded">Ositemile</a>
+            <a class="navbar-brand" href="/"><img src="@routes.Assets.at("images/ositemile04.png")" alt="..." class="img-rounded">Ositemile</a>
         </div>
         <!-- menu -->
         <div class="collapse navbar-collapse" id="navbar1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Blog</a></li>
-                <li class="nav-last-item"><a href="#">Contact</a></li>
-
+                <li><a href="/">ホーム</a></li>
+                <li class="nav-last-item"><a href="/postSearchItem">商品を投稿する</a></li>
             </ul>
                 <ul class="nav navbar-nav navbar-right">
                 @if(loginId == null){

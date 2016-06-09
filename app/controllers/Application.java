@@ -30,9 +30,7 @@ import models.entity.Comment;
 import models.form.*;
 import models.form.admin.AdminCommentForm;
 import models.login.*;
-import models.service.CommentModelService;
-import models.service.GoodsModelService;
-import models.service.UserModelService;
+import models.service.*;
 import models.amazon.*;
 
 import views.html.admin.*;
@@ -48,11 +46,8 @@ public class Application extends Controller {
     //楽天ジャンル検索APIにリクエストするURLの固定部分
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
-    public static Result index() {
-        String loginId = session().get("loginId");
-        System.out.println("loginId:"+loginId);
-        List<Comment> comment = CommentModelService.use().getCommnetList();
-        return ok(index.render(loginId));
+    public static Result index() {       
+        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(1)));
     }
 
     //ログイン画面
