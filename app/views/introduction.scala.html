@@ -31,7 +31,8 @@
 			<div class="introduction-commnet-box ">
 				<h3>あなたもコメントしよう！！</h3>
 				@form(action = routes.Application.commentCreate(),'enctype->"multipart/form-data") {
-					@textarea(commentForm("comment"),args='_label->"あなたもコメントしよう！",'class->"comment_input" ,'cols -> "80",'rows -> "3")
+					@textarea(commentForm("comment"),args='_label->"あなたもコメントしよう！",'class->"form-control" ,'cols -> "80",'rows -> "3")
+					<h6 class="introduction-attention">*あなたのコメントが社内を炎上(盛り上げ)させる</h6>
 					<div class="introduction-button">
 						<button type="submit" class="btn btn-success btn-lg">投稿する</button>
 					</div>

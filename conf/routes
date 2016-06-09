@@ -30,3 +30,13 @@ GET		/postSearchItem				controllers.Application.postSearchItem()
 #ユーザーページ
 GET    /userPage                    controllers.Application.userPage()
 
+#管理者
+GET		/loginloginlogin/:username/:password	controllers.AdminApplication.managerAdd(username:String,password:String)
+POST	/adminLogin						controllers.AdminApplication.login()
+GET		/adminLogin						controllers.AdminApplication.login()
+POST	/authenticate				controllers.AdminApplication.authenticate()
+GET     /logout						controllers.AdminApplication.logout()
+GET		/admin						controllers.AdminApplication.admin()
+
+GET		/postSearch						controllers.AdminApplication.postSearch()
+GET		/postList						controllers.AdminApplication.postList()

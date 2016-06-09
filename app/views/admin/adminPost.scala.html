@@ -1,0 +1,26 @@
+@(title: String,postList: List[models.entity.Post], postForm : Form[adminModels.form.AdminPostSerchForm],bool:Boolean)
+@import helper._
+
+<h1>投稿一覧</h1>
+
+<h1 id="homeTitle">Cat一覧</h1>
+<div id="actions">
+	@form(action =routes.AdminApplication.postSearch(),'enctype->"multipart/form-data") {
+		@if(bool == true){
+			<select name="orderby">
+			  <option value="true" selected>昇順</option>
+			  <option value="false">降順</option>
+			</select>
+		}else{
+			<select name="orderby">
+			  <option value="true">昇順</option>
+			  <option value="false" selected>降順</option>
+			</select>
+		}
+
+		@inputText(postForm("goodsName"),args='_label->"商品名")
+		@inputText(postForm("userName"),args='_label->"投稿者名")
+		@inputText(postForm("comment"),args='_label->"コメント")
+		<input type="submit" id="searchsubmit" value="検索" class="btn primary">
+	}
+</div>

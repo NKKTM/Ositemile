@@ -122,6 +122,9 @@ public class Goods  extends Model{
 
 	// カテゴリーリスト
 	public void setCategory(List<String> category){
+		for(int i = 0; i < category.size();i++){
+			this.category.add(category.get(i));
+		}
 		this.category = category;
 	}
 	public List<String> getCategory(){
