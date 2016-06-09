@@ -4,10 +4,11 @@ import play.*;
 
 
 
+
+
 import play.mvc.*;
 
 import views.html.*;
-import views.html.post.*;
 import views.html.admin.*;
 
 import java.text.SimpleDateFormat;
@@ -31,8 +32,12 @@ public class AdminApplication extends Controller {
 	// commnetリスト
 	@Security.Authenticated(models.login.SecuredAdmin.class)
 	public static Result commentList(){
+		// コメント情報取得
+		List<Comment> comment = CommentModelService.use().getCommnetList();
 
-		return TODO;
+		System.out.println("呼ばれた");
+		//List<Comment> comment = new ArrayList<Comment>();
+		return ok(commentList.render("",comment,new Form(AdminCommentForm.class),true));
 	}
 
 	// commnet検索

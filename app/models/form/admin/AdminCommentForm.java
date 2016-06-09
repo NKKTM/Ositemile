@@ -4,7 +4,7 @@
  */
 package models.form.admin;
 
-public class CommentForm {
+public class AdminCommentForm {
 	public String	comment;
 	public String	userName;
 }

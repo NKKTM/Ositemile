@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 
+
 import play.mvc.*;
 
 import play.data.Form;
@@ -27,12 +28,14 @@ import views.html.post.*;
 import models.entity.*;
 import models.entity.Comment;
 import models.form.*;
+import models.form.admin.AdminCommentForm;
 import models.login.*;
 import models.service.CommentModelService;
 import models.service.GoodsModelService;
 import models.service.UserModelService;
 import models.amazon.*;
 
+import views.html.admin.*;
 
 
 
@@ -45,9 +48,10 @@ public class Application extends Controller {
     //楽天ジャンル検索APIにリクエストするURLの固定部分
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
-    public static Result index() {       
+    public static Result index() {
         String loginId = session().get("loginId");
         System.out.println("loginId:"+loginId);
+        List<Comment> comment = CommentModelService.use().getCommnetList();
         return ok(index.render(loginId));
     }
 
@@ -129,7 +133,7 @@ public class Application extends Controller {
     }
 
     // 管理者ログイン
-    @Security.Authenticated(SecuredAdmin.class)   
+    @Security.Authenticated(SecuredAdmin.class)
     public static Result admin() {
         System.out.println("管理者ログインできてます。");
         return redirect("/");
@@ -234,6 +238,7 @@ public class Application extends Controller {
         Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
         if( !commnetForm.hasErrors() ){
             // エラーがない
+        	System.out.println("入りました！！！");
             String loginId = session().get("loginId");
             if(loginId == null){
                 System.out.println("ログインするか、新規登録をお願いします。");

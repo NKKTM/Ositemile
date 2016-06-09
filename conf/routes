@@ -28,6 +28,7 @@ GET		/admin	controllers.Application.admin()
 GET		/commentList			controllers.AdminApplication.commentList()
 GET		/commentSearch			controllers.AdminApplication.commentSearch()
 
+
 # 商品ページ
 GET		/introduction				controllers.Application.introduction()
 GET		/commentCreate				controllers.Application.commentCreate()
