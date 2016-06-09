@@ -45,7 +45,7 @@ public class Application extends Controller {
     //楽天ジャンル検索APIにリクエストするURLの固定部分
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
-    public static Result index() {
+    public static Result index() {       
         String loginId = session().get("loginId");
         System.out.println("loginId:"+loginId);
         return ok(index.render(loginId));
@@ -119,13 +119,26 @@ public class Application extends Controller {
         return redirect("/");
     }
 
+    // ユーザーに管理者権限を付与する
+    public static Result grantAdmin(Long id) {
+        User user = UserModelService.use().getUserById(id);
+        user.setAdmin(true);
+        user.save();
+        System.out.println(user.getUserName()+"に管理者権限を付与しました");
+        return redirect("/");
+    }
+
+    // 管理者ログイン
+    @Security.Authenticated(SecuredAdmin.class)   
+    public static Result admin() {
+        System.out.println("管理者ログインできてます。");
+        return redirect("/");
+    }
+
+
+
     // 投稿するアイテムを検索する
     public static Result postSearchItem() throws Exception{
-//    	Goods item = GoodsModelService.use().getGoodsById(1L);
-//    	List<String> categoryList = item.getCategory();
-//    	String category1 = categoryList.get(0);
-//    	System.out.println(category1);
-
         // アイテムを探すワードを取得
         String[] params = {"searchWord"};
         DynamicForm searchWord = Form.form();
@@ -221,7 +234,7 @@ public class Application extends Controller {
         Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
         if( !commnetForm.hasErrors() ){
             // エラーがない
-            String loginId = loginId = session().get("loginId");
+            String loginId = session().get("loginId");
             if(loginId == null){
                 System.out.println("ログインするか、新規登録をお願いします。");
                 return redirect(controllers.routes.Application.introduction());
