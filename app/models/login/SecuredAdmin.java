@@ -16,15 +16,14 @@ import models.service.UserModelService;
 public class SecuredAdmin extends Authenticator {
 
 	/*   
-	*  ログイン認証OKとする条件を設定するメソッド
-	*  （この場合はセッションからloginIdが取得できればOKとしている）
+	*  管理者ログイン認証OKとする条件を設定するメソッド
+	*  （この場合はセッションのloginIdのユーザーが管理権限を持っていればOKとしている）
 	*  @author Hatsune Kitajima
 	*/  	
 	@Override
 	public String getUsername(Context ctx){
 		String loginId = ctx.session().get("loginId");
 		User user = UserModelService.use().getUserByLoginId(loginId);
-		System.out.println("あどみんんんんん："+user.getAdmin());
 		if(user.getAdmin()){
 			System.out.println(user.getUserName()+"には管理者権限があります");
 			return loginId;
@@ -48,7 +47,7 @@ public class SecuredAdmin extends Authenticator {
 			returnUrl="/";
 		}
 		ctx.session().put("returnUrl", returnUrl);
-		return redirect(controllers.routes.Application.login());
+		return redirect(controllers.routes.Application.index());
 	}
 
 }
