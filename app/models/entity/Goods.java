@@ -4,6 +4,7 @@
  */
 package models.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ public class Goods  extends Model{
 	private String			imageUrl;			// 画像URL
 	private String			amazonUrl;			// AmazonのURL
 	private String          genreId;            //楽天のジャンルid
-	private List<String>	category;			// カテゴリリスト名
+	private String          category;			// カテゴリリスト名
 
 	@OneToMany(mappedBy="goods",cascade = CascadeType.ALL)
 	private Post			post;				// 投稿情報
@@ -38,7 +39,7 @@ public class Goods  extends Model{
 		this.goodsName = "";
 		this.imageUrl = "";
 		this.amazonUrl = "";
-		this.category = null;
+		this.category = "";
 	}
 
 	/*
@@ -51,14 +52,14 @@ public class Goods  extends Model{
 	 *	@author yuki kawakami
 	 */
 	public Goods(String goodsName,
-			 String imageUrl,
-			 String amazonUrl,
-			 String genreId){
-	this.goodsName = goodsName;
-	this.imageUrl = imageUrl;
-	this.amazonUrl = amazonUrl;
-	this.genreId = genreId;
-}
+				 String imageUrl,
+				 String amazonUrl,
+				 String genreId){
+		this.goodsName = goodsName;
+		this.imageUrl = imageUrl;
+		this.amazonUrl = amazonUrl;
+		this.genreId = genreId;
+	}
 
 	/*
 	 *	コンストラクタ(パラメーター)
@@ -73,7 +74,7 @@ public class Goods  extends Model{
 	public Goods(String goodsName,
 				 String imageUrl,
 				 String amazonUrl,
-				 List<String> category,
+				 String category,
 				 Post post){
 		this.goodsName = goodsName;
 		this.imageUrl = imageUrl;
@@ -95,7 +96,7 @@ public class Goods  extends Model{
 	public Goods setParameter(String goodsName,
 							 String imageUrl,
 							 String amazonUrl,
-							 List<String> category,
+							 String category,
 							 Post post){
 		this.setGoodsName(goodsName);
 		this.setImageUrl(imageUrl);
@@ -140,11 +141,11 @@ public class Goods  extends Model{
 	}
 
 	// カテゴリーリスト
-	public void setCategory(List<String> category){
-		this.category = category;
+	public void setCategory(String category){
+		this.category=category;
 	}
-	public List<String> getCategory(){
-		return category;
+	public String getCategory(){
+		return this.category;
 	}
 
 	// 投稿

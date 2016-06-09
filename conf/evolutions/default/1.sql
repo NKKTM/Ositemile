@@ -18,6 +18,7 @@ create table goods (
   image_url                 varchar(255),
   amazon_url                varchar(255),
   genre_id                  varchar(255),
+  category                  varchar(255),
   constraint pk_goods primary key (id))
 ;
 
