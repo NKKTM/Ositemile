@@ -42,6 +42,25 @@ public class Goods  extends Model{
 	}
 
 	/*
+	 * コンストラクタ(パラメーター)
+	 *	@param  String goodsName：商品名
+	 *			String imageUrl;：画像URL
+	 *			String amazonUrl：AmazonのURL
+	 *			String category：ジャンルid
+	 *	@return
+	 *	@author yuki kawakami
+	 */
+	public Goods(String goodsName,
+			 String imageUrl,
+			 String amazonUrl,
+			 String genreId){
+	this.goodsName = goodsName;
+	this.imageUrl = imageUrl;
+	this.amazonUrl = amazonUrl;
+	this.genreId = genreId;
+}
+
+	/*
 	 *	コンストラクタ(パラメーター)
 	 *	@param  String goodsName：商品名
 	 *			String imageUrl;：画像URL

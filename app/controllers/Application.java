@@ -29,6 +29,7 @@ import models.entity.Comment;
 import models.form.*;
 import models.login.*;
 import models.service.CommentModelService;
+import models.service.GoodsModelService;
 import models.service.UserModelService;
 import models.amazon.*;
 
@@ -41,6 +42,8 @@ public class Application extends Controller {
     // AmazonAPIにリクエストするURLの固定部分
     private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=-reviewCount&keyword=";
 
+    //楽天ジャンル検索APIにリクエストするURLの固定部分
+    private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
     public static Result index() {
         String loginId = session().get("loginId");
@@ -116,14 +119,19 @@ public class Application extends Controller {
         return redirect("/");
     }
 
-    // POSTするアイテムを検索する
+    // 投稿するアイテムを検索する
     public static Result postSearchItem() throws Exception{
+//    	Goods item = GoodsModelService.use().getGoodsById(33L);
+//    	System.out.println(item.getCategory().get(0));
+//    	System.out.println(item.getCategory().get(1));
+
         // アイテムを探すワードを取得
         String[] params = {"searchWord"};
         DynamicForm searchWord = Form.form();
         searchWord = searchWord.bindFromRequest(params);
+        Form<Goods> goodsForm = Form.form(Goods.class);
         if(searchWord.data().get("searchWord") == null){
-        	return ok(postSearchItem.render(session().get("loginId"),null));
+        	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm));
         }
         String searchWordStr = searchWord.data().get("searchWord").toString();
         // URLと結合
@@ -131,7 +139,57 @@ public class Application extends Controller {
         System.out.println("searchUrl："+searchUrl);
         Element elementRoot = AmazonModelService.use().getElement(searchUrl);
         List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
-        return ok(postSearchItem.render(session().get("loginId"),goodsList));
+        return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm));
+    }
+
+    //投稿するアイテムを選択しコメントなどを投稿するフォーム画面に移動する
+    public static Result postInput(){
+    	Form<Goods> goodsForm = form(Goods.class).bindFromRequest();
+    	Form<Post> postForm = Form.form(Post.class);
+    	if( !goodsForm.hasErrors() ){
+    		//フォームにエラーなし
+    		System.out.println("エラーなし");
+    		return ok(postInput.render(session().get("loginId"),goodsForm,postForm));
+    	}else{
+    		//フォームにエラーあり
+    		System.out.println("エラーあり");
+    		return ok(postSearchItem.render(session().get("loginId"),null,form(Goods.class)));
+    	}
+    }
+    //postとgoodsをdbに保存
+    public static Result postCreate() throws Exception{
+    	Form<Goods> goodsForm = form(Goods.class).bindFromRequest();
+    	Form<Post> postForm = form(Post.class).bindFromRequest();
+    	if(!goodsForm.hasErrors()){
+    		System.out.println("goodsフォームはエラーなし");
+
+    		if(!postForm.hasErrors()){
+    			//Goodsのフォームにも、postのフォームにもエラ-がない時
+        		System.out.println("Goodsのフォームにも、postのフォームにもエラ-がない");
+        		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
+        		Post post = new Post(postForm.get().getPostTitle(),postForm.get().getPostComment());
+        		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
+        		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
+        		List<String> categoryList = AmazonModelService.use().getCategoryList(elementRoot);
+        		item.setCategory(categoryList);
+        		post.setGoods(item);
+        		item.setPost(post);
+        		item.save();
+        		post.save();
+        		System.out.println(item.getCategory().get(0));
+        		System.out.println(item.getCategory().get(1));
+        	}else{
+        		//エラー：postのフォームにのみエラ-がある時
+        		System.out.println("postフォームにのみエラーあり！！");
+        	}
+
+    	}else{
+    		//エラー：Goodsのフォームにエラーがある時
+    		System.out.println("goodsフォームでエラーあり！！");
+    	}
+
+
+    	return TODO;
     }
 
     //ユーザーページ *中の処理未実装
@@ -144,14 +202,14 @@ public class Application extends Controller {
     // 商品ページ
     public static Result introduction(){
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
-
+    	 String loginId = session().get("loginId");
     	// コメントデーターの参照
     	CommentModelService commnetService = CommentModelService.use();
     	List<Comment> commentList = commnetService.getCommnetList();
     	if( commentList != null ){
-    		return ok(introduction.render(commentList ,commentForm));
+    		return ok(introduction.render(loginId,commentList ,commentForm));
     	}else{
-    		return ok(introduction.render( null,commentForm));
+    		return ok(introduction.render(loginId,null,commentForm));
     	}
 
 
