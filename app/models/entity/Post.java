@@ -64,6 +64,7 @@ public class Post  extends Model{
 				String postComment){
 		this.postTitle = postTitle;
 		this.postComment = postComment;
+		this.date = new Date();		
 	}
 
 	/*

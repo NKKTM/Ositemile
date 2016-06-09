@@ -44,28 +44,31 @@
                 </div>
                 <div class="row sampleRow">
 
-                		@for(post <- postList){
-							<div class="col-xs-12 col-sm-4 col-md-4">
-								<div class="panel">
-									<div class="panel-heading">
-										<p>@post.getDate()</p>
-										<h4>@post.getPostTitle()</h4>
-										<a href="@post.getGoods().getAmazonUrl()"></a>
-									</div>
-									<div class="panel-body">
-
-										<img class="post-img">
-
-										<p>@post.getGoods().getGoodsName()</p>
-										<p>@post.getPostComment()</p>
-										<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-									</div>
-									<div class="panel-footer">
-										<p>投稿者：<a class="contributor" href="#">@post.getUser().getUserName()</a></p>
-									</div>
+                    @if(postList != null){
+                		@for((post,i) <- postList.zipWithIndex){
+						<div class="col-xs-12 col-sm-4 col-md-4">
+							<div class="panel">
+								<div class="panel-heading">
+									<p>@post.getDate()</p>
+									<h4>@post.getPostTitle()</h4>
+									<a href="#"></a>
+								</div>
+								<div class="panel-body">
+									<a href="#"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
+									<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
+									<p>@post.getPostComment()</p>
+									<a class="category-label" href="#"><span class="label label-default">@post.getGoods().getCategory()</span></a>
+								</div>
+								<div class="panel-footer">
+									<p>投稿者：<a class="contributor" href="#">@post.getUser().getUserName()</a></p>
 								</div>
 							</div>
+						</div>
+                          @if(i%3 == 2){
+                            <div style="clear:both;"></div>
+                          }                        
 						}
+                    }
 
 				</div>
             </div>

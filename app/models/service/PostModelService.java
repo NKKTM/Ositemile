@@ -68,7 +68,7 @@ public class PostModelService {
 		List<Post> postList = find.orderBy("date desc").findPagingList(LIMIT)
 							.getPage(pageNum)
 							.getList();
-		return postList;
+		return checkPost(postList);
 	}
 
 	/*
