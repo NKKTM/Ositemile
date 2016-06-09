@@ -1,4 +1,4 @@
-@(loginId: String, postList: List[models.entity.Post])
+@(loginId: String, postList: List[models.entity.Post], page:Integer, maxPage: Integer)
 
 @main(loginId) {
 
@@ -78,5 +78,7 @@
     </div>
 
         <!-- /#sidebar-wrapper -->
+    <p>@helper.pagenateForIndex(page,maxPage)</p>
+
 
 }
