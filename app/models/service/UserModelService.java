@@ -36,6 +36,19 @@ public class UserModelService {
 	}
 
 	/*
+	 *	ユーザーリスト情報を取得
+	 *	@param なし
+	 *	@return Userのリスト
+	 *			失敗時：null
+	 *	@author Kotaro Nishida
+	 */
+	public List<User> getUserList(){
+		Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
+		List<User> user = find.all();
+		return checkUser(user);
+	}
+
+	/*
 	 *	IDでユーザー情報を取得
 	 *	@param Long userId：ユーザーのID
 	 *	@return Userのオブジェクト

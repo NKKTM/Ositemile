@@ -1,4 +1,4 @@
-@(loginId: String)
+@(loginId: String, postList: List[models.entity.Post], page:Integer, maxPage: Integer)
 
 @main(loginId) {
 
@@ -44,160 +44,44 @@
                 </div>
                 <div class="row sampleRow">
 
+                    @if(postList != null){
+                		@for((post,i) <- postList.zipWithIndex){
 						<div class="col-xs-12 col-sm-4 col-md-4">
 							<div class="panel">
 								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
+									<p>@post.getDate()</p>
+									<h4>@post.getPostTitle()</h4>
+									<a href="/introduction"></a>
 								</div>
 								<div class="panel-body">
-
-									<img class="post-img">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
+									<a href="/introduction"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
+									<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
+									<p>@post.getPostComment()</p>
+									<a class="category-label" href="#"><span class="label label-default">@post.getGoods().getCategory()</span></a>
 								</div>
 								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
+									<p>投稿者：<a class="contributor" href="#">@post.getUser().getUserName()</a></p>
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-12 col-sm-4 col-md-4">
-							<div class="panel">
-								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
-								</div>
-								<div class="panel-body">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-								</div>
-								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="col-xs-12 col-sm-4 col-md-4">
-							<div class="panel">
-								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
-								</div>
-								<div class="panel-body">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-								</div>
-								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-xs-12 col-sm-4 col-md-4">
-							<div class="panel">
-								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
-								</div>
-								<div class="panel-body">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-								</div>
-								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-xs-12 col-sm-4 col-md-4">
-							<div class="panel">
-								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
-								</div>
-								<div class="panel-body">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-								</div>
-								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-xs-12 col-sm-4 col-md-4">
-							<div class="panel">
-								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
-								</div>
-								<div class="panel-body">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-								</div>
-								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-xs-12 col-sm-4 col-md-4">
-							<div class="panel">
-								<div class="panel-heading">
-									<p>2016/06/06</p>
-									<h4>世界で一番美味しい唐揚げ</h4>
-									<a href="#"></a>
-								</div>
-								<div class="panel-body">
-
-									<p>セブンイレブン　から揚げ棒</p>
-									<p>安いのにとっても美味しい<br/>
-									毎日食べても飽きない。
-									</p>
-									<a class="category-label" href="#"><span class="label label-default">食品</span></a>
-								</div>
-								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="#">から揚げ棒大好きマン</a></p>
-								</div>
-							</div>
-						</div>
+                          @if(i%3 == 2){
+                            <div style="clear:both;"></div>
+                          }                        
+						}
+                    }
 
 				</div>
+                <p>@helper.pagenateForIndex(page,maxPage)</p>
+                    <!-- ページング  -->                
             </div>
         </div>
         <!-- /#page-content-wrapper コンテント終了-->
 
     </div>
-
         <!-- /#sidebar-wrapper -->
+
+
+
+
 
 }

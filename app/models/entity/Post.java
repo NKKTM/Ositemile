@@ -35,7 +35,7 @@ public class Post  extends Model{
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
 	private List<Comment>	comment;			// コメント
 
-	Date					date;				// 日付
+	private Date			date;				// 日付
 
 	/*
 	 *	デフォルトコンストラクタ
@@ -64,6 +64,7 @@ public class Post  extends Model{
 				String postComment){
 		this.postTitle = postTitle;
 		this.postComment = postComment;
+		this.date = new Date();		
 	}
 
 	/*
@@ -155,5 +156,13 @@ public class Post  extends Model{
 	public String getPostTitle(){
 		return postTitle;
 	}
+
+	// 日付
+	public void setDate(Date date){
+		this.date = date;
+	}
+	public Date getDate(){
+		return date;
+	}	
 
 }

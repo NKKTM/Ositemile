@@ -23,6 +23,14 @@ ul>li>a{
 	color: white;
 }
 
+.pager li>a{
+	color: #ccc;
+}
+
+.pager li>a:hover{
+	color: #555;
+}
+
 body > div > div.posts{
 	float: left;
 }
@@ -111,10 +119,12 @@ a.contributor:hover{
 	border: solid 1px black;
 	max-width: 100%;
     height: auto;
+    display: block;
+	margin: 0 auto;
 }
 
 .panel-body{
-	padding-top:0px;
+	padding-top:10px;
 }
 
 a.category-label:hover{
@@ -245,8 +255,33 @@ hr{
 	border-bottom: 0px;
 }
 
+.panel-heading h4{
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	/*width: 300px;*/
+	white-space: nowrap;	
+}
+
 .post-count>div.panel-body{
 	padding-bottom: 0px;
+}
+
+.panel-body p{
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	/*width: 300px;*/
+	white-space: nowrap;	
+}
+
+.posted-item-name{
+	padding: 0 25px;
+	font-size: 12px;
+	margin: 8px 0;
+	text-align: center;
 }
 
 .user-page-wrap{

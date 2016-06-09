@@ -2,6 +2,7 @@ package controllers;
 
 import play.*;
 
+
 import play.mvc.*;
 
 import play.data.Form;
@@ -27,12 +28,12 @@ import views.html.post.*;
 import models.entity.*;
 import models.entity.Comment;
 import models.form.*;
+import models.form.admin.AdminCommentForm;
 import models.login.*;
-import models.service.CommentModelService;
-import models.service.GoodsModelService;
-import models.service.UserModelService;
+import models.service.*;
 import models.amazon.*;
 
+import views.html.admin.*;
 
 
 
@@ -47,10 +48,9 @@ public class Application extends Controller {
     //楽天ジャンル検索APIにリクエストするURLの固定部分
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
-    public static Result index() {
-        String loginId = session().get("loginId");
-        System.out.println("loginId:"+loginId);
-        return ok(index.render(loginId));
+
+    public static Result index(Integer page) {       
+        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
     }
 
     //ログイン画面
@@ -203,11 +203,12 @@ public class Application extends Controller {
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
         		String category = AmazonModelService.use().getCategory(elementRoot);
 
-        		String loginId = session().get("loginId");
-        		User user = UserModelService.use().getUserByLoginId(loginId);
-        		post.setUser(user);
+                String loginId = session().get("loginId");
+                User user = UserModelService.use().getUserByLoginId(loginId);                
+
         		item.setCategory(category);
         		post.setGoods(item);
+                post.setUser(user);
         		item.setPost(post);
         		item.save();
         		post.save();
@@ -221,9 +222,7 @@ public class Application extends Controller {
     		//エラー：Goodsのフォームにエラーがある時
     		System.out.println("goodsフォームでエラーあり！！");
     	}
-
-
-    	return TODO;
+    	return redirect("/");
     }
 
     //ユーザーページ *中の処理未実装
@@ -254,6 +253,7 @@ public class Application extends Controller {
         Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
         if( !commnetForm.hasErrors() ){
             // エラーがない
+        	System.out.println("入りました！！！");
             String loginId = session().get("loginId");
             if(loginId == null){
                 System.out.println("ログインするか、新規登録をお願いします。");

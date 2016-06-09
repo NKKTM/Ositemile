@@ -27,25 +27,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img src="@routes.Assets.at("images/ositemile04.png")" alt="..." class="img-rounded">Ositemile</a>
+            <a class="navbar-brand" href="/"><img src="@routes.Assets.at("images/ositemile04.png")" alt="..." class="img-rounded">Ositemile</a>
         </div>
         <!-- menu -->
         <div class="collapse navbar-collapse" id="navbar1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Blog</a></li>
-                <li class="nav-last-item"><a href="#">Contact</a></li>
-
+                <li><a href="/">ホーム</a></li>
+                <li class="nav-last-item"><a href="@routes.Application.postSearchItem()">商品を投稿する</a></li>
             </ul>
                 <ul class="nav navbar-nav navbar-right">
                 @if(loginId == null){
                     <li class="nav-username"><p>名無しのからあげ さん</p></li>
-                    <li><a href="@routes.Application.login().absoluteURL()">ログイン</a></li>
+                    <li><a href="@routes.Application.login()">ログイン</a></li>
                 }else{
                     <li class="nav-username"><p>@loginId さん</p></li>
-                    <li><a href="@routes.Application.logout().absoluteURL()">ログアウト</a></li>
+                    <li><a href="@routes.Application.logout()">ログアウト</a></li>
                 }
             </ul>
 

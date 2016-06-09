@@ -1,0 +1,55 @@
+@(loginId: String,goodsList: List[models.entity.Goods],goodsForm:Form[models.form.admin.AdminGoodsForm],boo:Boolean)
+@import helper._
+
+@main_for_admin(""){
+	<h1 id="homeTitle">Comment一覧</h1>
+	<div id="actions">
+		@form(action =routes.AdminApplication.goodsSearch() ) {
+			@if(boo == true){
+				<select name="orderby">
+					<option value="true" selected>昇順</option>
+					<option value="false">降順</option>
+				</select>
+			}else{
+				<select name="orderby">
+					<option value="true">昇順</option>
+					<option value="false" selected>降順</option>
+				</select>
+			}
+
+			@inputText(goodsForm("goodsName"),args='_label->"商品名")
+			@inputText(goodsForm("category"),args='_label->"カテゴリー")
+			<input type="submit" id="searchsubmit" value="検索" class="btn primary">
+		}
+	</div>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr class="something">
+				<th class="col-md-2">ユーザーID</th>
+				<th class="col-md-2">商品名</th>
+				<th class="col-md-2">カテゴリー名</th>
+				<th class="col-md-2">編集</th>
+				<th class="col-md-2">削除</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(!(goodsList == null)){
+				@for(goods <- goodsList){
+				<tr>
+					<td>@goods.getId()</td>
+					<td>@goods.getGoodsName</td>
+					<td>@goods.getCategory()</td>
+
+					<td><a href="#">編集</a></td>
+					<td><a href="#"> 削除 </a></td>
+
+				</tr>
+				}
+			}
+
+		</tbody>
+	</table>
+}
+
+
