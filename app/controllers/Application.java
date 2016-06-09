@@ -181,9 +181,11 @@ public class Application extends Controller {
         		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
         		String category = AmazonModelService.use().getCategory(elementRoot);
-        		System.out.println("zzzzzzzzzz"+category);
+                String loginId = session().get("loginId");
+                User user = UserModelService.use().getUserByLoginId(loginId);                
         		item.setCategory(category);
         		post.setGoods(item);
+                post.setUser(user);
         		item.setPost(post);
         		item.save();
         		post.save();
@@ -197,9 +199,7 @@ public class Application extends Controller {
     		//エラー：Goodsのフォームにエラーがある時
     		System.out.println("goodsフォームでエラーあり！！");
     	}
-
-
-    	return TODO;
+    	return redirect("/");
     }
 
     //ユーザーページ *中の処理未実装
