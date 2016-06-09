@@ -20,18 +20,20 @@
   	@for(item <- goodsList){
 
 	  		<div class="col-xs-6 col-sm-2 col-md-2 searched-item">
-	  			<p style="overflow:hidden;">@item.getGoodsName()</p>
+	  			<p class="searched-item-name" title="@item.getGoodsName()">@item.getGoodsName()</p>
+	  		@if(item.getImageUrl()==null){
+	  			<img class="search-item-image" alt="..." src="@routes.Assets.at("images/noimage150x150.png")">
+	  		}else{
 	  			<img class="search-item-image" alt="..." src="@item.getImageUrl()">
-	  			<p style="overflow:hidden;">@item.getAmazonUrl()</p>
-	  			<p style="overflow:hidden;">@item.getGenreId()</p>
+	  		}
 			@form(action=routes.Application.postInput(),'enctype->"multipart/form-data") {
 				<input type="hidden" name="goodsName" value="@item.getGoodsName()">
 				<input type="hidden" name="imageUrl" value="@item.getImageUrl()">
 				<input type="hidden" name="amazonUrl" value="@item.getAmazonUrl()">
 				<input type="hidden" name="genreId" value="@item.getGenreId()">
-				<button type="submit" class="btn btn-default">この商品を投稿する</button>
+				<button type="submit" class="btn btn-default ">この商品を投稿する</button>
 			}
-	  			<a class="btn btn-default" href="@item.getAmazonUrl()" role="button">楽天市場の商品ページへ</a>
+	  			<a class="btn btn-default" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
 	  		</div>
 
 

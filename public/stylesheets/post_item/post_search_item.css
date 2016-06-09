@@ -1,8 +1,19 @@
 @CHARSET "UTF-8";
 .searched-item{
 	border:solid 1px black;
+	height:300px;
 }
 
 .search-item-image{
+	max-width: 150px;
+	height: 150px;
+}
 
+.searched-item-name{
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	-webkit-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	/*width: 300px;*/
+	white-space: nowrap;
 }

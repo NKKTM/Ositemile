@@ -24,7 +24,9 @@ GET		/wuntopufapurakrnkfro/:id	controllers.Application.grantAdmin(id:Long)
 
 # 管理者画面アクセス
 GET		/admin	controllers.Application.admin()
-
+#管理者
+GET		/commentList			controllers.AdminApplication.commentList()
+GET		/commentSearch			controllers.AdminApplication.commentSearch()
 
 # 商品ページ
 GET		/introduction				controllers.Application.introduction()
@@ -37,5 +39,3 @@ GET     /postCreate                 controllers.Application.postCreate()
 
 #ユーザーページ
 GET    /userPage                    controllers.Application.userPage()
-
-#管理者
