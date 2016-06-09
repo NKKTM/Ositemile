@@ -23,6 +23,14 @@ ul>li>a{
 	color: white;
 }
 
+.pager li>a{
+	color: #ccc;
+}
+
+.pager li>a:hover{
+	color: #555;
+}
+
 body > div > div.posts{
 	float: left;
 }

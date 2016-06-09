@@ -47,7 +47,7 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
     public static Result index(Integer page) {       
-        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,2));
+        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
     }
 
     //ログイン画面
