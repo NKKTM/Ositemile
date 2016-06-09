@@ -37,6 +37,19 @@ public class GoodsModelService {
 	}
 
 	/*
+	 *	商品全件取得
+	 *	@param なし
+	 *	@return Goodsのリスト
+	 *			失敗時：null
+	 *	@author Kotaro Nishida
+	 */
+	public List<Goods> getGoodsList(){
+		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
+		List<Goods> goodsList = find.all();
+		return checkGoods(goodsList);
+	}
+
+	/*
 	 *	IDでGoodsオブジェクト取得
 	 *	@param Long goodsId：商品ID
 	 *	@return Goodsオブジェクト

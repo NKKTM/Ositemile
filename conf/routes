@@ -27,6 +27,12 @@ GET		/admin	controllers.Application.admin()
 #管理者
 GET		/commentList			controllers.AdminApplication.commentList()
 GET		/commentSearch			controllers.AdminApplication.commentSearch()
+GET		/userList				controllers.AdminApplication.userList()
+GET		/userSearch				controllers.AdminApplication.userSearch()
+GET		/goodsList				controllers.AdminApplication.goodsList()
+GET		/goodsSearch			controllers.AdminApplication.goodsSearch()
+GET		/postList				controllers.AdminApplication.postList()
+GET		/postSearch			controllers.AdminApplication.postSearch()
 
 
 # 商品ページ
