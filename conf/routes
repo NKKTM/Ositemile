@@ -39,3 +39,5 @@ GET     /postCreate                 controllers.Application.postCreate()
 GET    /userPage                    controllers.Application.userPage()
 
 #管理者
+GET		/commentList			controllers.AdminApplication.commentList()
+GET		/commentSearch			controllers.AdminApplication.commentSearch()
