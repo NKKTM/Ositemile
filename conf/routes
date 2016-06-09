@@ -19,6 +19,12 @@ GET		/logout						controllers.Application.logout()
 GET		/register					controllers.Application.register()
 GET		/registerDB					controllers.Application.registerDB()
 
+# 管理者権限付与
+GET		/wuntopufapurakrnkfro/:id	controllers.Application.grantAdmin(id:Long)
+
+# 管理者画面アクセス
+GET		/admin	controllers.Application.admin()
+
 
 # 商品ページ
 GET		/introduction				controllers.Application.introduction()

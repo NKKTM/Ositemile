@@ -25,6 +25,7 @@ public class User extends Model{
 	private String			loginId;	// ログインID
 	private String			profile;	// プロフィール
 	private String			department;	// 部署名
+	private boolean			admin;		// 管理者権限を持つか否か
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private List<Comment>	comment;	// コメント情報
@@ -45,6 +46,7 @@ public class User extends Model{
 		this.loginId = "";
 		this.profile = "よろしくお願いします。";
 		this.department = "未設定";
+		this.admin = false;
 	}
 
 	/*
@@ -59,6 +61,7 @@ public class User extends Model{
 		this.userName = userName;
 		this.password = password;
 		this.loginId = loginId;
+		this.admin = false;		
 		if(this.profile == ""){
 			// プロフィールがない
 			this.profile = "よろしくお願いします。";
@@ -155,4 +158,12 @@ public class User extends Model{
 	public String getDepartment(){
 		return department;
 	}
+
+	// 管理者権限
+	public void setAdmin(boolean admin){
+		this.admin = admin;
+	}
+	public boolean getAdmin(){
+		return admin;
+	}	
 }

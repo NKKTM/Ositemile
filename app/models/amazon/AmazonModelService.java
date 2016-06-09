@@ -39,31 +39,6 @@ public class AmazonModelService {
 	}
 
 	/*
-	 *	リクエストURLの結果を返すメソッド
-	 *	@param url
-	 *	@return ?????
-	 *	@author Hatsune Kitajima
-	 */
-	public String http(String url) throws Exception {
-
-    	// リクエスト送信
-		URL requestUrl = new URL(url);
-		HttpURLConnection connection = (HttpURLConnection)requestUrl.openConnection();
-		InputStream input = connection.getInputStream();
-
-    	// 結果取得
-		BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
-
-		String line;
-		StringBuilder tmpResult = new StringBuilder();
-		while( (line = reader.readLine()) != null) {
-			tmpResult.append(line);
-		}
-		reader.close();
-		return tmpResult.toString();
-	}
-
-	/*
 	 * キーワード検索でxmlを取得し、大枠のxmlの情報を返す
 	 * @param 　楽天apiのurl
 	 * @return Element型 一番大きな外枠(root)のxml

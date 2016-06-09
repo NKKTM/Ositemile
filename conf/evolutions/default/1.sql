@@ -38,6 +38,7 @@ create table user (
   login_id                  varchar(255),
   profile                   varchar(255),
   department                varchar(255),
+  admin                     boolean,
   constraint pk_user primary key (id))
 ;
 
