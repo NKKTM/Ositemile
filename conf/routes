@@ -38,3 +38,4 @@ GET     /postCreate                 controllers.Application.postCreate()
 #ユーザーページ
 GET    /userPage                    controllers.Application.userPage()
 
+#管理者
