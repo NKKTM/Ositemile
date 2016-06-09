@@ -1,0 +1,9 @@
+.admin_content{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.admin_content table{
+	background-color: #fcfcfc;
+	margin: 20px 0;
+}

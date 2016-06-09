@@ -1,56 +1,56 @@
-@(loginId: String,commentList: java.util.List[models.entity.Comment],commentForm:Form[models.form.admin.CommentForm],boo:Boolean)
+@(loginId: String,commentList: List[models.entity.Comment],commentForm:Form[models.form.admin.AdminCommentForm],boo:Boolean)
 @import helper._
 
-
-<h1 id="homeTitle">Comment一覧</h1>
-<div id="actions">
-	@form(action =routes.AdminApplication.commentSearch()) {
-		@if(boo == true){
-			<select name="orderby">
-				<option value="true" selected>昇順</option>
-				<option value="false">降順</option>
-			</select>
-		}else{
-			<select name="orderby">
-				<option value="true">昇順</option>
-				<option value="false" selected>降順</option>
-			</select>
-		}
-		@inputText(commentForm("comment"),args='_label->"コメント内容")
-		@inputText(commentForm("userName"),args='_label->"ユーザー名")
-		<input type="submit" id="searchsubmit" value="検索" class="btn primary">
-	}
-</div>
-
-<table class="table table-bordered">
-	<thead>
-		<tr class="something">
-			<th class="col-md-2">コメントID</th>
-			<th class="col-md-2">コメント内容</th>
-			<th class="col-md-2">コメント投稿者</th>
-			<th class="col-md-2">リンク</th>
-			<th class="col-md-2">編集</th>
-			<th class="col-md-2">削除</th>
-		</tr>
-	</thead>
-	<tbody>
-		@if(!(commentList == null)){
-			@for(comment <- commentList){
-			<tr>
-				<td>@comment.getId()</td>
-				<td>@comment.getComment()</td>
-				<td>@comment.getUser().getUserName()</td>
-
-				<td><a href="@routes.Application.introduction()">LINK</a></td>
-				@*<td><a href="@routes.UpdateApplication.commentUpdateForm(comment.getId)">編集</a></td>*@
-				@*<td><a href="@routes.AdminApplication.deleteComment(comment.getId())"> 削除 </a></td>*@
-
-			</tr>
+@main_for_admin(""){
+	<h1 id="homeTitle">Comment一覧</h1>
+	<div id="actions">
+		@form(action =routes.AdminApplication.commentSearch()) {
+			@if(boo == true){
+				<select name="orderby">
+					<option value="true" selected>昇順</option>
+					<option value="false">降順</option>
+				</select>
+			}else{
+				<select name="orderby">
+					<option value="true">昇順</option>
+					<option value="false" selected>降順</option>
+				</select>
 			}
+			@inputText(commentForm("comment"),args='_label->"コメント内容")
+			@inputText(commentForm("userName"),args='_label->"ユーザー名")
+			<input type="submit" id="searchsubmit" value="検索" class="btn primary">
 		}
+	</div>
 
-	</tbody>
-</table>
+	<table class="table table-bordered">
+		<thead>
+			<tr class="something">
+				<th class="col-md-2">コメントID</th>
+				<th class="col-md-2">コメント内容</th>
+				<th class="col-md-2">コメント投稿者</th>
+				<th class="col-md-2">リンク</th>
+				<th class="col-md-2">編集</th>
+				<th class="col-md-2">削除</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(!(commentList == null)){
+				@for(comment <- commentList){
+				<tr>
+					<td>@comment.getId()</td>
+					<td>@comment.getComment()</td>
+					<td>@comment.getUser().getUserName()</td>
 
+					<td><a href="@routes.Application.introduction()">LINK</a></td>
+					<td><a href="#">編集</a></td>
+					<td><a href="#"> 削除 </a></td>
+
+				</tr>
+				}
+			}
+
+		</tbody>
+	</table>
+}
 
 
