@@ -40,12 +40,14 @@ public class Application extends Controller {
 
     // 定数
     // AmazonAPIにリクエストするURLの固定部分
-    private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=-reviewCount&keyword=";
+    //private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=-reviewCount&keyword=";
+	//ソート:standard
+	private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=standard&keyword=";
 
     //楽天ジャンル検索APIにリクエストするURLの固定部分
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
-    public static Result index() {       
+    public static Result index() {
         String loginId = session().get("loginId");
         System.out.println("loginId:"+loginId);
         return ok(index.render(loginId));
@@ -129,7 +131,7 @@ public class Application extends Controller {
     }
 
     // 管理者ログイン
-    @Security.Authenticated(SecuredAdmin.class)   
+    @Security.Authenticated(SecuredAdmin.class)
     public static Result admin() {
         System.out.println("管理者ログインできてます。");
         return redirect("/");
@@ -138,39 +140,52 @@ public class Application extends Controller {
 
 
     // 投稿するアイテムを検索する
+    @Security.Authenticated(Secured.class)
     public static Result postSearchItem() throws Exception{
+    	Form<SearchItemForm> searchForm = form(SearchItemForm.class).bindFromRequest();
         // アイテムを探すワードを取得
-        String[] params = {"searchWord"};
-        DynamicForm searchWord = Form.form();
-        searchWord = searchWord.bindFromRequest(params);
+//        String[] params = {"searchWord"};
+//        DynamicForm searchWord = Form.form();
+//        searchWord = searchWord.bindFromRequest(params);
         Form<Goods> goodsForm = Form.form(Goods.class);
-        if(searchWord.data().get("searchWord") == null){
-        	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm));
-        }
-        String searchWordStr = searchWord.data().get("searchWord").toString();
-        // URLと結合
-        String searchUrl = AMAZON_URL + searchWordStr;
-//        System.out.println("searchUrl："+searchUrl);
-        Element elementRoot = AmazonModelService.use().getElement(searchUrl);
-        List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
-        return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm));
+        if(searchForm.hasErrors()){
+        	System.out.println("バインドエラーあり！！！");
+        	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
+        }else{
+        	System.out.println("バインドエラーなし");
+	        String searchWordStr = searchForm.get().searchWord;
+	        System.out.println("searchWordStr:"+searchWordStr);
+	        // URLと結合
+	        String searchUrl = AMAZON_URL + searchWordStr;
+	//        System.out.println("searchUrl："+searchUrl);
+	        Element elementRoot = AmazonModelService.use().getElement(searchUrl);
+	        List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
+	        return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
+	    }
     }
 
     //投稿するアイテムを選択しコメントなどを投稿するフォーム画面に移動する
+    @Security.Authenticated(Secured.class)
     public static Result postInput(){
     	Form<Goods> goodsForm = form(Goods.class).bindFromRequest();
     	Form<Post> postForm = Form.form(Post.class);
     	if( !goodsForm.hasErrors() ){
     		//フォームにエラーなし
     		System.out.println("エラーなし");
-    		return ok(postInput.render(session().get("loginId"),goodsForm,postForm));
+    		Goods item = new Goods();
+    		item.setGoodsName(goodsForm.get().getGoodsName());
+    		item.setImageUrl(goodsForm.get().getImageUrl());
+    		item.setAmazonUrl(goodsForm.get().getAmazonUrl());
+    		item.setGenreId(goodsForm.get().getGenreId());
+    		return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
     	}else{
     		//フォームにエラーあり
     		System.out.println("エラーあり");
-    		return ok(postSearchItem.render(session().get("loginId"),null,form(Goods.class)));
+    		return ok(postSearchItem.render(session().get("loginId"),null,form(Goods.class),new Form<>(SearchItemForm.class)));
     	}
     }
     //postとgoodsをdbに保存
+    @Security.Authenticated(Secured.class)
     public static Result postCreate() throws Exception{
     	Form<Goods> goodsForm = form(Goods.class).bindFromRequest();
     	Form<Post> postForm = form(Post.class).bindFromRequest();
@@ -181,11 +196,16 @@ public class Application extends Controller {
     			//Goodsのフォームにも、postのフォームにもエラ-がない時
         		System.out.println("Goodsのフォームにも、postのフォームにもエラ-がない");
         		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
-        		Post post = new Post(postForm.get().getPostTitle(),postForm.get().getPostComment());
+        		String postComment = postForm.get().getPostComment();
+        		postComment = postComment.replaceAll("\n", "<br>");
+        		Post post = new Post(postForm.get().getPostTitle(),postComment);
         		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
         		String category = AmazonModelService.use().getCategory(elementRoot);
-        		System.out.println("zzzzzzzzzz"+category);
+
+        		String loginId = session().get("loginId");
+        		User user = UserModelService.use().getUserByLoginId(loginId);
+        		post.setUser(user);
         		item.setCategory(category);
         		post.setGoods(item);
         		item.setPost(post);

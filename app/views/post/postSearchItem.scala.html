@@ -1,4 +1,4 @@
-@(loginId: String,goodsList:List[models.entity.Goods],goodsForm: Form[models.entity.Goods])
+@(loginId: String,goodsList:List[models.entity.Goods],goodsForm: Form[models.entity.Goods],searchForm:Form[models.form.SearchItemForm])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
@@ -6,34 +6,39 @@
 
 @main(loginId) {
 <link href="@routes.Assets.at("stylesheets/post_item/post_search_item.css")" rel="stylesheet">
-  <div class="search-item">
-  	<form action="" method="GET">
-    	<p>検索ワードを入力してください</p>
-    	<input type="text" name="searchWord">
-    	<p class="submit"><input type="submit" value="検索"></p>
-    </form>
-  </div>
-
+<div class="container-fluid item-form-container-fluid">
+	<div class="row sampleRow">
+	  <div class="col-xs-12 col-sm-12 col-md-12 search-item">
+	  	@form(action=routes.Application.postSearchItem(),'enctype->"multipart/form-data") {
+	  		<h4 class="search-title">投稿する商品を検索</h4>
+	  		@inputText(searchForm("searchWord"),args='class->"shearch-item-input")(helper.search_item_caution, implicitly[Lang])
+	  		<button type="submit" class="btn btn-default">検索</button>
+	  	}
+	  </div>
+	</div>
+</div>
 @if(goodsList != null){
-	<div class="container-fluid">
+	<div class="container-fluid item-search-container-fluid">
   		<div class="row sampleRow">
   	@for(item <- goodsList){
 
 	  		<div class="col-xs-6 col-sm-2 col-md-2 searched-item">
-	  			<p class="searched-item-name" title="@item.getGoodsName()">@item.getGoodsName()</p>
-	  		@if(item.getImageUrl()==null){
-	  			<img class="search-item-image" alt="..." src="@routes.Assets.at("images/noimage150x150.png")">
-	  		}else{
-	  			<img class="search-item-image" alt="..." src="@item.getImageUrl()">
-	  		}
-			@form(action=routes.Application.postInput(),'enctype->"multipart/form-data") {
-				<input type="hidden" name="goodsName" value="@item.getGoodsName()">
-				<input type="hidden" name="imageUrl" value="@item.getImageUrl()">
-				<input type="hidden" name="amazonUrl" value="@item.getAmazonUrl()">
-				<input type="hidden" name="genreId" value="@item.getGenreId()">
-				<button type="submit" class="btn btn-default ">この商品を投稿する</button>
-			}
-	  			<a class="btn btn-default" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
+	  			<div class="searched-item-inside">
+			  		@if(item.getImageUrl()==null){
+			  			<img class="search-item-image" alt="..." src="@routes.Assets.at("images/noimage150x150.png")">
+			  		}else{
+			  			<img class="search-item-image" alt="..." src="@item.getImageUrl()">
+			  		}
+		  			<p class="searched-item-name" title="@item.getGoodsName()">@item.getGoodsName()</p>
+				@form(action=routes.Application.postInput(),'enctype->"multipart/form-data") {
+					<input type="hidden" name="goodsName" value="@item.getGoodsName()">
+					<input type="hidden" name="imageUrl" value="@item.getImageUrl()">
+					<input type="hidden" name="amazonUrl" value="@item.getAmazonUrl()">
+					<input type="hidden" name="genreId" value="@item.getGenreId()">
+					<button type="submit" class="btn btn-default select-item">この商品を投稿する</button>
+				}
+		  			<a class="btn btn-default" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
+	  			</div>
 	  		</div>
 
 
