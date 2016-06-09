@@ -71,6 +71,7 @@ public class AmazonModelService {
     	List<Goods> goodsList = new ArrayList<Goods>();
 
     	for (int i = 0; i < localNodeList.getLength(); i++) {
+    		String imageUrl=null;
 	      	 Element elementItem = (Element) localNodeList.item(i);
 	      	 //itemNameを取得
 	      	 Element elementItemName = (Element) elementItem.getElementsByTagName("itemName").item(0);
@@ -80,7 +81,9 @@ public class AmazonModelService {
 	       	 String itemUrl = elementItemUrl.getFirstChild().getNodeValue();
 	       	 //imageUrlの1個目を取得
 	       	 Element elementImageUrl = (Element) elementItem.getElementsByTagName("imageUrl").item(0);
-	       	 String imageUrl = elementImageUrl.getFirstChild().getNodeValue();
+	       	 if(elementImageUrl!=null){
+	       		 imageUrl = elementImageUrl.getFirstChild().getNodeValue();
+	       		 imageUrl = imageUrl.replace("?_ex=64x64", "");	   }
 	       	 //ジャンルid取得
 	       	 Element elementGenreId = (Element) elementItem.getElementsByTagName("genreId").item(0);
 	       	 String genreId =  elementGenreId.getFirstChild().getNodeValue();
@@ -96,24 +99,23 @@ public class AmazonModelService {
 	}
 
 	/*
-	 * ジャンルの情報をlist<String>で返す
+	 * ジャンル名をStringで返す
 	 * @param　Element型 一番大きな外枠(root)のxml
-	 * @return List<String>
+	 * @return String　ジャンル名
 	 * @author yuki kawakami
 	 */
 
-	public List<String> getCategoryList(Element elementRoot){
+	public String getCategory(Element elementRoot){
 		NodeList localNodeList =
 				((Element) elementRoot.getElementsByTagName("parents").item(0)).getElementsByTagName("parent");
-		List<String> categoryList = new ArrayList<String>();
-		for (int i = 0; i < localNodeList.getLength(); i++) {
-			Element elementItem = (Element) localNodeList.item(i);
-			//genreNameを取得
-			Element elementGenreName = (Element) elementItem.getElementsByTagName("genreName").item(0);
-			String itemName = elementGenreName.getFirstChild().getNodeValue();
-			System.out.println(itemName);
-			categoryList.add(itemName);
-		}
-		return categoryList;
+		String category = null;
+		Element elementItem = (Element) localNodeList.item(0);
+		//genreNameを取得
+		Element elementGenreName = (Element) elementItem.getElementsByTagName("genreName").item(0);
+		String itemName = elementGenreName.getFirstChild().getNodeValue();
+		System.out.println(itemName);
+		category = itemName;
+
+		return category;
 	}
 }

@@ -139,7 +139,6 @@ public class Application extends Controller {
 
     // 投稿するアイテムを検索する
     public static Result postSearchItem() throws Exception{
-
         // アイテムを探すワードを取得
         String[] params = {"searchWord"};
         DynamicForm searchWord = Form.form();
@@ -151,7 +150,7 @@ public class Application extends Controller {
         String searchWordStr = searchWord.data().get("searchWord").toString();
         // URLと結合
         String searchUrl = AMAZON_URL + searchWordStr;
-        System.out.println("searchUrl："+searchUrl);
+//        System.out.println("searchUrl："+searchUrl);
         Element elementRoot = AmazonModelService.use().getElement(searchUrl);
         List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
         return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm));
@@ -185,14 +184,14 @@ public class Application extends Controller {
         		Post post = new Post(postForm.get().getPostTitle(),postForm.get().getPostComment());
         		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
-        		List<String> categoryList = AmazonModelService.use().getCategoryList(elementRoot);
-        		item.setCategory(categoryList);
+        		String category = AmazonModelService.use().getCategory(elementRoot);
+        		System.out.println("zzzzzzzzzz"+category);
+        		item.setCategory(category);
         		post.setGoods(item);
         		item.setPost(post);
         		item.save();
         		post.save();
-        		System.out.println(item.getCategory().get(0));
-        		System.out.println(item.getCategory().get(1));
+
         	}else{
         		//エラー：postのフォームにのみエラ-がある時
         		System.out.println("postフォームにのみエラーあり！！");
