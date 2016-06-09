@@ -21,14 +21,6 @@ create table goods (
   constraint pk_goods primary key (id))
 ;
 
-create table managers (
-  id                        bigint not null,
-  username                  varchar(255),
-  password                  varchar(255),
-  created                   timestamp,
-  constraint pk_managers primary key (id))
-;
-
 create table post (
   id                        bigint not null,
   post_title                varchar(255),
@@ -53,8 +45,6 @@ create sequence comment_seq;
 
 create sequence goods_seq;
 
-create sequence managers_seq;
-
 create sequence post_seq;
 
 create sequence user_seq;
@@ -78,8 +68,6 @@ drop table if exists comment;
 
 drop table if exists goods;
 
-drop table if exists managers;
-
 drop table if exists post;
 
 drop table if exists user;
@@ -89,8 +77,6 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists comment_seq;
 
 drop sequence if exists goods_seq;
-
-drop sequence if exists managers_seq;
 
 drop sequence if exists post_seq;
 
