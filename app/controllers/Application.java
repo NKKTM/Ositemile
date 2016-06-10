@@ -52,7 +52,7 @@ public class Application extends Controller {
 
 
 
-    public static Result index(Integer page) {       
+    public static Result index(Integer page) {
         return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage()));
     }
 
@@ -250,7 +250,7 @@ public class Application extends Controller {
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
     	if( post.getComment() != null ){
-            Collections.reverse(post.getComment());            
+            Collections.reverse(post.getComment());
     		return ok(introduction.render(loginId,post,commentForm));
     	}else{
     		return ok(introduction.render(loginId,null,commentForm));
@@ -261,9 +261,9 @@ public class Application extends Controller {
 
     // コメント登録
 
-    public static Result commentCreate(){
+    public static Result commentCreate() throws ParseException{
         // sessionからloginId取得
-        String loginId = session().get("loginId");  
+        String loginId = session().get("loginId");
         // postIdからpostを取得
         String[] params = { "postId" };
         DynamicForm input = Form.form();
@@ -272,7 +272,7 @@ public class Application extends Controller {
         Post post = PostModelService.use().getPostListById(postId);
         // commentform取得
         Form<CommentForm> commentForm = form(CommentForm.class).bindFromRequest();
-                   
+
         if( !commentForm.hasErrors() ){
 
             // エラーがない
@@ -291,7 +291,7 @@ public class Application extends Controller {
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
         }else{
             // 入力にエラーがあった場合
-            Collections.reverse(post.getComment());                        
+            Collections.reverse(post.getComment());
             return ok(introduction.render(loginId,post,commentForm));
         }
     }
