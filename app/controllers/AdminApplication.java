@@ -56,6 +56,19 @@ public class AdminApplication extends Controller {
 		return ok(commentList.render("",comment,commnetSearchForm,bool));
 	}
 
+	// 削除
+	@Security.Authenticated(models.login.SecuredAdmin.class)
+	public static Result commentDelete(Long id){
+		Form<AdminCommentForm> commnetSearchForm = form(AdminCommentForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+		List<Comment> comment =  AdminCommentModelService.use().delete(id);
+		return ok(commentList.render("",comment,commnetSearchForm,bool));
+	}
+
 	//*******ユーザー********
 
 	// ユーザーリスト
@@ -76,6 +89,38 @@ public class AdminApplication extends Controller {
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
 		List<User> user =  AdminUserModelService.use().search(userSearchForm.get().userName, userSearchForm.get().loginId,bool);
+		return ok(userList.render("",user,userSearchForm,bool));
+	}
+
+	@Security.Authenticated(models.login.SecuredAdmin.class)
+	public static Result userDelete(Long userId){
+		Form<AdminUserForm> userSearchForm = form(AdminUserForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+
+		// コメント削除
+		List<Comment> comment =  CommentModelService.use().getCommetnListByPostId(userId);
+		if( comment != null ){
+			for(int i = 0; i < comment.size(); i++){
+				AdminCommentModelService.use().delete(comment.get(i).getId());
+			}
+		}
+
+
+		// 投稿削除
+		List<Post> post = PostModelService.use().getPostListByUserId(userId);
+		if( post != null ){
+			for(int i = 0; i < post.size(); i++){
+				AdminPostModelService.use().delete(post.get(i).getId());
+			}
+		}
+
+
+		// ユーザー削除
+		List<User> user =  AdminUserModelService.use().delete(userId);
 		return ok(userList.render("",user,userSearchForm,bool));
 	}
 

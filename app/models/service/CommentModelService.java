@@ -59,8 +59,21 @@ public class CommentModelService {
 	 */
 	public List<Comment> getCommentList(int postId){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
-		return find.where().eq("post.getPost().getId()",postId).findList();
+		return find.where().eq("post.getId()",postId).findList();
 	}
+
+	/*
+	 *	投稿したIDと一致したリスト取得
+	 *	@param Long postId : 投稿ID
+	 *	@return Commentのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Comment> getCommetnListByPostId(Long userId){
+		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
+		List<Comment> commentList =  find.where().eq("user.id",userId).findList();
+		return commentList;
+	}
+
 
 	/*
 	 *	引数のリストがnullまたは空かどうかのチェック

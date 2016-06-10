@@ -56,4 +56,20 @@ public class AdminPostModelService {
 		}
 		return null;
 	}
+
+	/*
+	 *	削除
+	 *	@param  Long postId : コメントのID
+	 *	@return Postのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Post> delete(Long postId){
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		if( !find.all().isEmpty() ){
+			Post post = find.ref(postId);
+			post.delete();
+			return find.all();
+		}
+		return null;
+	}
 }
