@@ -45,4 +45,8 @@ GET     /postInput                  controllers.Application.postInput()
 GET     /postCreate                 controllers.Application.postCreate()
 
 #ユーザーページ
-GET    /userPage                    controllers.Application.userPage()
+GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
+
+#ユーザー情報アップデート
+GET   /myProfileEdit:formatedUserID                  controllers.Application.updateUserForm(formatedUserID: Long)
+GET   /myProfileUpdate                               controllers.Application.DoUpdate()

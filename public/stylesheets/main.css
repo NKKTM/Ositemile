@@ -261,7 +261,7 @@ hr{
 	-webkit-text-overflow: ellipsis;
 	text-overflow: ellipsis;
 	/*width: 300px;*/
-	white-space: nowrap;	
+	white-space: nowrap;
 }
 
 .post-count>div.panel-body{
@@ -274,14 +274,14 @@ hr{
 	-webkit-text-overflow: ellipsis;
 	text-overflow: ellipsis;
 	/*width: 300px;*/
-	white-space: nowrap;	
+	white-space: nowrap;
 }
 
 .panel-body p[class="post-comment"]{
 	width: 100%;
 	max-height: 100px;
-	word-wrap:break-word;  
-	white-space: normal;		  			
+	word-wrap:break-word;
+	white-space: normal;
 }
 
 .posted-item-name{
@@ -310,4 +310,8 @@ hr{
 .profile-panel>div.panel-footer{
 	border-bottom-right-radius:8px;
 	border-bottom-left-radius:8px;
+}
+
+.no-post{
+	color:gray;
 }

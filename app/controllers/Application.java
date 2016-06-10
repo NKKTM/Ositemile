@@ -11,6 +11,7 @@ import static play.data.Form.*;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.List;
 
 import org.w3c.dom.*;
@@ -49,7 +50,7 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
 
-    public static Result index(Integer page) {       
+    public static Result index(Integer page) {
         return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
     }
 
@@ -204,11 +205,12 @@ public class Application extends Controller {
         		String category = AmazonModelService.use().getCategory(elementRoot);
 
                 String loginId = session().get("loginId");
-                User user = UserModelService.use().getUserByLoginId(loginId);                
+                User user = UserModelService.use().getUserByLoginId(loginId);
 
         		item.setCategory(category);
         		post.setGoods(item);
                 post.setUser(user);
+                post.setDateStr(PostModelService.use().getDateString());
         		item.setPost(post);
         		item.save();
         		post.save();
@@ -225,11 +227,18 @@ public class Application extends Controller {
     	return redirect("/");
     }
 
-    //ユーザーページ *中の処理未実装
-    public static Result userPage(){
+    //ユーザーページ
+    public static Result userPage(Long formatedUserId){
+    	 Long userId = formatedUserId-932108L;
+    	 User user = UserModelService.use().getUserById(userId);
+    	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
+    	 int postListSize = 0;
+    	 if(postList!=null){
+    		 postListSize = postList.size();
+    	 }
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
-         return ok(user_page.render(loginId));
+         return ok(user_page.render(loginId,user,postList,postListSize));
     }
 
     // 商品ページ
@@ -248,7 +257,7 @@ public class Application extends Controller {
     }
 
     // コメント登録
-    public static Result commentCreate(){
+    public static Result commentCreate() throws ParseException{
         Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
         if( !commnetForm.hasErrors() ){
             // エラーがない
@@ -269,12 +278,28 @@ public class Application extends Controller {
             // コメント登録
             commnetForm.get().comment = commnetForm.get().comment.replaceAll("\n","<br />");
             Comment comment = new Comment(commnetForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
+            comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
 
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
         }else{
         }
         return null;
+    }
+
+    //ユーザー情報編集のフォーム画面に遷移する
+    public static Result updateUserForm(Long formatedUserId){
+    	String loginId = session().get("loginId");
+    	Long userId = formatedUserId-932108L;
+    	User user = UserModelService.use().getUserById(userId);
+    	Form<User> userForm = form(User.class).fill(user);
+
+    	return ok(update_user.render(loginId,userForm,user));
+    }
+
+    //ユーザー情報の編集を実行する
+    public static Result DoUpdate(){
+    	return TODO;
     }
 
 }

@@ -4,8 +4,11 @@
  */
 package models.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
+import java.util.TimeZone;
 
 import models.entity.Post;
 import play.db.ebean.Model.Finder;
@@ -68,7 +71,7 @@ public class PostModelService {
 		int maxPage = postList.size()/LIMIT + 1;
 		System.out.println("maxPage："+maxPage);
 		return maxPage;
-	}	
+	}
 
 	/*
 	 *	１ページあたりの投稿リストを取得
@@ -206,5 +209,21 @@ public class PostModelService {
 			return null;
 		}
 		return post;
+	}
+
+	/*
+	 * ポストの日付表示に使うdateのStringを返す
+	 * @param なし
+	 * @return String　
+	 * @author yuki kawakami
+	 */
+	public String getDateString() throws ParseException{
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        nowDate.setTimeZone(tz);
+        String formatedDate = nowDate.format(new Date());
+        Date date = nowDate.parse(formatedDate);
+        String dateString = nowDate.format(date).toString();
+        return dateString;
 	}
 }
