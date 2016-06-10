@@ -5,6 +5,6 @@
 package models.form.admin;
 
 public class AdminPostForm {
-	public String postTtitle;
+	public String postTitle;
 	public String postComment;
 }

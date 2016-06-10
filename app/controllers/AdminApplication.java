@@ -21,6 +21,10 @@ import play.data.DynamicForm;
 import models.*;
 import models.entity.*;
 import models.service.*;
+import models.service.admin.AdminCommentModelService;
+import models.service.admin.AdminGoodsModelService;
+import models.service.admin.AdminPostModelService;
+import models.service.admin.AdminUserModelService;
 
 import com.avaje.ebean.Ebean;
 
@@ -42,7 +46,14 @@ public class AdminApplication extends Controller {
 	// commnet検索
 	@Security.Authenticated(models.login.SecuredAdmin.class)
 	public static Result commentSearch(){
-		return TODO;
+		Form<AdminCommentForm> commnetSearchForm = form(AdminCommentForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+		List<Comment> comment =  AdminCommentModelService.use().search(commnetSearchForm.get().comment, commnetSearchForm.get().userName,bool);
+		return ok(commentList.render("",comment,commnetSearchForm,bool));
 	}
 
 	//*******ユーザー********
@@ -58,7 +69,14 @@ public class AdminApplication extends Controller {
 	// ユーザー検索
 	@Security.Authenticated(models.login.SecuredAdmin.class)
 	public static Result userSearch(){
-		return TODO;
+		Form<AdminUserForm> userSearchForm = form(AdminUserForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+		List<User> user =  AdminUserModelService.use().search(userSearchForm.get().userName, userSearchForm.get().loginId,bool);
+		return ok(userList.render("",user,userSearchForm,bool));
 	}
 
 	//*******商品********
@@ -74,7 +92,14 @@ public class AdminApplication extends Controller {
 	// 商品検索
 	@Security.Authenticated(models.login.SecuredAdmin.class)
 	public static Result goodsSearch(){
-		return TODO;
+		Form<AdminGoodsForm> goodsSearchForm = form(AdminGoodsForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+		List<Goods> user =  AdminGoodsModelService.use().search(goodsSearchForm.get().goodsName, goodsSearchForm.get().category,bool);
+		return ok(goodsList.render("",user,goodsSearchForm,bool));
 	}
 
 	//*******投稿********
@@ -90,7 +115,14 @@ public class AdminApplication extends Controller {
 	// 検索
 	@Security.Authenticated(models.login.SecuredAdmin.class)
 	public static Result postSearch(){
-		return TODO;
+		Form<AdminPostForm> postSearchForm = form(AdminPostForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+		List<Post> post =  AdminPostModelService.use().search(postSearchForm.get().postTitle, postSearchForm.get().postComment,bool);
+		return ok(postList.render("",post,postSearchForm,bool));
 	}
 
 }
