@@ -51,7 +51,7 @@ public class Application extends Controller {
 
 
     public static Result index(Integer page) {       
-        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
+        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage()));
     }
 
     //ログイン画面

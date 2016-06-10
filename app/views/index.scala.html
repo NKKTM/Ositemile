@@ -1,4 +1,4 @@
-@(loginId: String, postList: List[models.entity.Post], page:Integer, maxPage: Integer)
+@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer)
 
 @main(loginId) {
 
@@ -10,27 +10,11 @@
                 <li class="sidebar-brand">
                     カテゴリー
                 </li>
-                <li>
-                    <a href="#">java</a>
-                </li>
-                <li>
-                    <a href="#">PHP</a>
-                </li>
-                <li>
-                    <a href="#">javascript</a>
-                </li>
-                <li>
-                    <a href="#">その他本</a>
-                </li>
-                <li>
-                    <a href="#">音楽</a>
-                </li>
-                <li>
-                    <a href="#">DVD</a>
-                </li>
-                <li>
-                    <a href="#">生活</a>
-                </li>
+                @for(category <- categoryList){
+                    <li class="sidebar-category">
+                        <a href="#">@category</a>
+                    </li>
+                }
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
