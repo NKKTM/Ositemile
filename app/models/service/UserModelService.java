@@ -5,6 +5,7 @@
 package models.service;
 
 import java.util.List;
+import java.lang.Exception;
 
 import models.entity.Post;
 import models.entity.User;
@@ -81,9 +82,13 @@ public class UserModelService {
 	 *	@author Kotaro Nishida
 	 */
 	public User getUserByLoginId(String loginId){
-		Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
-		List<User> userList = find.where().ilike("loginId", loginId).findList();
-		return userList.get(0);
+		try{
+			Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
+			List<User> userList = find.where().ilike("loginId", loginId).findList();
+			return userList.get(0);			
+		}catch(Exception e){
+			return null;
+		}
 	}
 
 	/*
