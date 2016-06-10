@@ -123,7 +123,7 @@ public class User extends Model{
 	public void setLoginId(String loginId){
 		this.loginId = loginId;
 	}
-	public String getLoiginId(){
+	public String getLoginId(){
 		return loginId;
 	}
 

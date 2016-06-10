@@ -10,6 +10,10 @@ import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security.Authenticator;
 
+import models.service.*;
+import models.entity.*;
+
+
 public class Secured extends Authenticator {
 
 	/*   
@@ -19,7 +23,17 @@ public class Secured extends Authenticator {
 	*/  	
 	@Override
 	public String getUsername(Context ctx){
-		return ctx.session().get("loginId");
+		String loginId = ctx.session().get("loginId");
+		User user = UserModelService.use().getUserByLoginId(loginId);
+		if(user != null){
+		//ユーザーがDBに存在するとき
+			return user.getLoginId();
+		}else{
+		//ユーザーがDBに存在しないとき
+			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");						
+ 	       	ctx.session().clear();			
+			return null;
+		}
 	}
 
 

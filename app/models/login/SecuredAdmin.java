@@ -24,12 +24,22 @@ public class SecuredAdmin extends Authenticator {
 	public String getUsername(Context ctx){
 		String loginId = ctx.session().get("loginId");
 		User user = UserModelService.use().getUserByLoginId(loginId);
-		if(user.getAdmin()){
-			System.out.println(user.getUserName()+"には管理者権限があります");
-			return loginId;
+		if(user != null){
+		//ユーザーが存在する場合
+			if(user.getAdmin()){
+			//ユーザーが管理者権限を持っている場合
+				System.out.println(user.getUserName()+"には管理者権限があります");
+				return loginId;
+			}else{
+			//ユーザーが管理者権限を持っていない場合				
+				System.out.println(user.getUserName()+"には管理者権限がありません");
+				return null;			
+			}
 		}else{
-			System.out.println(user.getUserName()+"には管理者権限がありません");
-			return null;			
+		//ユーザーが存在しない場合
+			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");			
+        	ctx.session().clear();			
+			return null;
 		}
 	}
 
