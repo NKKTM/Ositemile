@@ -27,12 +27,15 @@ GET		/admin					controllers.Application.admin()
 #管理者
 GET		/commentList			controllers.AdminApplication.commentList()
 GET		/commentSearch			controllers.AdminApplication.commentSearch()
+GET		/commentDelete/:id		controllers.AdminApplication.commentDelete(id:Long)
 GET		/userList				controllers.AdminApplication.userList()
 GET		/userSearch				controllers.AdminApplication.userSearch()
+GET		/userDelete/:userId			controllers.AdminApplication.userDelete(userId:Long)
 GET		/goodsList				controllers.AdminApplication.goodsList()
 GET		/goodsSearch			controllers.AdminApplication.goodsSearch()
 GET		/postList				controllers.AdminApplication.postList()
-GET		/postSearch			controllers.AdminApplication.postSearch()
+GET		/postSearch				controllers.AdminApplication.postSearch()
+
 
 
 # 商品ページ

@@ -55,4 +55,21 @@ public class AdminCommentModelService {
 		}
 		return null;
 	}
+
+	/*
+	 *	削除
+	 *	@param  Long commentId : コメントのID
+	 *	@return Commentのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Comment> delete(Long commentId){
+		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
+		if( !find.all().isEmpty() ){
+			Comment comment = find.ref(commentId);
+			comment.delete();
+			return find.all();
+		}
+		return null;
+	}
+
 }

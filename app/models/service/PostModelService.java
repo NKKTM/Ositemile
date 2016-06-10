@@ -68,7 +68,7 @@ public class PostModelService {
 		int maxPage = postList.size()/LIMIT + 1;
 		System.out.println("maxPage："+maxPage);
 		return maxPage;
-	}	
+	}
 
 	/*
 	 *	１ページあたりの投稿リストを取得
@@ -170,7 +170,7 @@ public class PostModelService {
 	 */
 	public List<Post> getPostListByUserId(Long userId){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where().eq("user.getId()", userId).findList();
+		List<Post> postList = find.where("user.id = " + userId).findList();
 		return checkPost(postList);
 	}
 

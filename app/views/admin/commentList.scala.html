@@ -29,7 +29,6 @@
 				<th class="col-md-2">コメント内容</th>
 				<th class="col-md-2">コメント投稿者</th>
 				<th class="col-md-2">リンク</th>
-				<th class="col-md-2">編集</th>
 				<th class="col-md-2">削除</th>
 			</tr>
 		</thead>
@@ -42,8 +41,7 @@
 					<td>@comment.getUser().getUserName()</td>
 
 					<td><a href="@routes.Application.introduction(comment.getPost().getId())">LINK</a></td>
-					<td><a href="#">編集</a></td>
-					<td><a href="#"> 削除 </a></td>
+					<td><a href="@routes.AdminApplication.commentDelete(comment.getId())"> 削除 </a></td>
 
 				</tr>
 				}
