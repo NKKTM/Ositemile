@@ -1,0 +1,6 @@
+@(elements: helper.FieldElements)
+
+@if(elements.hasErrors){
+	<div class="search-caution">@elements.errors</div>
+}
+@elements.input

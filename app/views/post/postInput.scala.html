@@ -1,17 +1,35 @@
-@(loginId:String, goodsForm:Form[models.entity.Goods], postForm:Form[models.entity.Post])
+@(loginId:String, goodsForm:Form[models.entity.Goods], postForm:Form[models.entity.Post], item:models.entity.Goods)
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
 @import helper._
 
 @main(loginId) {
+<link href="@routes.Assets.at("stylesheets/post_item/input_post_comment.css")" rel="stylesheet">
+<div class="container-fluid post-item-container">
+	<div class="row sampleRow">
+		<div class="col-xs-12 col-sm-5 col-md-5 item-info-box">
+			<div class="post-item-info">
+				<img class="post-item-image" alt="..." src="@item.getImageUrl()">
+				<h5 class="item-name">@item.getGoodsName()</h5>
+				<a class="btn btn-default rakuten-button" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-7 col-md-7">
 	@form(action=routes.Application.postCreate(),'enctype->"multipart/form-data"){
 	@* goods情報をhiddenで送る *@
 		@inputText(goodsForm("goodsName"),args='_label->"商品の名前",'type->"hidden")
 		@inputText(goodsForm("imageUrl"),args='_label->"画像url",'type->"hidden")
 		@inputText(goodsForm("amazonUrl"),args='_label->"楽天のurl",'type->"hidden")
 		@inputText(goodsForm("genreId"),args='_label->"ジャンルid",'type->"hidden")
-
-		@inputText(postForm("postTitle"),'_label->"投稿のタイトル")
-		@textarea(postForm("postComment"),'_label->"コメント")
-		<button type="submit" class="btn btn-default">この商品をPUSHする。</button>
+		<h4 class="input-title">投稿につけるタイトル</h4>
+		@inputText(postForm("postTitle"),args='_label->"投稿のタイトル",'class->"post-input-title")<br/>
+		<h4 class="input-title">コメント</h4>
+		@textarea(postForm("postComment"),args='_label->"コメント",'rows->"8",'class->"post-input-textarea")<br/>
+		<div class="button-box">
+		<button type="submit" class="btn btn-default push-item-comment">この商品をPUSHする。</button>
+		</div>
 	}
+		</div>
+	</div>
+</div>
 }

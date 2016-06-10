@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /		                    controllers.Application.index(page:Integer?=1)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -23,7 +23,7 @@ GET		/registerDB					controllers.Application.registerDB()
 GET		/wuntopufapurakrnkfro/:id	controllers.Application.grantAdmin(id:Long)
 
 # 管理者画面アクセス
-GET		/admin	controllers.Application.admin()
+GET		/admin					controllers.Application.admin()
 #管理者
 GET		/commentList			controllers.AdminApplication.commentList()
 GET		/commentSearch			controllers.AdminApplication.commentSearch()
@@ -36,7 +36,7 @@ GET		/postSearch			controllers.AdminApplication.postSearch()
 
 
 # 商品ページ
-GET		/introduction				controllers.Application.introduction()
+GET		/introduction/:postId		controllers.Application.introduction(postId:Long)
 GET		/commentCreate				controllers.Application.commentCreate()
 
 # POST

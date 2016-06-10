@@ -56,6 +56,21 @@ public class PostModelService {
 	}
 
 	/*
+	 *	ページングのためのMaxページ取得
+	 *	@param なし
+	 *	@return MaxPage
+	 *			失敗時：null
+	 *	@author Hatsune Kitajima
+	 */
+	public int getMaxPage(){
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.orderBy("date desc").findList();
+		int maxPage = postList.size()/LIMIT + 1;
+		System.out.println("maxPage："+maxPage);
+		return maxPage;
+	}	
+
+	/*
 	 *	１ページあたりの投稿リストを取得
 	 *	@param 取得したいページ数
 	 *	@return Postのリスト

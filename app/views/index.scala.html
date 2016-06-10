@@ -1,4 +1,4 @@
-@(loginId: String, postList: List[models.entity.Post])
+@(loginId: String, postList: List[models.entity.Post], page:Integer, maxPage: Integer)
 
 @main(loginId) {
 
@@ -51,12 +51,12 @@
 								<div class="panel-heading">
 									<p>@post.getDate()</p>
 									<h4>@post.getPostTitle()</h4>
-									<a href="#"></a>
+									<a href="/introduction/@post.getId()"></a>
 								</div>
 								<div class="panel-body">
-									<a href="#"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
+									<a href="/introduction/@post.getId()"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
 									<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
-									<p>@post.getPostComment()</p>
+									<p class="post-comment">@Html(post.getPostComment())</p>
 									<a class="category-label" href="#"><span class="label label-default">@post.getGoods().getCategory()</span></a>
 								</div>
 								<div class="panel-footer">
@@ -66,17 +66,22 @@
 						</div>
                           @if(i%3 == 2){
                             <div style="clear:both;"></div>
-                          }                        
+                          }
 						}
                     }
 
 				</div>
+                <p>@helper.pagenateForIndex(page,maxPage)</p>
+                    <!-- ページング  -->
             </div>
         </div>
         <!-- /#page-content-wrapper コンテント終了-->
 
     </div>
-
         <!-- /#sidebar-wrapper -->
+
+
+
+
 
 }

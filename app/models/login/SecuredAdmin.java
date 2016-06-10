@@ -47,7 +47,7 @@ public class SecuredAdmin extends Authenticator {
 			returnUrl="/";
 		}
 		ctx.session().put("returnUrl", returnUrl);
-		return redirect(controllers.routes.Application.index());
+		return redirect("/");
 	}
 
 }

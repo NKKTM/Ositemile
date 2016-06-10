@@ -28,6 +28,7 @@ public class Comment  extends Model{
 	@JoinColumn(name = "post")
 	private Post	post;			// 投稿情報
 
+	private String  dateStr;        //日付のString
 	Date			date;			// 日付
 
 	/*
@@ -108,4 +109,13 @@ public class Comment  extends Model{
 	public Post getPost(){
 		return post;
 	}
+
+	//日付のString
+	public void setDateStr(String d){
+		this.dateStr = d;
+	}
+	public String getDateStr(){
+		return this.dateStr;
+	}
+
 }
