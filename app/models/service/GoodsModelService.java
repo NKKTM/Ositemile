@@ -5,6 +5,10 @@
 package models.service;
 
 import java.util.List;
+import java.util.ArrayList;
+
+
+import com.avaje.ebean.*;
 
 import models.entity.Goods;
 import play.db.ebean.Model.Finder;
@@ -59,6 +63,23 @@ public class GoodsModelService {
 		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 		Goods goods = find.byId(goodsId);
 		return goods;
+	}
+
+	/*
+	 *	今まで投稿されたカテゴリ一覧取得
+	 *	@param なし
+	 *	@return categoryのList
+	 *	@author Hatsune Kitajima
+	 */
+	public List<String> getGoodsAllCategory(){
+		String sql = "select category from goods group by category"; 
+	    List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
+	    List<String> categoryList = new ArrayList<String>();
+	    for(SqlRow sq: sqlRows){
+	    	System.out.println(sq.getString("category"));
+	    	categoryList.add(sq.getString("category"));
+	    }
+		return categoryList;
 	}
 
 	/*

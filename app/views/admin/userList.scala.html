@@ -1,4 +1,4 @@
-@(loginId: String,userList: List[models.entity.User],userForm:Form[models.form.admin.AdminCommentForm],boo:Boolean)
+@(loginId: String,userList: List[models.entity.User],userForm:Form[models.form.admin.AdminUserForm],boo:Boolean)
 @import helper._
 
 @main_for_admin(""){
@@ -39,11 +39,11 @@
 				<tr>
 					<td>@user.getId()</td>
 					<td>@user.getUserName()</td>
-					<td>@user.getLoiginId()</td>
+					<td>@user.getLoginId()</td>
 
 					@*<td><a href="@routes.Application.userPage()">LINK</a></td>*@
 					<td><a href="#">編集</a></td>
-					<td><a href="#"> 削除 </a></td>
+					<td><a href="@routes.AdminApplication.userDelete(user.getId())"> 削除 </a></td>
 
 				</tr>
 				}

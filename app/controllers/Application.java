@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Collections;
 
 import org.w3c.dom.*;
 import org.w3c.dom.Element;
@@ -50,8 +51,9 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
 
-    public static Result index(Integer page) {
-        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
+
+    public static Result index(Integer page) {       
+        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage()));
     }
 
     //ログイン画面
@@ -80,7 +82,7 @@ public class Application extends Controller {
             System.out.println("DB登録に成功しました！");
             //セッションにloginIdを登録
             session().clear();
-            session("loginId", user.getLoiginId());
+            session("loginId", user.getLoginId());
             return redirect("/");
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
@@ -248,6 +250,7 @@ public class Application extends Controller {
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
     	if( post.getComment() != null ){
+            Collections.reverse(post.getComment());            
     		return ok(introduction.render(loginId,post,commentForm));
     	}else{
     		return ok(introduction.render(loginId,null,commentForm));
@@ -257,25 +260,29 @@ public class Application extends Controller {
     }
 
     // コメント登録
-    public static Result commentCreate() throws ParseException{
-        Form<CommentForm> commnetForm = form(CommentForm.class).bindFromRequest();
-        if( !commnetForm.hasErrors() ){
+
+    public static Result commentCreate(){
+        // sessionからloginId取得
+        String loginId = session().get("loginId");  
+        // postIdからpostを取得
+        String[] params = { "postId" };
+        DynamicForm input = Form.form();
+        input = input.bindFromRequest(params);
+        Long postId = Long.parseLong(input.data().get("postId"));
+        Post post = PostModelService.use().getPostListById(postId);
+        // commentform取得
+        Form<CommentForm> commentForm = form(CommentForm.class).bindFromRequest();
+                   
+        if( !commentForm.hasErrors() ){
+
             // エラーがない
         	System.out.println("入りました！！！");
-            String loginId = session().get("loginId");
             if(loginId == null){
                 System.out.println("ログインするか、新規登録をお願いします。");
                 return redirect(controllers.routes.Application.login());
             }
-
-            // postIdからpostを取得
-            String[] params = { "postId" };
-            DynamicForm input = Form.form();
-            input = input.bindFromRequest(params);
-            Long postId = Long.parseLong(input.data().get("postId"));
-            Post post = PostModelService.use().getPostListById(postId);
-
             // コメント登録
+
             commnetForm.get().comment = commnetForm.get().comment.replaceAll("\n","<br />");
             Comment comment = new Comment(commnetForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
@@ -283,8 +290,10 @@ public class Application extends Controller {
 
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
         }else{
+            // 入力にエラーがあった場合
+            Collections.reverse(post.getComment());                        
+            return ok(introduction.render(loginId,post,commentForm));
         }
-        return null;
     }
 
     //ユーザー情報編集のフォーム画面に遷移する

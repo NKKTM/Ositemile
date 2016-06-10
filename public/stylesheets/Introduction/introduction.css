@@ -1,7 +1,19 @@
+.introduction-color-box{
+    padding-right: 4%;
+}
+
 .introduction-postcommnet-box{
 	width: 100%;
-    padding-bottom: 20px;
+    padding-top: 25px;
+    padding-left: 40px;
+    padding-right: 40px;    
+    padding-bottom: 25px;
     margin: 10px auto;
+    background-color: #fafafa;
+    border-radius: 6px;    
+}
+
+.post-user{
 }
 
 .introduction-commnet-box{
@@ -41,7 +53,7 @@ textarea{
     width: 100%;
     background-color: #fff;
     border-radius: 6px;
-    margin-top: 20px;
+    margin-bottom: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 0px;
@@ -64,12 +76,10 @@ textarea{
     padding-right: 10px;
     overflow: hidden;
 }
-.introduction-button{
-	padding-top:20px;
-}
 
-.introduction-color-box{
-	background-color: #d8f6e5;
+.introduction-button{
+    text-align: right;
+    margin-bottom: 30px;
 }
 
 .introduction-full-box{
@@ -80,4 +90,87 @@ textarea{
 
 .introduction_hr{
 	border-top: 1px dotted #bbb;
+}
+
+
+.post-input-textarea{
+    border-radius:5px;
+    border-color:#bab9bf;
+    width:90%;
+}
+
+.post-input-title{
+    border-radius:5px;
+    border-color:#bab9bf;
+    border-style: solid;
+    border-width: 1px;
+    width:80%;
+    height:42px;
+    margin-bottom:10px;
+}
+
+
+
+
+
+.item-info-box{
+    padding-left:3%;
+    padding-right:4%;
+    margin-top:10px;
+}
+
+.post-item-container{
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:40px;
+}
+
+.post-item-info{
+    border-radius:8px;
+    background-color:#f5f5f5;
+    text-align:center;
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-left:5%;
+    padding-right:5%;
+}
+
+.push-item-comment{
+    background-color:#ffb9a6;
+    color:#515151;
+    margin-top:20px;
+    margin-right:5%;
+    width:60%;
+    height:40px;
+}
+
+button.push-item-comment:hover{
+    background-color:#fd996f;
+}
+
+.post-item-image{
+    padding-left:15px;
+    padding-right:15px;
+    width:100%;
+    height:auto;
+}
+
+.input-title{
+    padding: .25em 0 .25em .75em;
+    border-left: 6px solid #ffb9a6;
+    color: gray;
+    font-weight: 500;
+}
+
+.item-name{
+    color:#515151;
+}
+
+.button-box{
+    width:100%;
+    text-align:center;
+}
+
+.rakuten-button{
+    color:gray;
 }
