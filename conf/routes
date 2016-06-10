@@ -51,5 +51,5 @@ GET     /postCreate                 controllers.Application.postCreate()
 GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
 
 #ユーザー情報アップデート
-GET   /myProfileEdit:formatedUserID                  controllers.Application.updateUserForm(formatedUserID: Long)
-GET   /myProfileUpdate                               controllers.Application.DoUpdate()
+GET   /myProfileEdit:formatedUserId                  controllers.Application.updateUserForm(formatedUserId: Long)
+GET   /myProfileUpdate:formatedUserId                             controllers.Application.DoUpdate(formatedUserId: Long)

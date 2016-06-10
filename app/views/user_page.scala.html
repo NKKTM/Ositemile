@@ -1,5 +1,7 @@
 @(loginId: String,user: models.entity.User, postList: List[models.entity.Post],postListSize: Int)
 
+@num = @{932108L}
+
 @main(loginId) {
 	<div class="container user-page-wrap">
     <div class="row">
@@ -23,7 +25,9 @@
                         <h4>@postListSize</h4>
                     </div>
                 </div>
-                <a class="btn btn-default" href="#">プロフィール編集</a>
+                @if(loginId == user.getLoginId()){
+                <a class="btn btn-default" href="@routes.Application.updateUserForm(num+user.getId)">プロフィール編集</a>
+                }
             </div>
         </div>
         <!-- /.ユーザー情報div -->

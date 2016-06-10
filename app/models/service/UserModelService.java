@@ -85,7 +85,7 @@ public class UserModelService {
 		try{
 			Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 			List<User> userList = find.where().ilike("loginId", loginId).findList();
-			return userList.get(0);			
+			return userList.get(0);
 		}catch(Exception e){
 			return null;
 		}
@@ -123,6 +123,21 @@ public class UserModelService {
 			return null;
 		}
 		return user;
+	}
+
+
+	/*
+	 * ユーザー情報の編集
+	 * @param 第1引数：現在登録されているユーザー、第2引数：編集された内容が入っているユーザー
+	 * @return user
+	 * @author yuki kawakmi
+	 */
+	public User updateUser(User oldUser,User newUser){
+		oldUser.setUserName(newUser.getUserName());
+		oldUser.setProfile(newUser.getProfile());
+		oldUser.setDepartment(newUser.getDepartment());
+		oldUser.update();
+		return oldUser;
 	}
 
 }
