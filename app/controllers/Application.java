@@ -283,8 +283,8 @@ public class Application extends Controller {
             }
             // コメント登録
 
-            commnetForm.get().comment = commnetForm.get().comment.replaceAll("\n","<br />");
-            Comment comment = new Comment(commnetForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
+            commentForm.get().comment = commentForm.get().comment.replaceAll("\n","<br />");
+            Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
 
