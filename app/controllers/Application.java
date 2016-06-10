@@ -233,14 +233,13 @@ public class Application extends Controller {
     }
 
     // 商品ページ
-    public static Result introduction(){
+    public static Result introduction(Long postId){
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
-    	 String loginId = session().get("loginId");
-    	// コメントデーターの参照
-    	CommentModelService commnetService = CommentModelService.use();
-    	List<Comment> commentList = commnetService.getCommnetList();
-    	if( commentList != null ){
-    		return ok(introduction.render(loginId,commentList ,commentForm));
+    	String loginId = session().get("loginId");
+    	// ポストの参照
+        Post post = PostModelService.use().getPostListById(postId);
+    	if( post.getComment() != null ){
+    		return ok(introduction.render(loginId,post,commentForm));
     	}else{
     		return ok(introduction.render(loginId,null,commentForm));
     	}
@@ -257,15 +256,22 @@ public class Application extends Controller {
             String loginId = session().get("loginId");
             if(loginId == null){
                 System.out.println("ログインするか、新規登録をお願いします。");
-                return redirect(controllers.routes.Application.introduction());
+                return redirect(controllers.routes.Application.login());
             }
+
+            // postIdからpostを取得
+            String[] params = { "postId" };
+            DynamicForm input = Form.form();
+            input = input.bindFromRequest(params);
+            Long postId = Long.parseLong(input.data().get("postId"));
+            Post post = PostModelService.use().getPostListById(postId);
 
             // コメント登録
             commnetForm.get().comment = commnetForm.get().comment.replaceAll("\n","<br />");
-            Comment comment = new Comment(commnetForm.get().comment,UserModelService.use().getUserByLoginId(loginId),null);
+            Comment comment = new Comment(commnetForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             CommentModelService.use().save(comment);
 
-            return redirect(controllers.routes.Application.introduction());
+            return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
         }else{
         }
         return null;

@@ -36,7 +36,7 @@ GET		/postSearch			controllers.AdminApplication.postSearch()
 
 
 # 商品ページ
-GET		/introduction				controllers.Application.introduction()
+GET		/introduction/:postId		controllers.Application.introduction(postId:Long)
 GET		/commentCreate				controllers.Application.commentCreate()
 
 # POST

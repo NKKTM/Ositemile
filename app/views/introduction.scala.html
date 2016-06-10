@@ -1,5 +1,5 @@
 @* @(goods: models.entity.Goods, post : model.entity.Post, commentForm: Form[models.form.CommentForm]) *@
-@(loginId: String,commentList : List[models.entity.Comment] , commentForm: Form[models.form.CommentForm])
+@(loginId: String, post : models.entity.Post , commentForm: Form[models.form.CommentForm])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
@@ -19,22 +19,23 @@
 		</div>
 	</div>
 	<div class="row introduction-full-box">
-		<div class="col-sm-4">
-			<h2>商品タイトル</h2>
+		<div class="col-sm-5">
+			<h2>@post.getGoods().getGoodsName()</h2>
 		</div>
 
 		@*コメント表示*@
-		<div class="col-sm-8 introduction-color-box">
+		<div class="col-sm-7 introduction-color-box">
 			<div class="introduction-postcommnet-box">
-				<h3>投稿者コメント</h3>
-				<h4>この商品最高！！！！！！！</h4>
+				<h3>@post.getPostTitle()</h3>
+				<h4>@Html(post.getPostComment())</h4>
 			</div>
 
 
 			<div class="introduction-commnet-box ">
 				<h3>あなたもコメントしよう！！</h3>
-				@form(action = routes.Application.commentCreate(),'enctype->"multipart/form-data") {
+				@form(action = routes.Application.commentCreate()) {
 					@textarea(commentForm("comment"),args='_label->"あなたもコメントしよう！",'class->"form-control" ,'cols -> "80",'rows -> "3")
+					<input type="hidden" name="postId" value="@post.getId()"/>
 					<h6 class="introduction-attention">*あなたのコメントが社内を炎上(盛り上げ)させる</h6>
 					<div class="introduction-button">
 						<button type="submit" class="btn btn-success btn-lg">投稿する</button>
@@ -44,8 +45,8 @@
 
 				<div class="introduction-commnet-title">
 					<h3>ーーコメントーー</h3>
-					@if(commentList != null){
-						@for( comment<-commentList ){
+					@if(post.getComment() != null){
+						@for( comment<- post.getComment()){
 							<hr class="introduction-hr">
 							<div class="introduction-commnet-box2 ">
 								<div class="introduction-commnet-box3 introduction-commnet">

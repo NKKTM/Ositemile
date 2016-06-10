@@ -41,7 +41,7 @@
 					<td>@Html(comment.getComment().replaceAll("\n",""))</td>
 					<td>@comment.getUser().getUserName()</td>
 
-					<td><a href="@routes.Application.introduction()">LINK</a></td>
+					<td><a href="@routes.Application.introduction(comment.getPost().getId())">LINK</a></td>
 					<td><a href="#">編集</a></td>
 					<td><a href="#"> 削除 </a></td>
 
