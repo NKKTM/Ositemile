@@ -34,6 +34,8 @@
 	/*width: 300px;*/
 	white-space: nowrap;
 	font-weight:500;
+	padding-right:5px;
+	padding-left:5px;
 }
 
 .select-item{
@@ -65,6 +67,7 @@ button.select-item:hover{
 	height:33px;
 	border:solid 1px #c9c8ca;
 	border-radius:4px;
+	width: 250px;
 }
 
 .search-caution{

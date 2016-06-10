@@ -12,6 +12,7 @@
 	border-width: 1px;
 	width:80%;
 	height:42px;
+	margin-bottom:10px;
 }
 
 .item-info-box{
@@ -37,11 +38,40 @@
 
 .push-item-comment{
 	background-color:#ffb9a6;
+	color:#515151;
+	margin-top:20px;
+	margin-right:5%;
+	width:60%;
+	height:40px;
 }
 
 button.push-item-comment:hover{
 	background-color:#fd996f;
 }
 
+.post-item-image{
+	padding-left:15px;
+	padding-right:15px;
+	width:100%;
+	height:auto;
+}
 
+.input-title{
+	padding: .25em 0 .25em .75em;
+    border-left: 6px solid #ffb9a6;
+    color: gray;
+    font-weight: 500;
+}
 
+.item-name{
+	color:#515151;
+}
+
+.button-box{
+	width:100%;
+	text-align:center;
+}
+
+.rakuten-button{
+	color:gray;
+}

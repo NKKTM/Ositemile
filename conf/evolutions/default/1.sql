@@ -8,6 +8,7 @@ create table comment (
   comment                   varchar(255),
   user                      bigint,
   post                      bigint,
+  date_str                  varchar(255),
   date                      timestamp,
   constraint pk_comment primary key (id))
 ;
@@ -28,6 +29,7 @@ create table post (
   post_comment              varchar(255),
   goods                     bigint,
   user                      bigint,
+  date_str                  varchar(255),
   date                      timestamp,
   constraint pk_post primary key (id))
 ;

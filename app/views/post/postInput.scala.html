@@ -10,8 +10,8 @@
 		<div class="col-xs-12 col-sm-5 col-md-5 item-info-box">
 			<div class="post-item-info">
 				<img class="post-item-image" alt="..." src="@item.getImageUrl()">
-				<h5>@item.getGoodsName()</h5>
-				<a class="btn btn-default" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
+				<h5 class="item-name">@item.getGoodsName()</h5>
+				<a class="btn btn-default rakuten-button" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-7 col-md-7">
@@ -21,11 +21,13 @@
 		@inputText(goodsForm("imageUrl"),args='_label->"画像url",'type->"hidden")
 		@inputText(goodsForm("amazonUrl"),args='_label->"楽天のurl",'type->"hidden")
 		@inputText(goodsForm("genreId"),args='_label->"ジャンルid",'type->"hidden")
-		<h4>投稿につけるタイトル</h4>
+		<h4 class="input-title">投稿につけるタイトル</h4>
 		@inputText(postForm("postTitle"),args='_label->"投稿のタイトル",'class->"post-input-title")<br/>
-		<h4>コメント</h4>
+		<h4 class="input-title">コメント</h4>
 		@textarea(postForm("postComment"),args='_label->"コメント",'rows->"8",'class->"post-input-textarea")<br/>
+		<div class="button-box">
 		<button type="submit" class="btn btn-default push-item-comment">この商品をPUSHする。</button>
+		</div>
 	}
 		</div>
 	</div>
