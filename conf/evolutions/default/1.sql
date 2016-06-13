@@ -27,7 +27,7 @@ create table post (
   id                        bigint not null,
   post_title                varchar(255),
   post_comment              text,
-  goods                     bigint,
+  goods_id                  bigint,
   user                      bigint,
   date_str                  varchar(255),
   date                      timestamp,
