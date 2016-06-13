@@ -303,6 +303,7 @@ public class Application extends Controller {
     }
 
     //ユーザー情報編集のフォーム画面に遷移する
+    @Security.Authenticated(Secured.class)
     public static Result updateUserForm(Long formatedUserId){
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
@@ -313,8 +314,27 @@ public class Application extends Controller {
     }
 
     //ユーザー情報の編集を実行する
-    public static Result DoUpdate(){
-    	return TODO;
+    @Security.Authenticated(Secured.class)
+    public static Result DoUpdate(Long formatedUserId){
+    	String loginId = session().get("loginId");
+    	Long userId = formatedUserId-932108L;
+    	User user = UserModelService.use().getUserById(userId);
+    	Form<User> userForm = form(User.class).bindFromRequest();
+    	if(!userForm.hasErrors()){
+    		System.out.println("ユーザー編集バインド、エラーなし");
+    		User newUser = new User();
+	    	newUser.setUserName(userForm.get().getUserName());
+	    	newUser.setPassword(userForm.get().getPassword());
+	    	newUser.setLoginId(userForm.get().getLoginId());
+	    	newUser.setProfile(userForm.get().getProfile());
+	    	newUser.setDepartment(userForm.get().getDepartment());
+	    	newUser.setAdmin(userForm.get().getAdmin());
+	    	User editedUser = UserModelService.use().updateUser(user, newUser);
+	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
+    	}else{
+    		System.out.println("ユーザー編集バインド、エラーあり！！！");
+    		return ok(update_user.render(loginId,userForm,user));
+    	}
     }
 
 }
