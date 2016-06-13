@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import play.db.ebean.Model;
 
@@ -25,7 +26,7 @@ public class Goods  extends Model{
 	private String          genreId;            //楽天のジャンルid
 	private String          category;			// カテゴリリスト名
 
-	@OneToMany(mappedBy="goods",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="goods",cascade = CascadeType.ALL)
 	private Post			post;				// 投稿情報
 
 	/*

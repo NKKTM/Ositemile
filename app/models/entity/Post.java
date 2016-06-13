@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Column;
 
-
 import play.db.ebean.Model;
 
 @Entity
@@ -28,8 +27,7 @@ public class Post  extends Model{
     @Column(columnDefinition="text")		
 	private String			postComment;		// 投稿したユーザーのコメント
 
-	@ManyToOne
-	@JoinColumn(name = "goods")
+	@OneToOne
 	private Goods			goods;				// 商品
 
 	@ManyToOne

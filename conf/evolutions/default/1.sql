@@ -57,8 +57,8 @@ alter table comment add constraint fk_comment_user_1 foreign key (user) referenc
 create index ix_comment_user_1 on comment (user);
 alter table comment add constraint fk_comment_post_2 foreign key (post) references post (id) on delete restrict on update restrict;
 create index ix_comment_post_2 on comment (post);
-alter table post add constraint fk_post_goods_3 foreign key (goods) references goods (id) on delete restrict on update restrict;
-create index ix_post_goods_3 on post (goods);
+alter table post add constraint fk_post_goods_3 foreign key (goods_id) references goods (id) on delete restrict on update restrict;
+create index ix_post_goods_3 on post (goods_id);
 alter table post add constraint fk_post_user_4 foreign key (user) references user (id) on delete restrict on update restrict;
 create index ix_post_user_4 on post (user);
 
