@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Column;
+
 
 import play.db.ebean.Model;
 
@@ -22,6 +24,8 @@ public class Post  extends Model{
 	@Id
 	private Long			id;					// ID
 	private String 			postTitle;			// 投稿タイトル
+
+    @Column(columnDefinition="text")		
 	private String			postComment;		// 投稿したユーザーのコメント
 
 	@ManyToOne

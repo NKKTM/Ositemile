@@ -5,7 +5,7 @@
 
 create table comment (
   id                        bigint not null,
-  comment                   varchar(255),
+  comment                   text,
   user                      bigint,
   post                      bigint,
   date_str                  varchar(255),
@@ -26,7 +26,7 @@ create table goods (
 create table post (
   id                        bigint not null,
   post_title                varchar(255),
-  post_comment              varchar(255),
+  post_comment              text,
   goods                     bigint,
   user                      bigint,
   date_str                  varchar(255),
