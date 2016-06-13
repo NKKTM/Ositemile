@@ -7,6 +7,7 @@ package models.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +19,7 @@ public class Comment  extends Model{
 
 	@Id
 	private Long	id;				// ID
+    @Column(columnDefinition="text")	
 	private String	comment;		// コメント内容
 
 	@ManyToOne
@@ -116,6 +118,14 @@ public class Comment  extends Model{
 	}
 	public String getDateStr(){
 		return this.dateStr;
+	}
+
+	//日付
+	public void setDate(Date date){
+		this.date = date;
+	}
+	public Date getDate(){
+		return this.date;
 	}
 
 }

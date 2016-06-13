@@ -2,7 +2,7 @@
 @import helper._
 
 @main_for_admin(""){
-	<h1 id="homeTitle">Comment一覧</h1>
+	<h1 id="homeTitle">商品一覧</h1>
 	<div id="actions">
 		@form(action =routes.AdminApplication.goodsSearch() ) {
 			@if(boo == true){
@@ -26,7 +26,7 @@
 	<table class="table table-bordered">
 		<thead>
 			<tr class="something">
-				<th class="col-md-2">ユーザーID</th>
+				<th class="col-md-2">商品ID</th>
 				<th class="col-md-2">商品名</th>
 				<th class="col-md-2">カテゴリー名</th>
 				<th class="col-md-2">削除</th>
@@ -39,8 +39,7 @@
 					<td>@goods.getId()</td>
 					<td>@goods.getGoodsName</td>
 					<td>@goods.getCategory()</td>
-
-					<td><a href="#"> 削除 </a></td>
+					<td><a href="@routes.AdminApplication.goodsDelete(goods.getPost().getId() )"> 削除 </a></td>
 
 				</tr>
 				}

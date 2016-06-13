@@ -55,4 +55,20 @@ public class AdminGoodsModelService {
 		}
 		return null;
 	}
+
+	/*
+	 *	削除
+	 *	@param  Long goodsId : コメントのID
+	 *	@return Goodsのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Goods> delete(Long goodsId){
+		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
+		if( !find.all().isEmpty() ){
+			Goods goods = find.ref(goodsId);
+			goods.delete();
+			return find.all();
+		}
+		return null;
+	}
 }

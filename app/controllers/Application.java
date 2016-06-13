@@ -52,9 +52,14 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
 
-
-    public static Result index(Integer page) {
-        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage()));
+    public static Result index(Integer page,String category) {
+        List<Post> postList;
+        if(category.equals("ALL")){
+            postList = PostModelService.use().getPostList(page);
+        }else{
+            postList = PostModelService.use().getPostListByCategory(page,category);
+        }
+        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category));
     }
 
     //ログイン画面
@@ -265,13 +270,16 @@ public class Application extends Controller {
     public static Result introduction(Long postId){
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
     	String loginId = session().get("loginId");
+
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
     	if( post.getComment() != null ){
-            Collections.reverse(post.getComment());
-    		return ok(introduction.render(loginId,post,commentForm));
+    		// コメント情報取得
+    		List<Comment> comment = CommentModelService.use().getCommentList(postId);
+            Collections.reverse(comment);
+    		return ok(introduction.render(loginId,post,commentForm,comment));
     	}else{
-    		return ok(introduction.render(loginId,null,commentForm));
+    		return ok(introduction.render(loginId,null,commentForm,null));
     	}
 
 
@@ -306,11 +314,17 @@ public class Application extends Controller {
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
 
+            // postにコメント情報を格納
+            Post updatePost = PostModelService.use().getPostListById(postId);
+            updatePost.getComment().add(comment);
+            updatePost.update();
+
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
         }else{
             // 入力にエラーがあった場合
-            Collections.reverse(post.getComment());
-            return ok(introduction.render(loginId,post,commentForm));
+            List<Comment> comment = CommentModelService.use().getCommentList(postId);
+            Collections.reverse(comment);
+            return ok(introduction.render(loginId,post,commentForm,comment));
         }
     }
 
@@ -350,5 +364,4 @@ public class Application extends Controller {
     		return ok(update_user.render(loginId,userForm,user));
     	}
     }
-
 }

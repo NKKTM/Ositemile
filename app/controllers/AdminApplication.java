@@ -14,6 +14,8 @@ import views.html.admin.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import play.data.Form;
+import play.db.ebean.Model.Finder;
+
 import static play.data.Form.*;
 
 import play.data.DynamicForm;
@@ -109,7 +111,6 @@ public class AdminApplication extends Controller {
 			}
 		}
 
-
 		// 投稿削除
 		List<Post> post = PostModelService.use().getPostListByUserId(userId);
 		if( post != null ){
@@ -118,9 +119,9 @@ public class AdminApplication extends Controller {
 			}
 		}
 
-
 		// ユーザー削除
 		List<User> user =  AdminUserModelService.use().delete(userId);
+
 		return ok(userList.render("",user,userSearchForm,bool));
 	}
 
@@ -143,8 +144,37 @@ public class AdminApplication extends Controller {
 		input = input.bindFromRequest(params);
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
-		List<Goods> user =  AdminGoodsModelService.use().search(goodsSearchForm.get().goodsName, goodsSearchForm.get().category,bool);
-		return ok(goodsList.render("",user,goodsSearchForm,bool));
+		List<Goods> goods =  AdminGoodsModelService.use().search(goodsSearchForm.get().goodsName, goodsSearchForm.get().category,bool);
+		return ok(goodsList.render("",goods,goodsSearchForm,bool));
+	}
+
+	// 削除
+	@Security.Authenticated(models.login.SecuredAdmin.class)
+	public static Result goodsDelete( Long postId ){
+		Form<AdminGoodsForm> goodsSearchForm = form(AdminGoodsForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+
+		// 商品削除
+		Goods item = GoodsModelService.use().getGoodsListByPostId(postId);
+		if( item != null ){
+			Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
+			item.delete();
+		}
+
+		// コメント削除
+		List<Comment> comment =  CommentModelService.use().getCommentList(postId);
+		if( comment != null ){
+			for(int i = 0; i < comment.size(); i++){
+				AdminCommentModelService.use().delete(comment.get(i).getId());
+			}
+		}
+
+		List<Goods> goods = GoodsModelService.use().getGoodsList();
+		return ok(goodsList.render("",goods,goodsSearchForm,bool));
 	}
 
 	//*******投稿********
@@ -167,6 +197,38 @@ public class AdminApplication extends Controller {
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
 		List<Post> post =  AdminPostModelService.use().search(postSearchForm.get().postTitle, postSearchForm.get().postComment,bool);
+		return ok(postList.render("",post,postSearchForm,bool));
+	}
+
+	// 削除
+	@Security.Authenticated(models.login.SecuredAdmin.class)
+	public static Result postDelete(Long postId){
+		Form<AdminPostForm> postSearchForm = form(AdminPostForm.class).bindFromRequest();
+		String[] params = { "orderby" };
+		DynamicForm input = Form.form();
+		input = input.bindFromRequest(params);
+		String on = input.data().get("orderby");
+		boolean bool = Boolean.valueOf(on);
+
+		// 商品削除
+		Goods goods = GoodsModelService.use().getGoodsListByPostId(postId);
+		if( goods != null ){
+			Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
+
+			goods.delete();
+			System.out.println("入った？");
+		}
+
+		// コメント削除
+		List<Comment> comment =  CommentModelService.use().getCommentList(postId);
+		if( comment != null ){
+			for(int i = 0; i < comment.size(); i++){
+				AdminCommentModelService.use().delete(comment.get(i).getId());
+			}
+		}
+
+		// 投稿削除
+		List<Post> post =  AdminPostModelService.use().delete(postId);
 		return ok(postList.render("",post,postSearchForm,bool));
 	}
 
