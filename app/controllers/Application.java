@@ -52,8 +52,14 @@ public class Application extends Controller {
 
 
 
-    public static Result index(Integer page) {
-        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage()));
+    public static Result index(Integer page,String category) {
+        List<Post> postList;
+        if(category.equals("ALL")){
+            postList = PostModelService.use().getPostList(page);
+        }else{
+            postList = PostModelService.use().getPostListByCategory(page,category);
+        }
+        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category));
     }
 
     //ログイン画面

@@ -65,9 +65,16 @@ public class PostModelService {
 	 *			失敗時：null
 	 *	@author Hatsune Kitajima
 	 */
-	public int getMaxPage(){
+	public int getMaxPage(String category){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.orderBy("date desc").findList();
+		List<Post> postList;
+		if(category.equals("ALL")){
+		//カテゴリがALLの場合
+			postList = find.orderBy("date desc").findList();
+		}else{
+		//カテゴリがそれ以外の場合
+			postList = find.where().ilike("goods.category", category).findList();	
+		}
 		int maxPage = postList.size()/LIMIT + 1;
 		System.out.println("maxPage："+maxPage);
 		return maxPage;
@@ -146,9 +153,10 @@ public class PostModelService {
 	 *	@param String category: カテゴリー
 	 *	@return Postのリスト
 	 *			失敗時；null
-	 *	@author Kotaro Nishida
+	 *	@author Kotaro Nishida -> ページング仕様に変更 @author Hatsune Kitajima
 	 */
-	public List<Post> getPostListByCategory( String categoryName ){
+	public List<Post> getPostListByCategory(Integer pageNumber, String categoryName){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;		
 		Finder<Long,Post> find = new Finder<Long ,Post>(Long.class,Post.class);
 		List<Post> postListSize = find.all();		// データーベースに入っているリストサイズ用
 		List<Post> postList = null;
@@ -158,9 +166,11 @@ public class PostModelService {
 			return null;
 		}
 		// カテゴリーの中身を調べる
-		for( int i = 0; i < postListSize.size(); i++ ){
-			postList = find.where().ilike("goods.getCategory(i)", categoryName).findList();
-		}
+		postList = find.where().ilike("goods.category", categoryName)
+							.orderBy("date desc")
+							.findPagingList(LIMIT)
+							.getPage(pageNum)
+							.getList();
 		return checkPost(postList);
 	}
 

@@ -1,4 +1,4 @@
-@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer)
+@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String)
 
 @num = @{932108L}
 
@@ -12,9 +12,12 @@
                 <li class="sidebar-brand">
                     カテゴリー
                 </li>
-                @for(category <- categoryList){
                     <li class="sidebar-category">
-                        <a href="#">@category</a>
+                        <a href="@routes.Application.index(1,"ALL")">ALL</a>
+                    </li>                
+                @for(categoryTmp <- categoryList){
+                    <li class="sidebar-category">
+                        <a href="@routes.Application.index(1,categoryTmp)">@categoryTmp</a>
                     </li>
                 }
             </ul>
@@ -43,7 +46,7 @@
 									<a href="/introduction/@post.getId()"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
 									<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
 									<p class="post-comment">@Html(post.getPostComment())</p>
-									<a class="category-label" href="#"><span class="label label-default">@post.getGoods().getCategory()</span></a>
+									<a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
 								</div>
 								<div class="panel-footer">
 									<p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
@@ -57,7 +60,7 @@
                     }
 
 				</div>
-                <p>@helper.pagenateForIndex(page,maxPage)</p>
+                <p>@helper.pagenateForIndex(page,maxPage,category)</p>
                     <!-- ページング  -->
             </div>
         </div>
