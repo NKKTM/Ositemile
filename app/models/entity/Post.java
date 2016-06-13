@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import play.data.validation.Constraints;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Pattern;
 import play.db.ebean.Model;
 
 @Entity
@@ -21,7 +24,13 @@ public class Post  extends Model{
 
 	@Id
 	private Long			id;					// ID
+	@Constraints.Required(message="必須項目です。")
+	@Pattern(value = "^[-0-9一-龠a-zA-Zァ-ヶぁ-ゞー 　!！?？（）()^_/><＞＜。、「」『』％&＆＝=〜￥¥#＃@＠*:：＊+＋\"”＿.]+$", message = "使用できるのは英,ひら,全角カナ,漢字のみです。")
+	@MaxLength(value = 150, message = "150文字以下で入力してください。")
 	private String 			postTitle;			// 投稿タイトル
+	@Constraints.Required(message="必須項目です。")
+	@Pattern(value = "^[-0-9一-龠a-zA-Zァ-ヶぁ-ゞー 　!！?？（）()^_/>＞＜。、「」『』％&＆＝=〜￥¥#＃@＠*:：＊+＋”＿.]+$", message = "使用できるのは英,ひら,全角カナ,漢字のみです。")
+	@MaxLength(value = 1000, message = "1000文字以下で入力してください。")
 	private String			postComment;		// 投稿したユーザーのコメント
 
 	@ManyToOne

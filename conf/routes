@@ -49,6 +49,7 @@ GET     /postCreate                 controllers.Application.postCreate()
 
 #ユーザーページ
 GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
+GET    /userPageByLoginId                   controllers.Application.getUserPageByLoginid(loginId:String)
 
 #ユーザー情報アップデート
 GET   /myProfileEdit:formatedUserId                  controllers.Application.updateUserForm(formatedUserId: Long)
