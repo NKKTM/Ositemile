@@ -33,6 +33,9 @@ public class User extends Model{
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private List<Post>		post;		// 投稿した情報
 
+	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	private List<Iine>		iine;		// いいねした情報	
+
 	/*
 	 *	デフォルトコンストラクタ
 	 *	@param なし
@@ -136,12 +139,20 @@ public class User extends Model{
 	}
 
 	// 投稿
+	public void setIine( List<Iine> iine ){
+		this.iine = iine;
+	}
+	public List<Iine> getIine(){
+		return iine;
+	}
+
+	// いいね
 	public void setPost( List<Post> post ){
 		this.post = post;
 	}
 	public List<Post> getPost(){
 		return post;
-	}
+	}	
 
 	// プロフィール
 	public void setProfile(String profile){
