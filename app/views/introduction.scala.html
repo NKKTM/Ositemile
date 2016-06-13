@@ -5,6 +5,8 @@
 
 @import helper._
 
+@num = @{932108L}
+
 @(loginId: String)
 
 @main(loginId) {
@@ -28,15 +30,16 @@
 		@*コメント表示*@
 		<div class="col-xs-12 col-sm-7 col-md-7 introduction-color-box">
 			<div class="introduction-postcommnet-box">
-				<span class="post-user">投稿者：@post.getUser().getUserName()さん</span>
-				<span class="post-date">@post.getDateStr()</span>
+				<div class="post-user">投稿者：<a href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></div>
+				<div class="post-date">@post.getDateStr()</div>
+				<div style="clear:both;"></div>
 				<h3 class="input-title">@post.getPostTitle()</h3>
 				<h4>@Html(post.getPostComment())</h4>
 			</div>
 
 
 			<div class="introduction-commnet-box ">
-				<h3>あなたもコメントしよう！！</h3>
+				<h3>気軽にコメントしてみよう！</h3>
 				@form(action = routes.Application.commentCreate()) {
 					@textarea(commentForm("comment"),args='_label->"あなたもコメントしよう！",'class->"form-control" ,'cols -> "80",'rows -> "3")
 					<input type="hidden" name="postId" value="@post.getId()"/>
@@ -48,14 +51,15 @@
 
 
 				<div class="introduction-commnet-title">
-					<h3>ーーコメントーー</h3>
+					<h3>みんなの反応</h3>
 					@if(commentList != null){
 						@for( comment<- commentList){
 							<hr class="introduction-hr">
 							<div class="introduction-commnet-box2 ">
 								<div class="introduction-commnet-box3 introduction-commnet">
-									@comment.getUser().getUserName()さん<br>
-									@Html(comment.getComment())
+									<span class="comment-date">@comment.getDateStr()</span>
+									<span class="comment-user"><a href="@routes.Application.userPage(comment.getUser().getId+num)">@comment.getUser().getUserName()</a></span>
+									<div class="comment-data">@Html(comment.getComment())</div>
 								</div>
 							</div>
 						}

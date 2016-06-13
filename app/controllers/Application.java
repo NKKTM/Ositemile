@@ -11,6 +11,7 @@ import static play.data.Form.*;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Collections;
 
@@ -50,8 +51,14 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
 
-    public static Result index(Integer page) {
-        return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
+    public static Result index(Integer page,String category) {
+        List<Post> postList;
+        if(category.equals("ALL")){
+            postList = PostModelService.use().getPostList(page);
+        }else{
+            postList = PostModelService.use().getPostListByCategory(page,category);
+        }
+        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category));
     }
 
     //ログイン画面
@@ -210,6 +217,7 @@ public class Application extends Controller {
         		item.setCategory(category);
         		post.setGoods(item);
                 post.setUser(user);
+                post.setDateStr(PostModelService.use().getDateString());
         		item.setPost(post);
         		item.save();
         		post.save();
@@ -226,11 +234,18 @@ public class Application extends Controller {
     	return redirect("/");
     }
 
-    //ユーザーページ *中の処理未実装
-    public static Result userPage(){
+    //ユーザーページ
+    public static Result userPage(Long formatedUserId){
+    	 Long userId = formatedUserId-932108L;
+    	 User user = UserModelService.use().getUserById(userId);
+    	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
+    	 int postListSize = 0;
+    	 if(postList!=null){
+    		 postListSize = postList.size();
+    	 }
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
-         return ok(user_page.render(loginId));
+         return ok(user_page.render(loginId,user,postList,postListSize));
     }
 
     // 商品ページ
@@ -253,7 +268,8 @@ public class Application extends Controller {
     }
 
     // コメント登録
-    public static Result commentCreate(){
+
+    public static Result commentCreate() throws ParseException{
         // sessionからloginId取得
         String loginId = session().get("loginId");
         // postIdからpostを取得
@@ -266,6 +282,7 @@ public class Application extends Controller {
         Form<CommentForm> commentForm = form(CommentForm.class).bindFromRequest();
 
         if( !commentForm.hasErrors() ){
+
             // エラーがない
         	System.out.println("入りました！！！");
             if(loginId == null){
@@ -273,8 +290,10 @@ public class Application extends Controller {
                 return redirect(controllers.routes.Application.login());
             }
             // コメント登録
+
             commentForm.get().comment = commentForm.get().comment.replaceAll("\n","<br />");
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
+            comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
 
             // postにコメント情報を格納
@@ -289,5 +308,40 @@ public class Application extends Controller {
             Collections.reverse(comment);
             return ok(introduction.render(loginId,post,commentForm,comment));
         }
+    }
+
+    //ユーザー情報編集のフォーム画面に遷移する
+    @Security.Authenticated(Secured.class)
+    public static Result updateUserForm(Long formatedUserId){
+    	String loginId = session().get("loginId");
+    	Long userId = formatedUserId-932108L;
+    	User user = UserModelService.use().getUserById(userId);
+    	Form<User> userForm = form(User.class).fill(user);
+
+    	return ok(update_user.render(loginId,userForm,user));
+    }
+
+    //ユーザー情報の編集を実行する
+    @Security.Authenticated(Secured.class)
+    public static Result DoUpdate(Long formatedUserId){
+    	String loginId = session().get("loginId");
+    	Long userId = formatedUserId-932108L;
+    	User user = UserModelService.use().getUserById(userId);
+    	Form<User> userForm = form(User.class).bindFromRequest();
+    	if(!userForm.hasErrors()){
+    		System.out.println("ユーザー編集バインド、エラーなし");
+    		User newUser = new User();
+	    	newUser.setUserName(userForm.get().getUserName());
+	    	newUser.setPassword(userForm.get().getPassword());
+	    	newUser.setLoginId(userForm.get().getLoginId());
+	    	newUser.setProfile(userForm.get().getProfile());
+	    	newUser.setDepartment(userForm.get().getDepartment());
+	    	newUser.setAdmin(userForm.get().getAdmin());
+	    	User editedUser = UserModelService.use().updateUser(user, newUser);
+	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
+    	}else{
+    		System.out.println("ユーザー編集バインド、エラーあり！！！");
+    		return ok(update_user.render(loginId,userForm,user));
+    	}
     }
 }

@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /		                    controllers.Application.index(page:Integer?=1)
+GET     /		                    controllers.Application.index(page:Integer?=1,category?="ALL")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -50,4 +50,8 @@ GET     /postInput                  controllers.Application.postInput()
 GET     /postCreate                 controllers.Application.postCreate()
 
 #ユーザーページ
-GET    /userPage                    controllers.Application.userPage()
+GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
+
+#ユーザー情報アップデート
+GET   /myProfileEdit:formatedUserId                  controllers.Application.updateUserForm(formatedUserId: Long)
+GET   /myProfileUpdate:formatedUserId                             controllers.Application.DoUpdate(formatedUserId: Long)
