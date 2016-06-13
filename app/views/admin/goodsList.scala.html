@@ -39,8 +39,7 @@
 					<td>@goods.getId()</td>
 					<td>@goods.getGoodsName</td>
 					<td>@goods.getCategory()</td>
-
-					<td><a href="#"> 削除 </a></td>
+					<td><a href="@routes.AdminApplication.goodsDelete(goods.getPost().getId() )"> 削除 </a></td>
 
 				</tr>
 				}

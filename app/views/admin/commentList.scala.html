@@ -28,6 +28,7 @@
 				<th class="col-md-2">コメントID</th>
 				<th class="col-md-2">コメント内容</th>
 				<th class="col-md-2">コメント投稿者</th>
+				<th class="col-md-2">投稿時間</th>
 				<th class="col-md-2">リンク</th>
 				<th class="col-md-2">削除</th>
 			</tr>
@@ -39,6 +40,7 @@
 					<td>@comment.getId()</td>
 					<td>@Html(comment.getComment().replaceAll("\n",""))</td>
 					<td>@comment.getUser().getUserName()</td>
+					<td>@comment.getDate()</td>
 
 					<td><a href="@routes.Application.introduction(comment.getPost().getId())">LINK</a></td>
 					<td><a href="@routes.AdminApplication.commentDelete(comment.getId())"> 削除 </a></td>

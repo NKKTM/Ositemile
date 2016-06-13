@@ -50,6 +50,20 @@ public class GoodsModelService {
 	}
 
 	/*
+	 *  postIdでグッズリストを取得
+	 *	@param  Long postId : 投稿ID
+	 *	@return goodsのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public Goods getGoodsListByPostId(Long postId){
+		System.out.println("postId："+postId);
+		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
+		System.out.println(find.all());
+		Goods goods = find.where("post.id = ' "+postId +"'").findUnique();
+		return goods;
+	}
+
+	/*
 	 *	IDでGoodsオブジェクト取得
 	 *	@param Long goodsId：商品ID
 	 *	@return Goodsオブジェクト

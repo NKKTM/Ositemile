@@ -50,7 +50,7 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
 
-    public static Result index(Integer page) {       
+    public static Result index(Integer page) {
         return ok(index.render(session().get("loginId"),PostModelService.use().getPostList(page),page,PostModelService.use().getMaxPage()));
     }
 
@@ -205,7 +205,7 @@ public class Application extends Controller {
         		String category = AmazonModelService.use().getCategory(elementRoot);
 
                 String loginId = session().get("loginId");
-                User user = UserModelService.use().getUserByLoginId(loginId);                
+                User user = UserModelService.use().getUserByLoginId(loginId);
 
         		item.setCategory(category);
         		post.setGoods(item);
@@ -237,13 +237,16 @@ public class Application extends Controller {
     public static Result introduction(Long postId){
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
     	String loginId = session().get("loginId");
+
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
     	if( post.getComment() != null ){
-            Collections.reverse(post.getComment());            
-    		return ok(introduction.render(loginId,post,commentForm));
+    		// コメント情報取得
+    		List<Comment> comment = CommentModelService.use().getCommentList(postId);
+            Collections.reverse(comment);
+    		return ok(introduction.render(loginId,post,commentForm,comment));
     	}else{
-    		return ok(introduction.render(loginId,null,commentForm));
+    		return ok(introduction.render(loginId,null,commentForm,null));
     	}
 
 
@@ -252,7 +255,7 @@ public class Application extends Controller {
     // コメント登録
     public static Result commentCreate(){
         // sessionからloginId取得
-        String loginId = session().get("loginId");  
+        String loginId = session().get("loginId");
         // postIdからpostを取得
         String[] params = { "postId" };
         DynamicForm input = Form.form();
@@ -261,7 +264,7 @@ public class Application extends Controller {
         Post post = PostModelService.use().getPostListById(postId);
         // commentform取得
         Form<CommentForm> commentForm = form(CommentForm.class).bindFromRequest();
-                   
+
         if( !commentForm.hasErrors() ){
             // エラーがない
         	System.out.println("入りました！！！");
@@ -274,12 +277,17 @@ public class Application extends Controller {
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             CommentModelService.use().save(comment);
 
+            // postにコメント情報を格納
+            Post updatePost = PostModelService.use().getPostListById(postId);
+            updatePost.getComment().add(comment);
+            updatePost.update();
+
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
         }else{
             // 入力にエラーがあった場合
-            Collections.reverse(post.getComment());                        
-            return ok(introduction.render(loginId,post,commentForm));
+            List<Comment> comment = CommentModelService.use().getCommentList(postId);
+            Collections.reverse(comment);
+            return ok(introduction.render(loginId,post,commentForm,comment));
         }
     }
-
 }

@@ -47,7 +47,7 @@ public class CommentModelService {
 	 */
 	public List<Comment> getCommnetList(){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
-		List<Comment> commentList = find.all();
+		List<Comment> commentList = find.orderBy("id").findList();
 		return commentList;
 	}
 
@@ -57,9 +57,9 @@ public class CommentModelService {
 	 *	@return コメントのリスト
 	 *	@author Kotaro Nishida
 	 */
-	public List<Comment> getCommentList(int postId){
+	public List<Comment> getCommentList(Long postId){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
-		return find.where().eq("post.getId()",postId).findList();
+		return find.where().eq("post.id",postId).orderBy("date").findList();
 	}
 
 	/*

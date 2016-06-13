@@ -118,4 +118,12 @@ public class Comment  extends Model{
 		return this.dateStr;
 	}
 
+	//日付
+	public void setDate(Date date){
+		this.date = date;
+	}
+	public Date getDate(){
+		return this.date;
+	}
+
 }

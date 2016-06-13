@@ -29,7 +29,6 @@
 				<th class="col-md-2">投稿タイトル</th>
 				<th class="col-md-2">投稿コメント</th>
 				<th class="col-md-2">リンク</th>
-				<th class="col-md-2">編集</th>
 				<th class="col-md-2">削除</th>
 			</tr>
 		</thead>
@@ -42,8 +41,7 @@
 					<td>@post.getPostComment()</td>
 
 					<td><a href="@routes.Application.introduction(post.getId())">LINK</a></td>
-					<td><a href="#">編集</a></td>
-					<td><a href="#"> 削除 </a></td>
+					<td><a href="@routes.AdminApplication.postDelete(post.getId())"> 削除 </a></td>
 
 				</tr>
 				}

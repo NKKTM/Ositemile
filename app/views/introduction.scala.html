@@ -1,5 +1,5 @@
 @* @(goods: models.entity.Goods, post : model.entity.Post, commentForm: Form[models.form.CommentForm]) *@
-@(loginId: String, post : models.entity.Post , commentForm: Form[models.form.CommentForm])
+@(loginId: String, post : models.entity.Post , commentForm: Form[models.form.CommentForm],commentList : List[models.entity.Comment])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
@@ -23,7 +23,7 @@
 				<h5 class="item-name">@post.getGoods().getGoodsName()</h5>
 				<a class="btn btn-default rakuten-button" target="_blank" href="@post.getGoods().getAmazonUrl()" role="button">楽天の商品ページへ</a>
 			</div>
-		</div>		
+		</div>
 
 		@*コメント表示*@
 		<div class="col-xs-12 col-sm-7 col-md-7 introduction-color-box">
@@ -49,8 +49,8 @@
 
 				<div class="introduction-commnet-title">
 					<h3>ーーコメントーー</h3>
-					@if(post.getComment() != null){
-						@for( comment<- post.getComment()){
+					@if(commentList != null){
+						@for( comment<- commentList){
 							<hr class="introduction-hr">
 							<div class="introduction-commnet-box2 ">
 								<div class="introduction-commnet-box3 introduction-commnet">

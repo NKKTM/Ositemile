@@ -33,8 +33,10 @@ GET		/userSearch				controllers.AdminApplication.userSearch()
 GET		/userDelete/:userId			controllers.AdminApplication.userDelete(userId:Long)
 GET		/goodsList				controllers.AdminApplication.goodsList()
 GET		/goodsSearch			controllers.AdminApplication.goodsSearch()
+GET		/goodsDelete/:postId			controllers.AdminApplication.goodsDelete(postId:Long)
 GET		/postList				controllers.AdminApplication.postList()
 GET		/postSearch				controllers.AdminApplication.postSearch()
+GET		/postDelete/:postId		controllers.AdminApplication.postDelete(postId:Long)
 
 
 
