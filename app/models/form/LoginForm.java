@@ -5,16 +5,25 @@
 package models.form;
 
 import play.data.validation.*;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.MinLength;
+import play.data.validation.Constraints.Pattern;
 import play.db.ebean.*;
 import java.security.NoSuchAlgorithmException;
 import models.entity.User;
 
 public class LoginForm {
-	
-	@Constraints.Required	
+
+	@Constraints.Required
+	@Pattern(value = "^[a-zA-Z0-9]+$", message = "半角英数字のみで入力してください。")
+	@MinLength(value = 4, message = "4文字以上入力してください。")
+	@MaxLength(value = 16, message = "16文字以下で入力してください。")
 	public String loginId;
 
-	@Constraints.Required	
+	@Constraints.Required
+	@Pattern(value = "^[a-zA-Z0-9]+$", message = "半角英数字のみで入力してください。")
+	@MinLength(value = 4, message = "4文字以上入力してください。")
+	@MaxLength(value = 16, message = "16文字以下で入力してください。")
 	public String password;
 
 

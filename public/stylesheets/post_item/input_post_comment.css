@@ -46,7 +46,9 @@
 }
 
 button.push-item-comment:hover{
-	background-color:#fd996f;
+	background-color:#ffb9a6;
+	color:#515151;
+	opacity:0.7;
 }
 
 .post-item-image{
@@ -58,6 +60,7 @@ button.push-item-comment:hover{
 
 .input-title{
 	padding: .25em 0 .25em .75em;
+	padding-left:9px;
     border-left: 6px solid #ffb9a6;
     color: gray;
     font-weight: 500;

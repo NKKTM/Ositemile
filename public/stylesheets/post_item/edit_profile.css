@@ -1,0 +1,69 @@
+@CHARSET "UTF-8";
+.profile-form{
+	padding:30px;
+}
+
+.edit_user_form{
+	border-radius:5px;
+	border:solid 1px #a1a0a2;
+	margin-bottom:10px;
+
+}
+
+.edit_user_text{
+	height: 35px;
+	width:200px;
+}
+
+.edit-user-title{
+	padding: .25em 0 .25em .75em;
+	padding-left:9px;
+    border-left: 6px solid #ffb9a6;
+    color: gray;
+    font-weight: 500;
+}
+
+.edit-name-caution{
+	 font-size: 70%;
+}
+
+.edit-user_btn{
+	background-color: #ffb9a6;
+    color: #515151;
+    margin-top: 20px;
+    margin-right: 5%;
+    width: 25%;
+    height: 40px;
+    margin-top:5px;
+}
+
+button.edit-user_btn:hover{
+	background-color: #ffb9a6;
+	color: #515151;
+	opacity:0.7;
+}
+
+.edit-user-head{
+	width:300px;
+	margin-top:0px;
+	margin-bottom:20px;
+    color: gray;
+	border-bottom: 1px solid #ccc;
+	margin-bottom:35px;
+}
+
+.edit-user-head:first-letter {
+	font-size:30px;
+}
+
+@media (min-width: 992px){
+.edit_user_textarea{
+	margin-right:50px;
+}
+
+.profile-form{
+	padding-right:400px;
+	padding-left:50px;
+}
+
+}
