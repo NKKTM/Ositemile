@@ -158,14 +158,11 @@ public class AdminApplication extends Controller {
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
 
-		System.out.println("投稿ID:"+postId);
-
 		// 商品削除
 		Goods item = GoodsModelService.use().getGoodsListByPostId(postId);
 		if( item != null ){
 			Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 			item.delete();
-			System.out.println("入った？");
 		}
 
 		// コメント削除
