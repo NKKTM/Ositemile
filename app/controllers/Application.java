@@ -219,7 +219,7 @@ public class Application extends Controller {
     				return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
     			}
         		String postComment = postForm.get().getPostComment();
-        		postComment = postComment.replaceAll("\n", "<br>");
+        		postComment = PostModelService.use().sanitizeString(postComment);
         		Post post = new Post(postForm.get().getPostTitle(),postComment);
         		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
@@ -370,7 +370,7 @@ public class Application extends Controller {
                 return redirect(controllers.routes.Application.login());
             }
             // コメント登録
-            commentForm.get().comment = commentForm.get().comment.replaceAll("\n","<br />");
+            commentForm.get().comment = PostModelService.use().sanitizeString(commentForm.get().comment);
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
@@ -402,7 +402,7 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
     	User user = UserModelService.use().getUserById(userId);
-    	user.setProfile(user.getProfile().replaceAll("<br />","\n"));
+    	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
     	Form<User> userForm = form(User.class).fill(user);
 
     	return ok(update_user.render(loginId,userForm,user));
@@ -421,7 +421,7 @@ public class Application extends Controller {
 	    	newUser.setUserName(userForm.get().getUserName());
 	    	newUser.setPassword(userForm.get().getPassword());
 	    	newUser.setLoginId(userForm.get().getLoginId());
-	    	String profile = userForm.get().getProfile().replaceAll("\n","<br />");
+	    	String profile = PostModelService.use().sanitizeString(userForm.get().getProfile());
 	    	newUser.setProfile(profile);
 	    	newUser.setDepartment(userForm.get().getDepartment());
 	    	newUser.setAdmin(userForm.get().getAdmin());
