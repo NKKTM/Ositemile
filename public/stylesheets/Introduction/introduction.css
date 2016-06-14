@@ -16,7 +16,7 @@
 .post-user{
     float: left;
 }
-.post-user a, .comment-user a{
+.post-user a, .comment-user a, .iineBtn a{
     color: gray;
     font-weight: 500;        
 }
@@ -200,7 +200,7 @@ button.push-item-comment:hover{
     text-align: right;             
 }
 
-#iineBtn{
+.iineBtn button{
     font-size: 20px;
     text-align: right;
     color: #ffb9a6;
@@ -210,6 +210,6 @@ button.push-item-comment:hover{
     outline: none;
 }
 
-#iineBtn:hover{
+.iineBtn button:hover{
     background-color: #eee;    
 }

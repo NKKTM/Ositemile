@@ -1,0 +1,9 @@
+@(loginId:String, iineList: List[models.entity.Iine])
+
+@import helper._
+
+@main(loginId) {
+	@for(iine <- iineList){
+		<div>@iine.getUser().getUserName()</div>
+	}
+}

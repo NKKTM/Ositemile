@@ -1,5 +1,4 @@
-@* @(goods: models.entity.Goods, post : model.entity.Post, commentForm: Form[models.form.CommentForm]) *@
-@(loginId: String, post : models.entity.Post , commentForm: Form[models.form.CommentForm],commentList : List[models.entity.Comment])
+@(loginId: String, post : models.entity.Post , commentForm: Form[models.form.CommentForm],commentList : List[models.entity.Comment], iine: Boolean, iineList: List[models.entity.Iine])
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
@@ -37,7 +36,22 @@
 				<div style="clear:both;"></div>
 				<h3 class="input-title">@post.getPostTitle()</h3>
 				<h4>@Html(post.getPostComment())</h4>
-				<div class="iineBtn"><button id="iineBtn" value="false">☆</button>いいね</div>
+				@if(loginId == null){
+					<div class="iineBtn"><button id="iineBtnNanashi">☆</button>
+						<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
+					</div>					
+				}else{
+					@if(iine == false){
+						<div class="iineBtn"><button id="iineBtn" value="false">☆</button>
+							<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
+						</div>
+					}
+					@if(iine == true){
+						<div class="iineBtn"><button id="iineBtn" value="true">★</button>
+							<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
+						</div>				
+					}
+				}
 			</div>
 
 
