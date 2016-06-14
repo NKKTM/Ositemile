@@ -44,6 +44,9 @@ GET		/postDelete/:postId		controllers.AdminApplication.postDelete(postId:Long)
 GET		/introduction/:postId		controllers.Application.introduction(postId:Long)
 GET		/commentCreate				controllers.Application.commentCreate()
 
+# いいねボタン
+POST	/iineBtn/:postId				controllers.Application.iineBtn(postId:Long)
+
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
 GET     /postInput                  controllers.Application.postInput()

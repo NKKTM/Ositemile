@@ -18,6 +18,10 @@ import java.util.Collections;
 import org.w3c.dom.*;
 import org.w3c.dom.Element;
 
+
+import play.libs.Json;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import play.data.DynamicForm;
@@ -281,12 +285,40 @@ public class Application extends Controller {
     	}else{
     		return ok(introduction.render(loginId,null,commentForm,null));
     	}
+    }
 
+    // いいねJSONデータの作成
+    public static Result iineBtn(Long postId) {
+        String iineBtn = request().body().asFormUrlEncoded().get("iineBtn")[0];
+        ObjectNode result = Json.newObject();
+        //loginIdを取得
+        String loginId = session().get("loginId");
+        //ユーザーとPOSTを取得
+        User user = UserModelService.use().getUserByLoginId(loginId);
+        Post post = PostModelService.use().getPostListById(postId);
 
+        if (iineBtn != null) {
+        // いいねボタンの値が取得できた時
+            if(iineBtn.equals("false")){
+            // いいねボタンの値がfalseのとき（いいね保存）
+                result.put("iineBtn", "true");
+                Iine iine = new Iine(post,user);
+                iine.save();
+            }else if(iineBtn.equals("true")){
+            // いいねボタンの値がtrueのとき（いいね削除）
+                result.put("iineBtn", "false");
+                Iine iine = IineModelService.use().getCommetById(post.getId(),user.getId());
+                iine.delete();
+            }
+            return ok(result);
+        } else {
+        // いいねボタンの値が取得できなかった時
+            result.put("iineBtn", "エラー");
+            return badRequest(result);
+        }
     }
 
     // コメント登録
-
     public static Result commentCreate() throws ParseException{
         // sessionからloginId取得
         String loginId = session().get("loginId");

@@ -45,6 +45,9 @@ public class Post  extends Model{
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
 	private List<Comment>	comment;			// コメント
 
+	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
+	private List<Iine>	iine;			// コメント	
+
 	private String          dateStr;            //画面に表示する日付のString
 	private Date			date;				// 日付
 
@@ -151,6 +154,14 @@ public class Post  extends Model{
 	public List<Comment> getComment(){
 		return comment;
 	}
+
+	// いいね
+	public void setIine(List<Iine> iine){
+		this.iine = iine;
+	}
+	public List<Iine> getIine(){
+		return iine;
+	}	
 
 	// 投稿コメント
 	public void setPostComment(String postComment){
