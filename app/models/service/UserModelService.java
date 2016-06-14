@@ -140,4 +140,22 @@ public class UserModelService {
 		return oldUser;
 	}
 
+	/*
+	 * 重複チェックに使用
+	 * loginIdを引数に渡し、そのユーザーがすでに存在したらtrue,そうでなければfalse
+	 * @param loginId
+	 * @return boolean
+	 * @author yuki kawakmi
+	 */
+	public boolean checkLoginId(String loginId){
+		User u = getUserByLoginId(loginId);
+		if(u != null){
+			//すでにユーザーが存在するとき
+			return true;
+		}else{
+			//ユーザーが存在しないとき
+			return false;
+		}
+	}
+
 }

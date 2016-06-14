@@ -59,3 +59,6 @@ GET    /userPageByLoginId                   controllers.Application.getUserPageB
 #ユーザー情報アップデート
 GET   /myProfileEdit:formatedUserId                  controllers.Application.updateUserForm(formatedUserId: Long)
 GET   /myProfileUpdate:formatedUserId                             controllers.Application.DoUpdate(formatedUserId: Long)
+
+#ポストの検索
+GET   /index/:page/                  controllers.Application.searchPostBykeyword(page:Integer)

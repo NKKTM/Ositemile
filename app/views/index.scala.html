@@ -1,4 +1,6 @@
-@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String)
+@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
+@import helper._
 
 @num = @{932108L}
 
@@ -14,7 +16,7 @@
                 </li>
                     <li class="sidebar-category">
                         <a href="@routes.Application.index(1,"ALL")">ALL</a>
-                    </li>                
+                    </li>
                 @for(categoryTmp <- categoryList){
                     <li class="sidebar-category">
                         <a href="@routes.Application.index(1,categoryTmp)">@categoryTmp</a>
@@ -27,13 +29,21 @@
         <!-- コンテント -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-            	<div class="content-info-label">
-	                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">カテゴリー</a>
-                    @if(category.equals("ALL")){
-                        <span>　新着記事</span>
-                    }else{
-                        <span>　@category</span>                    
-                    }
+            	<div class="row sampleRow categoryInfoBox">
+            		<div class="col-xs-12 col-sm-6 col-md-6 categoryInfo">
+		                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">カテゴリー</a>
+	                    @if(category.equals("ALL")){
+	                        <span>　新着記事</span>
+	                    }else{
+	                        <span>　@category</span>
+	                    }
+	                </div>
+	                <div class="col-xs-12 col-sm-6 col-md-6">
+                   @form(action=routes.Application.searchPostBykeyword(1),'enctype->"multipart/form-data",'class->"searchPostFrom"){
+                   		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
+                   		<button type="submit" class="btn btn-default keyword">検索</button>
+                   }
+                   </div>
                 </div>
                 <div class="row sampleRow">
 

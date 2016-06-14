@@ -327,3 +327,31 @@ a.edit-user-btn:hover{
     color: gray;
 	opacity:0.7;
 }
+
+.error{
+	color:#ff7b58;
+}
+
+.searchPostFrom{
+	float:left;
+}
+
+.searchPostFrom > input{
+	height:34px;
+	border-radius:4px;
+	border:solid 1px #c1c0c2;
+}
+
+.categoryInfoBox{
+	margin-bottom:15px;
+}
+
+.categoryInfo{
+	margin-bottom:15px;
+}
+
+@media (min-width: 992px){
+	.searchPostFrom{
+		float:right;
+	}
+}

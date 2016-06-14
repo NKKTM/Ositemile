@@ -1,6 +1,6 @@
-@(registerForm: Form[models.form.RegisterForm])
+@(registerForm: Form[models.form.RegisterForm],message: String)
 
-@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }  
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
 @import helper._
 
@@ -16,7 +16,12 @@
           <p>ユーザー名</p>
       	@inputText(registerForm("userName"))<br>
           <p>ログインID</p>
-        @inputText(registerForm("loginId"))<br>  
+
+          @if(message.equals("このIDはすでに使われています。")){
+          	<div class="error">@message</div>
+          }
+
+        @inputText(registerForm("loginId"))<br>
           <p>Password</p>
       	@inputPassword(registerForm("password"))
           <p class="submit"><input type="submit" value="登録"></p>

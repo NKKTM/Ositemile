@@ -269,4 +269,25 @@ public class PostModelService {
 		s = s.replaceAll("<br />","\n");
 		return s;
 	}
+
+	/*
+	 *トップページの投稿検索
+	 *@param string キーワード
+	 *@return String　list<Post>
+	 *@author yuki kawakami
+	 */
+
+	public List<Post> searchPostByKeyword(String keyword,Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
+										+"postComment LIKE '%"+keyword+"%'"+" OR "
+										+"user.userName LIKE '%"+keyword+"%'"+" OR "
+										+"goods.goodsName LIKE '%"+keyword+"%'")
+									.orderBy("date desc")
+									.findPagingList(LIMIT)
+									.getPage(pageNum)
+									.getList();
+		return postList;
+	}
 }
