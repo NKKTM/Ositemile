@@ -213,7 +213,7 @@ public class Application extends Controller {
     				return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
     			}
         		String postComment = postForm.get().getPostComment();
-        		postComment = postComment.replaceAll("\n", "<br>");
+        		postComment = PostModelService.use().sanitizeString(postComment);
         		Post post = new Post(postForm.get().getPostTitle(),postComment);
         		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);

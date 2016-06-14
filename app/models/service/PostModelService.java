@@ -73,7 +73,7 @@ public class PostModelService {
 			postList = find.orderBy("date desc").findList();
 		}else{
 		//カテゴリがそれ以外の場合
-			postList = find.where().ilike("goods.category", category).findList();	
+			postList = find.where().ilike("goods.category", category).findList();
 		}
 		int maxPage = postList.size()/LIMIT + 1;
 		System.out.println("maxPage："+maxPage);
@@ -156,7 +156,7 @@ public class PostModelService {
 	 *	@author Kotaro Nishida -> ページング仕様に変更 @author Hatsune Kitajima
 	 */
 	public List<Post> getPostListByCategory(Integer pageNumber, String categoryName){
-		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;		
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long,Post> find = new Finder<Long ,Post>(Long.class,Post.class);
 		List<Post> postListSize = find.all();		// データーベースに入っているリストサイズ用
 		List<Post> postList = null;
@@ -235,5 +235,22 @@ public class PostModelService {
         Date date = nowDate.parse(formatedDate);
         String dateString = nowDate.format(date).toString();
         return dateString;
+	}
+
+	/*
+	 * 文字列のサニタイズ
+	 * @param String サニタイズしたい文字列
+	 * @return String　サニタイズ後の文字列
+	 * @author yuki kawakami
+	 */
+
+	public String sanitizeString(String s){
+		s = s.replaceAll("&", "&amp;");
+		s = s.replaceAll("\"", "&quot;");
+		s = s.replaceAll("'", "&#39;");
+		s = s.replaceAll("<", "&lt;");
+		s = s.replaceAll(">", "&gt;");
+		s = s.replaceAll("\n", "<br>");
+		return s;
 	}
 }
