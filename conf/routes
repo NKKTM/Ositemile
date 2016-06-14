@@ -44,6 +44,9 @@ GET		/postDelete/:postId		controllers.AdminApplication.postDelete(postId:Long)
 GET		/introduction/:postId		controllers.Application.introduction(postId:Long)
 GET		/commentCreate				controllers.Application.commentCreate()
 
+# いいねボタン
+POST	/iineBtn/:postId				controllers.Application.iineBtn(postId:Long)
+
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
 GET     /postInput                  controllers.Application.postInput()
@@ -51,6 +54,7 @@ GET     /postCreate                 controllers.Application.postCreate()
 
 #ユーザーページ
 GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
+GET    /userPageByLoginId                   controllers.Application.getUserPageByLoginid(loginId:String)
 
 #ユーザー情報アップデート
 GET   /myProfileEdit:formatedUserId              controllers.Application.updateUserForm(formatedUserId: Long)

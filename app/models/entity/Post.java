@@ -14,7 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Column;
 
+import play.data.validation.Constraints;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Pattern;
 import play.db.ebean.Model;
 
 @Entity
@@ -22,7 +26,13 @@ public class Post  extends Model{
 
 	@Id
 	private Long			id;					// ID
+	@Constraints.Required(message="必須項目です。")
+	@MaxLength(value = 150, message = "150文字以下で入力してください。")
 	private String 			postTitle;			// 投稿タイトル
+
+	@Column(columnDefinition="text")
+	@Constraints.Required(message="必須項目です。")
+	@MaxLength(value = 1000, message = "1000文字以下で入力してください。")
 	private String			postComment;		// 投稿したユーザーのコメント
 
 	@OneToOne
@@ -34,6 +44,9 @@ public class Post  extends Model{
 
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
 	private List<Comment>	comment;			// コメント
+
+	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
+	private List<Iine>	iine;			// コメント	
 
 	private String          dateStr;            //画面に表示する日付のString
 	private Date			date;				// 日付
@@ -141,6 +154,14 @@ public class Post  extends Model{
 	public List<Comment> getComment(){
 		return comment;
 	}
+
+	// いいね
+	public void setIine(List<Iine> iine){
+		this.iine = iine;
+	}
+	public List<Iine> getIine(){
+		return iine;
+	}	
 
 	// 投稿コメント
 	public void setPostComment(String postComment){

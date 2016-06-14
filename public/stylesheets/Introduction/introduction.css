@@ -195,3 +195,21 @@ button.push-item-comment:hover{
 .rakuten-button{
     color:gray;
 }
+
+.iineBtn{
+    text-align: right;             
+}
+
+#iineBtn{
+    font-size: 20px;
+    text-align: right;
+    color: #ffb9a6;
+    background-color:#fafafa;
+    background:none;
+    border:0;
+    outline: none;
+}
+
+#iineBtn:hover{
+    background-color: #eee;    
+}

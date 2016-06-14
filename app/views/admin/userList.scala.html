@@ -1,6 +1,8 @@
 @(loginId: String,userList: List[models.entity.User],userForm:Form[models.form.admin.AdminUserForm],boo:Boolean)
 @import helper._
 
+@num = @{932108L}
+
 @main_for_admin(""){
 	<h1 id="homeTitle">ユーザー一覧</h1>
 	<div id="actions">
@@ -29,7 +31,7 @@
 				<th class="col-md-2">ユーザー名</th>
 				<th class="col-md-2">ログインID</th>
 				<th class="col-md-2">リンク</th>
-				<th class="col-md-2">編集</th>
+				<th class="col-md-2">管理権限</th>
 				<th class="col-md-2">削除</th>
 			</tr>
 		</thead>
@@ -40,9 +42,8 @@
 					<td>@user.getId()</td>
 					<td>@user.getUserName()</td>
 					<td>@user.getLoginId()</td>
-
-					@*<td><a href="@routes.Application.userPage()">LINK</a></td>*@
-					<td><a href="#">編集</a></td>
+					<td><a href="@routes.Application.userPage(user.getId()+num)">LINK</a></td>
+					<td>@user.getAdmin()</td>
 					<td><a href="@routes.AdminApplication.userDelete(user.getId())"> 削除 </a></td>
 
 				</tr>

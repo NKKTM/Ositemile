@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Ositemile</title>
+<link rel="icon" type="image/png" href="@routes.Assets.at("images/ositemile04.png")" sizes="32x32">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +14,19 @@
 <!-- 自作css -->
 <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
 <link href="@routes.Assets.at("stylesheets/simple-sidebar.css")" rel="stylesheet">
-
+<!-- js読み込み -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<!-- スライドバーの動き用js -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </head>
 <body>
@@ -40,7 +53,7 @@
                     <li class="nav-username"><p>名無しのからあげ さん</p></li>
                     <li><a href="@routes.Application.login()">ログイン</a></li>
                 }else{
-                    <li class="nav-username"><p>@loginId さん</p></li>
+                    <li class="nav-username"><a href="@routes.Application.getUserPageByLoginid(loginId)">@loginId さん</a></li>
                     <li><a href="@routes.Application.logout()">ログアウト</a></li>
                 }
             </ul>
@@ -61,16 +74,5 @@
   </div>
 </footer> -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
-<!-- スライドバーの動き用js -->
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
 </body>
 </html>

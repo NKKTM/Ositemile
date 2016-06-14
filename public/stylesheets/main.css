@@ -315,3 +315,15 @@ hr{
 .no-post{
 	color:gray;
 }
+
+.edit-user-btn{
+	background-color: #ffb9a6;
+    color: gray;
+    border:0px;
+}
+
+a.edit-user-btn:hover{
+	background-color: #ffb9a6;
+    color: gray;
+	opacity:0.7;
+}

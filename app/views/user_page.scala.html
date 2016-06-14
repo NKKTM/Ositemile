@@ -19,7 +19,7 @@
                         <h5>部署：<span>@user.getDepartment()</span></h5>
                     </div>
                     <div class="panel-footer">
-                        @user.getProfile()
+                       @Html(user.getProfile())
                     </div>
                 </div>
                 <div class="panel panel-success post-count">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 @if(loginId == user.getLoginId()){
-                <a class="btn btn-default" href="@routes.Application.updateUserForm(num+user.getId)">プロフィール編集</a>
+                <a class="btn btn-default edit-user-btn" href="@routes.Application.updateUserForm(num+user.getId)">プロフィール編集</a>
                 }
             </div>
         </div>

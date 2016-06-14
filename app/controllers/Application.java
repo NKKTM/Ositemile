@@ -22,6 +22,11 @@ import org.w3c.dom.*;
 import org.w3c.dom.Element;
 
 import javax.imageio.ImageIO;
+
+
+import play.libs.Json;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import play.data.DynamicForm;
@@ -44,6 +49,10 @@ import views.html.admin.*;
 import play.mvc.Http.*;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
+
+import org.apache.commons.lang3.StringUtils;
+
+
 
 public class Application extends Controller {
 
@@ -98,7 +107,7 @@ public class Application extends Controller {
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
             System.out.println("DB登録に失敗しました！");
-            return redirect("/");
+            return ok(register.render(registerForm));
         }
     }
 
@@ -167,6 +176,9 @@ public class Application extends Controller {
         	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
         }else{
         	System.out.println("バインドエラーなし");
+        	if(StringUtils.isBlank(searchForm.get().searchWord)){
+        		return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
+        	}
 	        String searchWordStr = searchForm.get().searchWord;
 	        System.out.println("searchWordStr:"+searchWordStr);
 	        // URLと結合
@@ -208,10 +220,14 @@ public class Application extends Controller {
 
     		if(!postForm.hasErrors()){
     			//Goodsのフォームにも、postのフォームにもエラ-がない時
+
         		System.out.println("Goodsのフォームにも、postのフォームにもエラ-がない");
         		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
+        		if(StringUtils.isBlank(postForm.get().getPostTitle()) || StringUtils.isBlank(postForm.get().getPostComment())){
+    				return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
+    			}
         		String postComment = postForm.get().getPostComment();
-        		postComment = postComment.replaceAll("\n", "<br>");
+        		postComment = PostModelService.use().sanitizeString(postComment);
         		Post post = new Post(postForm.get().getPostTitle(),postComment);
         		String genreSearchUrl = RAKUTEN_GENRE_URL + goodsForm.get().getGenreId();
         		Element elementRoot = AmazonModelService.use().getElement(genreSearchUrl);
@@ -231,6 +247,8 @@ public class Application extends Controller {
         	}else{
         		//エラー：postのフォームにのみエラ-がある時
         		System.out.println("postフォームにのみエラーあり！！");
+        		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
+        		return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
         	}
 
     	}else{
@@ -245,6 +263,7 @@ public class Application extends Controller {
     	 Long userId = formatedUserId-932108L;
     	 User user = UserModelService.use().getUserById(userId);
     	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
+    	 Collections.reverse(postList);
     	 int postListSize = 0;
     	 if(postList!=null){
     		 postListSize = postList.size();
@@ -258,6 +277,13 @@ public class Application extends Controller {
         	 return ok(user_page.render(loginId,user,postList,postListSize,base64encodeing_str));
          }
          return ok(user_page.render(loginId,user,postList,postListSize,null));
+    }
+
+    //loginIdからユーザーページのリンクを作る
+    public static Result getUserPageByLoginid(String loginId){
+    	User user = UserModelService.use().getUserByLoginId(loginId);
+    	Long formatedUserId = user.getId() + 932108L;
+    	return redirect(controllers.routes.Application.userPage(formatedUserId));
     }
 
     // 商品ページ
@@ -275,12 +301,40 @@ public class Application extends Controller {
     	}else{
     		return ok(introduction.render(loginId,null,commentForm,null));
     	}
+    }
 
+    // いいねJSONデータの作成
+    public static Result iineBtn(Long postId) {
+        String iineBtn = request().body().asFormUrlEncoded().get("iineBtn")[0];
+        ObjectNode result = Json.newObject();
+        //loginIdを取得
+        String loginId = session().get("loginId");
+        //ユーザーとPOSTを取得
+        User user = UserModelService.use().getUserByLoginId(loginId);
+        Post post = PostModelService.use().getPostListById(postId);
 
+        if (iineBtn != null) {
+        // いいねボタンの値が取得できた時
+            if(iineBtn.equals("false")){
+            // いいねボタンの値がfalseのとき（いいね保存）
+                result.put("iineBtn", "true");
+                Iine iine = new Iine(post,user);
+                iine.save();
+            }else if(iineBtn.equals("true")){
+            // いいねボタンの値がtrueのとき（いいね削除）
+                result.put("iineBtn", "false");
+                Iine iine = IineModelService.use().getCommetById(post.getId(),user.getId());
+                iine.delete();
+            }
+            return ok(result);
+        } else {
+        // いいねボタンの値が取得できなかった時
+            result.put("iineBtn", "エラー");
+            return badRequest(result);
+        }
     }
 
     // コメント登録
-
     public static Result commentCreate() throws ParseException{
         // sessionからloginId取得
         String loginId = session().get("loginId");
@@ -328,6 +382,7 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
     	User user = UserModelService.use().getUserById(userId);
+    	user.setProfile(user.getProfile().replaceAll("<br />","\n"));
     	Form<User> userForm = form(User.class).fill(user);
 
     	return ok(update_user.render(loginId,userForm,user));
@@ -346,7 +401,8 @@ public class Application extends Controller {
 	    	newUser.setUserName(userForm.get().getUserName());
 	    	newUser.setPassword(userForm.get().getPassword());
 	    	newUser.setLoginId(userForm.get().getLoginId());
-	    	newUser.setProfile(userForm.get().getProfile());
+	    	String profile = userForm.get().getProfile().replaceAll("\n","<br />");
+	    	newUser.setProfile(profile);
 	    	newUser.setDepartment(userForm.get().getDepartment());
 	    	newUser.setAdmin(userForm.get().getAdmin());
 	    	newUser.setImageName(userForm.get().getImageName());
