@@ -273,7 +273,6 @@ public class Application extends Controller {
 
          if(user.getImageData() != null){
         	 String base64encodeing_str = Base64.getEncoder().encodeToString(user.getImageData());
-        	 System.out.println("エンコーディングされたで："+base64encodeing_str);
         	 return ok(user_page.render(loginId,user,postList,postListSize,base64encodeing_str));
          }
          return ok(user_page.render(loginId,user,postList,postListSize,null));

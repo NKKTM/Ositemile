@@ -17,14 +17,11 @@
 		<input name="password" type="hidden" value="@user.getPassword()">
 		<input name="loginId" type="hidden" value="@user.getLoginId()">
 
-		@textarea(userForm("profile"),args='_label->"コメント",'class->"" ,'cols -> "80",'rows -> "10")
-		@inputText(userForm("department"),args='_label->"部署",'class->"")
-		@inputText(userForm("imageName"),args='_label->"画像",'type->"file")
-
 		<h4 class="edit-user-title">部署</h4>
 		@inputText(userForm("department"),args='_label->"部署",'class->"edit_user_form edit_user_text")
 		<h4 class="edit-user-title">自己紹介</h4>
 		@textarea(userForm("profile"),args='_label->"コメント",'class->"form-control edit_user_form edit_user_textarea" ,'cols -> "80",'rows -> "10")
+		@inputText(userForm("imageName"),args='_label->"画像",'type->"file")
 
 		<input name="admin" type="hidden" value="@user.getAdmin()">
 		<br>
