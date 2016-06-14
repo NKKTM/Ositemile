@@ -52,16 +52,22 @@ public class MakeImage {
 		return baos.toByteArray();
 	}
 
-	/**
-
+	/*
+	*
 	* バイト列→イメージを作成
 	* @param bytes
 	* @return イメージデータ
+	* 作者：Kotaro Nishida
 	*/
 	public static BufferedImage getImageFromBytes(byte[] bytes) throws IOException{
-		ByteArrayInputStream baos = new ByteArrayInputStream(bytes);
-		BufferedImage img = ImageIO.read(baos);
+		BufferedImage img = null;
+		try{
+			ByteArrayInputStream baos = new ByteArrayInputStream(bytes);
+			img = ImageIO.read(baos);
+		}catch(Exception e){
+
+		}
+
 		return img;
 	}
-
 }
