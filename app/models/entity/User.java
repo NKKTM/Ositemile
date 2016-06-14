@@ -14,7 +14,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import play.db.ebean.Model;
-
+import play.data.validation.Constraints;
+import play.data.validation.Constraints.MaxLength;
 import play.db.ebean.*;
 
 
@@ -22,10 +23,13 @@ import play.db.ebean.*;
 public class User extends Model{
 	@Id
 	private Long			id;			// ID
+	@Constraints.Required(message="必須項目です。")
 	private String			userName;	// ユーザー名
 	private String			password;	// パスワード
 	private String			loginId;	// ログインID
+	@MaxLength(value = 150, message = "150文字以下で入力してください。")
 	private String			profile;	// プロフィール
+	@MaxLength(value = 30, message = "30文字以下で入力してください。")
 	private String			department;	// 部署名
 	private boolean			admin;		// 管理者権限を持つか否か
 
@@ -40,7 +44,7 @@ public class User extends Model{
 	private List<Post>		post;		// 投稿した情報
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
-	private List<Iine>		iine;		// いいねした情報	
+	private List<Iine>		iine;		// いいねした情報
 
 	/*
 	 *	デフォルトコンストラクタ
@@ -158,7 +162,7 @@ public class User extends Model{
 	}
 	public List<Post> getPost(){
 		return post;
-	}	
+	}
 
 	// プロフィール
 	public void setProfile(String profile){
@@ -184,6 +188,7 @@ public class User extends Model{
 		return admin;
 	}
 
+
 	// 画像データー
 	public void setImageData(byte[] image){
 		this.imageData = image;
@@ -199,4 +204,5 @@ public class User extends Model{
 	public String getImageName(){
 		return this.imageName;
 	}
+
 }

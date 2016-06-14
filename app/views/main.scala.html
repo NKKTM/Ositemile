@@ -16,18 +16,7 @@
 <link href="@routes.Assets.at("stylesheets/simple-sidebar.css")" rel="stylesheet">
 <!-- js読み込み -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<!-- スライドバーの動き用js -->
-<script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
-
 </head>
 <body>
 <nav class="navbar navbar-new" role="navigation">
@@ -73,6 +62,17 @@
     <p class="text-muted">Created By Team NKK </p>
   </div>
 </footer> -->
+
+<!-- スライドバーの動き用js -->
+<script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 
 </body>
 </html>
