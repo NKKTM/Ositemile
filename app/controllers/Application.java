@@ -10,17 +10,23 @@ import play.db.ebean.Model.Finder;
 
 import static play.data.Form.*;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.List;
+
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 
 import org.w3c.dom.*;
 import org.w3c.dom.Element;
+
+import javax.imageio.ImageIO;
 
 
 import play.libs.Json;
@@ -33,6 +39,8 @@ import play.data.DynamicForm;
 import views.html.*;
 import views.html.login.*;
 import views.html.post.*;
+import views.html.iine.*;
+
 
 import models.entity.*;
 import models.entity.Comment;
@@ -40,9 +48,14 @@ import models.form.*;
 import models.form.admin.AdminCommentForm;
 import models.login.*;
 import models.service.*;
+import models.MakeImage;
 import models.amazon.*;
 
 import views.html.admin.*;
+
+import play.mvc.Http.*;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -266,7 +279,12 @@ public class Application extends Controller {
     	 }
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
-         return ok(user_page.render(loginId,user,postList,postListSize));
+
+         if(user.getImageData() != null){
+        	 String base64encodeing_str = Base64.getEncoder().encodeToString(user.getImageData());
+        	 return ok(user_page.render(loginId,user,postList,postListSize,base64encodeing_str));
+         }
+         return ok(user_page.render(loginId,user,postList,postListSize,null));
     }
 
     //loginIdからユーザーページのリンクを作る
@@ -281,19 +299,32 @@ public class Application extends Controller {
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
     	String loginId = session().get("loginId");
 
+        // いいねが押されているかの判定
+        User user = UserModelService.use().getUserByLoginId(loginId);
+        boolean iine = false;
+        if(user != null){
+            //ログインしている時のみ実行
+            if(IineModelService.use().getIineById(postId,user.getId()) != null){
+                //いいねがすでに押されている場合はtrueにする
+                iine = true;
+            }
+        }
+
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
     	if( post.getComment() != null ){
     		// コメント情報取得
     		List<Comment> comment = CommentModelService.use().getCommentList(postId);
             Collections.reverse(comment);
-    		return ok(introduction.render(loginId,post,commentForm,comment));
+            List<Iine> iineList = IineModelService.use().getIineListByPostId(postId);
+    		return ok(introduction.render(loginId,post,commentForm,comment,iine,iineList));
     	}else{
-    		return ok(introduction.render(loginId,null,commentForm,null));
+    		return ok(introduction.render(loginId,null,commentForm,null,null,null));
     	}
     }
 
     // いいねJSONデータの作成
+    @Security.Authenticated(Secured.class)
     public static Result iineBtn(Long postId) {
         String iineBtn = request().body().asFormUrlEncoded().get("iineBtn")[0];
         ObjectNode result = Json.newObject();
@@ -304,30 +335,45 @@ public class Application extends Controller {
         Post post = PostModelService.use().getPostListById(postId);
 
         if (iineBtn != null) {
-        // いいねボタンの値が取得できた時
-            if(iineBtn.equals("false")){
-            // いいねボタンの値がfalseのとき（いいね保存）
+            // いいねボタンの値が取得できた時
+            if(iineBtn.equals("true")){
+                // いいねボタンの値がtrueのとき（いいね保存）
                 result.put("iineBtn", "true");
-                Iine iine = new Iine(post,user);
-                iine.save();
-            }else if(iineBtn.equals("true")){
-            // いいねボタンの値がtrueのとき（いいね削除）
+                if(IineModelService.use().getIineById(post.getId(),user.getId()) == null){
+                    //すでにこのpostIdとuserIdの組み合わせで登録されていなければセーブ
+                    Iine iine = new Iine(post,user);
+                    iine.save();
+                }
+            }else if(iineBtn.equals("false")){
+                // いいねボタンの値がfalseのとき（いいね削除）
                 result.put("iineBtn", "false");
-                Iine iine = IineModelService.use().getCommetById(post.getId(),user.getId());
+                Iine iine = IineModelService.use().getIineById(post.getId(),user.getId());
                 iine.delete();
             }
+            //いいね数を格納
+            int iineNum = IineModelService.use().getIineListByPostId(postId).size();
+            result.put("iineNum",iineNum);
             return ok(result);
         } else {
         // いいねボタンの値が取得できなかった時
             result.put("iineBtn", "エラー");
             return badRequest(result);
         }
+    } 
+
+    // いいねリスト
+    public static Result iineListForPost(Long postId) {
+        List<Iine> iineList = IineModelService.use().getIineListByPostId(postId);
+        String loginId = session().get("loginId");
+        return ok(iineListForPost.render(loginId,iineList));
     }
 
     // コメント登録
+    @Security.Authenticated(Secured.class)
     public static Result commentCreate() throws ParseException{
-        // sessionからloginId取得
+        // sessionからloginId,ユーザーを取得
         String loginId = session().get("loginId");
+        User user = UserModelService.use().getUserByLoginId(loginId);
         // postIdからpostを取得
         String[] params = { "postId" };
         DynamicForm input = Form.form();
@@ -346,7 +392,6 @@ public class Application extends Controller {
                 return redirect(controllers.routes.Application.login());
             }
             // コメント登録
-
             commentForm.get().comment = PostModelService.use().sanitizeString(commentForm.get().comment);
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
@@ -362,7 +407,14 @@ public class Application extends Controller {
             // 入力にエラーがあった場合
             List<Comment> comment = CommentModelService.use().getCommentList(postId);
             Collections.reverse(comment);
-            return ok(introduction.render(loginId,post,commentForm,comment));
+            //いいねの判定
+            boolean iine = false;
+            if(IineModelService.use().getIineById(post.getId(),user.getId()) != null){
+                //いいねがすでに押されている場合はtrueにする
+                iine = true;
+            }
+            List<Iine> iineList = IineModelService.use().getIineListByPostId(postId);
+            return ok(introduction.render(loginId,post,commentForm,comment,iine,iineList));
         }
     }
 
@@ -372,8 +424,24 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
     	User user = UserModelService.use().getUserById(userId);
+    	// ユーザーフォームの作成
+    	UserForm userFormtemp = new UserForm();
+    	System.out.println("++++++++++++++++++++++++"+Base64.getEncoder().encodeToString(user.getImageData()));
+    	userFormtemp.setUserForm(user.getUserName(),		// ユーザー名
+    							   user.getPassword(),		// パスワード
+    							   user.getLoginId(),		// ログインID
+    							   user.getAdmin(),			// 管理者かどうか
+    							   user.getProfile(),		// プロフィール
+    							   user.getDepartment(),	// 部署名
+    							   null,					// 画像名
+    							   user.getImageData(),		// 前回の画像データ
+    							   user.getImageName(),		// 前回の画像名
+    							   Base64.getEncoder().encodeToString(user.getImageData()));	// エンコーディングされたデータ
+    	Form<UserForm> userForm = form(UserForm.class).fill(userFormtemp);
+
+    	System.out.println("画像データー："+user.getImageData());
     	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
-    	Form<User> userForm = form(User.class).fill(user);
+    	//Form<User> userForm = form(User.class).fill(user);
 
     	return ok(update_user.render(loginId,userForm,user));
     }
@@ -384,25 +452,56 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
     	User user = UserModelService.use().getUserById(userId);
-    	Form<User> userForm = form(User.class).bindFromRequest();
+    	Form<UserForm> userForm = form(UserForm.class).bindFromRequest();
     	if(!userForm.hasErrors()){
     		System.out.println("ユーザー編集バインド、エラーなし");
     		User newUser = new User();
-	    	newUser.setUserName(userForm.get().getUserName());
-	    	newUser.setPassword(userForm.get().getPassword());
-	    	newUser.setLoginId(userForm.get().getLoginId());
-	    	if(StringUtils.isBlank(userForm.get().getProfile())){
-	    		newUser.setProfile("よろしくお願いします。");
-	    	}else{
-	    		String profile = PostModelService.use().sanitizeString(userForm.get().getProfile());
-	    		newUser.setProfile(profile);
+	    	newUser.setUserName(userForm.get().userName);
+	    	newUser.setPassword(userForm.get().password);
+	    	newUser.setLoginId(userForm.get().loginId);
+	    	String profile = PostModelService.use().sanitizeString(userForm.get().profile);
+	    	newUser.setProfile(profile);
+	    	newUser.setDepartment(userForm.get().department);
+	    	newUser.setAdmin(userForm.get().admin);
+
+	    	// 画像の保存
+	    	String imageName = newUser.getImageName();	// 画像の名前の保存
+	    	MultipartFormData body = request().body().asMultipartFormData();
+	    	FilePart image = body.getFile("imageName");
+
+	    	// 画像を指定したかどうか
+	    	String extensionName = "";		// 拡張子
+	    	if( image != null ){
+	    		// 新しく画像を指定された場合
+
+	    		// 拡張子の取得
+	    		newUser.setImageName(image.getFilename());
+	    		int lastDotPosition = image.getFilename().lastIndexOf(".");
+	    		extensionName = image.getFilename().substring(lastDotPosition + 1);
+
+	    		// 画像->byte型に変換
+	    		BufferedImage read;
+	    		try{
+		    		read = ImageIO.read(image.getFile());
+					newUser.setImageData(new MakeImage().getBytesFromImage(read,extensionName));
+					System.out.println(newUser.getImageData());
+	    		}catch(Exception e){
+
+	    		}
+
+	    	}else if( userForm.get().imageNameOld != null ){
+	    		// 画像指定されず前回の画像がある場合
+	    		newUser.setImageName(userForm.get().imageNameOld);
+	    		//newUser.setImageData(userForm.get().imageDataOld);
+	    		String encodingData = userForm.get().encoding;
+	    		System.out.println("************"+encodingData);
+	    		newUser.setImageData(Base64.getDecoder().decode(encodingData));
+	    		System.out.println(userForm.get().imageDataOld);
+	    	} else{
+	    		// 画像が選択せれず、前回のデーターもなかった場合
 	    	}
-	    	if(StringUtils.isBlank(userForm.get().getDepartment())){
-	    		newUser.setDepartment("未設定");
-	    	}else{
-	    		newUser.setDepartment(userForm.get().getDepartment());
-	    	}
-	    	newUser.setAdmin(userForm.get().getAdmin());
+
+
 	    	User editedUser = UserModelService.use().updateUser(user, newUser);
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{
