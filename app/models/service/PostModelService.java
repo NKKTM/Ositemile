@@ -237,20 +237,36 @@ public class PostModelService {
         return dateString;
 	}
 
+
 	/*
 	 * 文字列のサニタイズ
 	 * @param String サニタイズしたい文字列
 	 * @return String　サニタイズ後の文字列
 	 * @author yuki kawakami
 	 */
-
 	public String sanitizeString(String s){
 		s = s.replaceAll("&", "&amp;");
 		s = s.replaceAll("\"", "&quot;");
 		s = s.replaceAll("'", "&#39;");
 		s = s.replaceAll("<", "&lt;");
 		s = s.replaceAll(">", "&gt;");
-		s = s.replaceAll("\n", "<br>");
+		s = s.replaceAll("\n", "<br />");
+		return s;
+	}
+
+	/*
+	 *サニタイズされた文字列を元の文字列に戻す
+	 *@param String サニタイズされた文字列
+	 *@return String　元の文字列
+	 *@author yuki kawakami
+	 */
+	public String reverseSanitize(String s){
+		s = s.replaceAll("&amp;","&");
+		s = s.replaceAll("&quot;","\"");
+		s = s.replaceAll("&#39;","'");
+		s = s.replaceAll("&lt;","<");
+		s = s.replaceAll("&gt;",">");
+		s = s.replaceAll("<br />","\n");
 		return s;
 	}
 }

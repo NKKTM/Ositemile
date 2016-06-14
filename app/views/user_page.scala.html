@@ -46,7 +46,7 @@
                         <div class="panel-heading">
                             <p>@post.getDateStr()</p>
                             <h4>@post.getPostTitle()</h4>
-                            <a href="#"></a>
+                            <a href="/introduction/@post.getId()"></a>
                         </div>
                         <div class="panel-body">
 
@@ -55,10 +55,10 @@
                             <div>
                             	@post.getPostComment()
                             </div>
-                            <a class="category-label" href="#"><span class="label label-default">@post.getGoods().getCategory()</span></a>
+                            <a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
                         </div>
                         <div class="panel-footer">
-                            <p>投稿者：<a class="contributor" href="#">@post.getUser().getUserName()</a></p>
+                            <p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
                         </div>
                     </div>
                 </div>
