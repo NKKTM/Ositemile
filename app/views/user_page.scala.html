@@ -58,7 +58,7 @@
                             <img class="post-img" src="@post.getGoods().getImageUrl()">
 							<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
                             <div>
-                            	@post.getPostComment()
+                            	@Html(post.getPostComment())
                             </div>
                             <a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
                         </div>

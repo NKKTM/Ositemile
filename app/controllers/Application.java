@@ -6,6 +6,8 @@ import play.*;
 import play.mvc.*;
 
 import play.data.Form;
+import play.db.ebean.Model.Finder;
+
 import static play.data.Form.*;
 
 import java.awt.image.BufferedImage;
@@ -13,8 +15,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.List;
+
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 
@@ -75,7 +80,7 @@ public class Application extends Controller {
         }else{
             postList = PostModelService.use().getPostListByCategory(page,category);
         }
-        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category));
+        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class)));
     }
 
     //ログイン画面
@@ -87,7 +92,7 @@ public class Application extends Controller {
     //新規登録画面
     public static Result register() {
         Form<RegisterForm> registerForm = new Form(RegisterForm.class);
-        return ok(register.render(registerForm));
+        return ok(register.render(registerForm,""));
     }
 
     //新規ユーザーをDBに登録
@@ -99,6 +104,9 @@ public class Application extends Controller {
         	User user = new User();
             user.setUserName(registerForm.get().userName);
             user.setPassword(registerForm.get().password);
+            if(UserModelService.use().checkLoginId(registerForm.get().loginId)){
+            	return ok(register.render(registerForm,"このIDはすでに使われています。"));
+            }
             user.setLoginId(registerForm.get().loginId);
             user.save();
             System.out.println("DB登録に成功しました！");
@@ -109,7 +117,7 @@ public class Application extends Controller {
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
             System.out.println("DB登録に失敗しました！");
-            return ok(register.render(registerForm));
+            return ok(register.render(registerForm,""));
         }
     }
 
@@ -174,14 +182,13 @@ public class Application extends Controller {
 //        searchWord = searchWord.bindFromRequest(params);
         Form<Goods> goodsForm = Form.form(Goods.class);
         if(searchForm.hasErrors()){
-        	System.out.println("バインドエラーあり！！！");
         	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
         }else{
-        	System.out.println("バインドエラーなし");
         	if(StringUtils.isBlank(searchForm.get().searchWord)){
         		return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
         	}
 	        String searchWordStr = searchForm.get().searchWord;
+	        searchWordStr = URLEncoder.encode(searchWordStr,"utf-8");
 	        System.out.println("searchWordStr:"+searchWordStr);
 	        // URLと結合
 	        String searchUrl = AMAZON_URL + searchWordStr;
@@ -494,11 +501,25 @@ public class Application extends Controller {
 	    		// 画像が選択せれず、前回のデーターもなかった場合
 	    	}
 
+
 	    	User editedUser = UserModelService.use().updateUser(user, newUser);
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{
     		System.out.println("ユーザー編集バインド、エラーあり！！！");
     		return ok(update_user.render(loginId,userForm,user));
+    	}
+    }
+
+    public static Result searchPostBykeyword(Integer page){
+    	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
+    	if(!searchForm.hasErrors()){
+    		System.out.println("投稿検索バインドエラーなし");
+    		String keyword = searchForm.get().keyword;
+    		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
+    		return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage("ALL"),"ALL",searchForm));
+    	}else{
+    		System.out.println("投稿検索バインドエラーあり!!!");
+    		return redirect(controllers.routes.Application.index(1,"ALL"));
     	}
     }
 }

@@ -4,6 +4,7 @@
  */
 package models.form;
 
+import models.service.UserModelService;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
 import play.data.validation.Constraints.MinLength;
