@@ -8,17 +8,20 @@ import play.mvc.*;
 import play.data.Form;
 import static play.data.Form.*;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Base64;
 import java.util.Collections;
 
 import org.w3c.dom.*;
 import org.w3c.dom.Element;
 
-
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import play.data.DynamicForm;
@@ -33,11 +36,14 @@ import models.form.*;
 import models.form.admin.AdminCommentForm;
 import models.login.*;
 import models.service.*;
+import models.MakeImage;
 import models.amazon.*;
 
 import views.html.admin.*;
 
-
+import play.mvc.Http.*;
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
 
 public class Application extends Controller {
 
@@ -245,7 +251,13 @@ public class Application extends Controller {
     	 }
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
-         return ok(user_page.render(loginId,user,postList,postListSize));
+
+         if(user.getImageData() != null){
+        	 String base64encodeing_str = Base64.getEncoder().encodeToString(user.getImageData());
+        	 System.out.println("エンコーディングされたで："+base64encodeing_str);
+        	 return ok(user_page.render(loginId,user,postList,postListSize,base64encodeing_str));
+         }
+         return ok(user_page.render(loginId,user,postList,postListSize,null));
     }
 
     // 商品ページ
@@ -337,6 +349,22 @@ public class Application extends Controller {
 	    	newUser.setProfile(userForm.get().getProfile());
 	    	newUser.setDepartment(userForm.get().getDepartment());
 	    	newUser.setAdmin(userForm.get().getAdmin());
+	    	newUser.setImageName(userForm.get().getImageName());
+
+	    	// 画像の保存
+	    	String imageName = newUser.getImageName();	// 画像の名前の保存
+	    	MultipartFormData body = request().body().asMultipartFormData();
+	    	FilePart image = body.getFile("imageName");
+	    	int lastDotPosition = image.getFilename().lastIndexOf(".");
+	    	String extensionName = image.getFilename().substring(lastDotPosition + 1);
+	    	BufferedImage read;
+			try {
+				read = ImageIO.read(image.getFile());
+				newUser.setImageData(new MakeImage().getBytesFromImage(read,extensionName));
+			} catch (IOException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
 	    	User editedUser = UserModelService.use().updateUser(user, newUser);
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{

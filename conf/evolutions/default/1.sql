@@ -42,6 +42,8 @@ create table user (
   profile                   varchar(255),
   department                varchar(255),
   admin                     boolean,
+  image_name                varchar(255),
+  image_data                blob,
   constraint pk_user primary key (id))
 ;
 
