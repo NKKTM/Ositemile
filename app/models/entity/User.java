@@ -6,9 +6,11 @@ package models.entity;
 
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import play.db.ebean.Model;
@@ -26,6 +28,10 @@ public class User extends Model{
 	private String			profile;	// プロフィール
 	private String			department;	// 部署名
 	private boolean			admin;		// 管理者権限を持つか否か
+
+	private String			imageName;	// 画像名
+	@Lob
+	private byte[]			imageData;	// 画像データー(バイナリー)
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private List<Comment>	comment;	// コメント情報
@@ -64,7 +70,7 @@ public class User extends Model{
 		this.userName = userName;
 		this.password = password;
 		this.loginId = loginId;
-		this.admin = false;		
+		this.admin = false;
 		if(this.profile == ""){
 			// プロフィールがない
 			this.profile = "よろしくお願いします。";
@@ -176,5 +182,21 @@ public class User extends Model{
 	}
 	public boolean getAdmin(){
 		return admin;
-	}	
+	}
+
+	// 画像データー
+	public void setImageData(byte[] image){
+		this.imageData = image;
+	}
+	public byte[] getImageData(){
+		return this.imageData;
+	}
+
+	// 画像名
+	public void setImageName(String imageName){
+		this.imageName = imageName;
+	}
+	public String getImageName(){
+		return this.imageName;
+	}
 }
