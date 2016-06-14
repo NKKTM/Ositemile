@@ -34,6 +34,8 @@ import play.data.DynamicForm;
 import views.html.*;
 import views.html.login.*;
 import views.html.post.*;
+import views.html.iine.*;
+
 
 import models.entity.*;
 import models.entity.Comment;
@@ -290,19 +292,32 @@ public class Application extends Controller {
     	Form<CommentForm> commentForm = new Form(CommentForm.class);
     	String loginId = session().get("loginId");
 
+        // いいねが押されているかの判定
+        User user = UserModelService.use().getUserByLoginId(loginId);        
+        boolean iine = false;
+        if(user != null){
+            //ログインしている時のみ実行
+            if(IineModelService.use().getIineById(postId,user.getId()) != null){
+                //いいねがすでに押されている場合はtrueにする
+                iine = true;
+            }
+        }
+
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
     	if( post.getComment() != null ){
     		// コメント情報取得
     		List<Comment> comment = CommentModelService.use().getCommentList(postId);
             Collections.reverse(comment);
-    		return ok(introduction.render(loginId,post,commentForm,comment));
+            List<Iine> iineList = IineModelService.use().getIineListByPostId(postId);            
+    		return ok(introduction.render(loginId,post,commentForm,comment,iine,iineList));
     	}else{
-    		return ok(introduction.render(loginId,null,commentForm,null));
+    		return ok(introduction.render(loginId,null,commentForm,null,null,null));
     	}
     }
 
     // いいねJSONデータの作成
+    @Security.Authenticated(Secured.class)    
     public static Result iineBtn(Long postId) {
         String iineBtn = request().body().asFormUrlEncoded().get("iineBtn")[0];
         ObjectNode result = Json.newObject();
@@ -313,18 +328,24 @@ public class Application extends Controller {
         Post post = PostModelService.use().getPostListById(postId);
 
         if (iineBtn != null) {
-        // いいねボタンの値が取得できた時
+            // いいねボタンの値が取得できた時
             if(iineBtn.equals("false")){
-            // いいねボタンの値がfalseのとき（いいね保存）
+                // いいねボタンの値がfalseのとき（いいね保存）
                 result.put("iineBtn", "true");
-                Iine iine = new Iine(post,user);
-                iine.save();
+                if(IineModelService.use().getIineById(post.getId(),user.getId()) == null){
+                    //すでにこのpostIdとuserIdの組み合わせで登録されていなければセーブ
+                    Iine iine = new Iine(post,user);
+                    iine.save();
+                }
             }else if(iineBtn.equals("true")){
-            // いいねボタンの値がtrueのとき（いいね削除）
+                // いいねボタンの値がtrueのとき（いいね削除）
                 result.put("iineBtn", "false");
-                Iine iine = IineModelService.use().getCommetById(post.getId(),user.getId());
+                Iine iine = IineModelService.use().getIineById(post.getId(),user.getId());
                 iine.delete();
             }
+            //いいね数を格納
+            int iineNum = IineModelService.use().getIineListByPostId(postId).size();
+            result.put("iineNum",iineNum);
             return ok(result);
         } else {
         // いいねボタンの値が取得できなかった時
@@ -333,10 +354,19 @@ public class Application extends Controller {
         }
     }
 
-    // コメント登録
-    public static Result commentCreate() throws ParseException{
-        // sessionからloginId取得
+    // いいねリスト
+    public static Result iineListForPost(Long postId) {
+        List<Iine> iineList = IineModelService.use().getIineListByPostId(postId);
         String loginId = session().get("loginId");
+        return ok(iineListForPost.render(loginId,iineList));     
+    }    
+
+    // コメント登録
+    @Security.Authenticated(Secured.class)    
+    public static Result commentCreate() throws ParseException{
+        // sessionからloginId,ユーザーを取得
+        String loginId = session().get("loginId");
+        User user = UserModelService.use().getUserByLoginId(loginId);        
         // postIdからpostを取得
         String[] params = { "postId" };
         DynamicForm input = Form.form();
@@ -355,8 +385,7 @@ public class Application extends Controller {
                 return redirect(controllers.routes.Application.login());
             }
             // コメント登録
-
-            commentForm.get().comment = commentForm.get().comment.replaceAll("\n","<br />");
+            commentForm.get().comment = PostModelService.use().sanitizeString(commentForm.get().comment);
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
@@ -371,7 +400,14 @@ public class Application extends Controller {
             // 入力にエラーがあった場合
             List<Comment> comment = CommentModelService.use().getCommentList(postId);
             Collections.reverse(comment);
-            return ok(introduction.render(loginId,post,commentForm,comment));
+            //いいねの判定
+            boolean iine = false;
+            if(IineModelService.use().getIineById(post.getId(),user.getId()) != null){
+                //いいねがすでに押されている場合はtrueにする
+                iine = true;
+            }
+            List<Iine> iineList = IineModelService.use().getIineListByPostId(postId);
+            return ok(introduction.render(loginId,post,commentForm,comment,iine,iineList));
         }
     }
 
@@ -381,7 +417,7 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
     	User user = UserModelService.use().getUserById(userId);
-    	user.setProfile(user.getProfile().replaceAll("<br />","\n"));
+    	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
     	Form<User> userForm = form(User.class).fill(user);
 
     	return ok(update_user.render(loginId,userForm,user));
@@ -400,7 +436,7 @@ public class Application extends Controller {
 	    	newUser.setUserName(userForm.get().getUserName());
 	    	newUser.setPassword(userForm.get().getPassword());
 	    	newUser.setLoginId(userForm.get().getLoginId());
-	    	String profile = userForm.get().getProfile().replaceAll("\n","<br />");
+	    	String profile = PostModelService.use().sanitizeString(userForm.get().getProfile());
 	    	newUser.setProfile(profile);
 	    	newUser.setDepartment(userForm.get().getDepartment());
 	    	newUser.setAdmin(userForm.get().getAdmin());

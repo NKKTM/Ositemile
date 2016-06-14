@@ -27,9 +27,9 @@ public class IineModelService {
 	 *	@return いいねのリスト
 	 *	@author Hatsune Kitajima
 	 */
-	public List<Iine> getIineList(Long postId){
+	public List<Iine> getIineListByPostId(Long postId){
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
-		return find.where().eq("post.id",postId).orderBy("date").findList();
+		return find.where().eq("post.id",postId).findList();
 	}
 
 	/*
@@ -38,7 +38,7 @@ public class IineModelService {
 	 *	@return いいねのリスト
 	 *	@author Hatsune Kitajima
 	 */
-	public List<Iine> getCommetnListByPostId(Long userId){
+	public List<Iine> getIineListByUserId(Long userId){
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
 		List<Iine> iineList =  find.where().eq("user.id",userId).findList();
 		return iineList;
@@ -50,7 +50,7 @@ public class IineModelService {
 	 *	@return いいね
 	 *	@author Hatsune Kitajima
 	 */
-	public Iine getCommetById(Long postId, Long userId){
+	public Iine getIineById(Long postId, Long userId){
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
 		Iine iine =  find.where("post.id = "+postId+ " and user.id = "+userId).findUnique();;
 		return iine;
