@@ -9,6 +9,7 @@ import play.data.Form;
 import static play.data.Form.*;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -100,6 +101,14 @@ public class Application extends Controller {
             user.setUserName(registerForm.get().userName);
             user.setPassword(registerForm.get().password);
             user.setLoginId(registerForm.get().loginId);
+            File file = new File("public/images/unknown.png");
+            try {
+				user.setImageData(MakeImage.getBytesFromImage(ImageIO.read(file), "png"));
+				user.setImageName("unknown.png");
+			} catch (IOException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
             user.save();
             System.out.println("DB登録に成功しました！");
             //セッションにloginIdを登録
@@ -419,7 +428,6 @@ public class Application extends Controller {
     	User user = UserModelService.use().getUserById(userId);
     	// ユーザーフォームの作成
     	UserForm userFormtemp = new UserForm();
-    	System.out.println("++++++++++++++++++++++++"+Base64.getEncoder().encodeToString(user.getImageData()));
     	userFormtemp.setUserForm(user.getUserName(),		// ユーザー名
     							   user.getPassword(),		// パスワード
     							   user.getLoginId(),		// ログインID
@@ -481,7 +489,6 @@ public class Application extends Controller {
 	    		}catch(Exception e){
 
 	    		}
-
 	    	}else if( userForm.get().imageNameOld != null ){
 	    		// 画像指定されず前回の画像がある場合
 	    		newUser.setImageName(userForm.get().imageNameOld);
@@ -498,6 +505,8 @@ public class Application extends Controller {
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{
     		System.out.println("ユーザー編集バインド、エラーあり！！！");
+    		System.out.println("userForm:"+userForm.get().encoding);
+
     		return ok(update_user.render(loginId,userForm,user));
     	}
     }
