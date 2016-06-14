@@ -314,16 +314,16 @@ public class Application extends Controller {
 
         if (iineBtn != null) {
             // いいねボタンの値が取得できた時
-            if(iineBtn.equals("false")){
-                // いいねボタンの値がfalseのとき（いいね保存）
+            if(iineBtn.equals("true")){
+                // いいねボタンの値がtrueのとき（いいね保存）
                 result.put("iineBtn", "true");
                 if(IineModelService.use().getIineById(post.getId(),user.getId()) == null){
                     //すでにこのpostIdとuserIdの組み合わせで登録されていなければセーブ
                     Iine iine = new Iine(post,user);
                     iine.save();
                 }
-            }else if(iineBtn.equals("true")){
-                // いいねボタンの値がtrueのとき（いいね削除）
+            }else if(iineBtn.equals("false")){
+                // いいねボタンの値がfalseのとき（いいね削除）
                 result.put("iineBtn", "false");
                 Iine iine = IineModelService.use().getIineById(post.getId(),user.getId());
                 iine.delete();
@@ -337,7 +337,7 @@ public class Application extends Controller {
             result.put("iineBtn", "エラー");
             return badRequest(result);
         }
-    }
+    } 
 
     // いいねリスト
     public static Result iineListForPost(Long postId) {
