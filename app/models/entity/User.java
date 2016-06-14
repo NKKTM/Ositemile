@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import play.db.ebean.Model;
 import play.data.validation.Constraints;
@@ -20,6 +21,7 @@ import play.db.ebean.*;
 
 
 @Entity
+@Table(name = "userTable")
 public class User extends Model{
 	@Id
 	private Long			id;			// ID

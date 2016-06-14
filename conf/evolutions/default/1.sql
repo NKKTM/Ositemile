@@ -41,7 +41,7 @@ create table post (
   constraint pk_post primary key (id))
 ;
 
-create table user (
+create table userTable (
   id                        bigint not null,
   user_name                 varchar(255),
   password                  varchar(255),
@@ -51,7 +51,7 @@ create table user (
   admin                     boolean,
   image_name                varchar(255),
   image_data                blob,
-  constraint pk_user primary key (id))
+  constraint pk_userTable primary key (id))
 ;
 
 create sequence comment_seq;
@@ -62,19 +62,19 @@ create sequence iine_seq;
 
 create sequence post_seq;
 
-create sequence user_seq;
+create sequence userTable_seq;
 
-alter table comment add constraint fk_comment_user_1 foreign key (user) references user (id) on delete restrict on update restrict;
+alter table comment add constraint fk_comment_user_1 foreign key (user) references userTable (id) on delete restrict on update restrict;
 create index ix_comment_user_1 on comment (user);
 alter table comment add constraint fk_comment_post_2 foreign key (post) references post (id) on delete restrict on update restrict;
 create index ix_comment_post_2 on comment (post);
 alter table iine add constraint fk_iine_post_3 foreign key (post) references post (id) on delete restrict on update restrict;
 create index ix_iine_post_3 on iine (post);
-alter table iine add constraint fk_iine_user_4 foreign key (user) references user (id) on delete restrict on update restrict;
+alter table iine add constraint fk_iine_user_4 foreign key (user) references userTable (id) on delete restrict on update restrict;
 create index ix_iine_user_4 on iine (user);
 alter table post add constraint fk_post_goods_5 foreign key (goods_id) references goods (id) on delete restrict on update restrict;
 create index ix_post_goods_5 on post (goods_id);
-alter table post add constraint fk_post_user_6 foreign key (user) references user (id) on delete restrict on update restrict;
+alter table post add constraint fk_post_user_6 foreign key (user) references userTable (id) on delete restrict on update restrict;
 create index ix_post_user_6 on post (user);
 
 
@@ -91,7 +91,7 @@ drop table if exists iine;
 
 drop table if exists post;
 
-drop table if exists user;
+drop table if exists userTable;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
@@ -103,5 +103,5 @@ drop sequence if exists iine_seq;
 
 drop sequence if exists post_seq;
 
-drop sequence if exists user_seq;
+drop sequence if exists userTable_seq;
 
