@@ -1,5 +1,6 @@
 /*
  *	画像の生成クラス
+ *
  *	@author Kotaro Nishida
  */
 package models;
@@ -52,7 +53,7 @@ public class MakeImage {
 		return baos.toByteArray();
 	}
 
-	/*
+	/**
 	*
 	* バイト列→イメージを作成
 	* @param bytes

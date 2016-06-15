@@ -458,9 +458,19 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
     	User user = UserModelService.use().getUserById(userId);
-    	Form<UserForm> userForm = form(UserForm.class).bindFromRequest();
+    	Form<UserForm> userForm = new Form(UserForm.class).bindFromRequest();
+
     	if(!userForm.hasErrors()){
     		System.out.println("ユーザー編集バインド、エラーなし");
+
+    		if( userForm.get().department.isEmpty() ){
+    			// 部署が空白
+    			userForm.get().department = "未設定";
+    		}
+    		if( userForm.get().profile.isEmpty() ){
+    			userForm.get().profile = "よろしくお願いします。";
+    		}
+
     		User newUser = new User();
 	    	newUser.setUserName(userForm.get().userName);
 	    	newUser.setPassword(userForm.get().password);
@@ -512,7 +522,6 @@ public class Application extends Controller {
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{
     		System.out.println("ユーザー編集バインド、エラーあり！！！");
-    		System.out.println("userForm:"+userForm.get().encoding);
 
     		return ok(update_user.render(loginId,userForm,user));
     	}

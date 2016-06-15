@@ -4,21 +4,22 @@
  */
 package models.form;
 
-import play.data.validation.Constraints;
-
 import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Required;
 
 public class UserForm {
-	@Constraints.Required(message="必須項目です。")
+	@Required(message="必須項目です。")
 	public String			userName;		// ユーザー名
 	public String			password;		// パスワード
 	public String			loginId;		// ログインID
-
 	public boolean			admin;			// 管理者かどうか
+
 	@MaxLength(value = 30, message = "30文字以下で入力してください。")
 	public String			department;		// 部署
+
 	@MaxLength(value = 150, message = "150文字以下で入力してください。")
 	public String			profile;		// プロフィール
+
 	public String			imageName;		// 画像名
 	public byte[]			imageDataOld;	// 前回の画像データー
 	public String			imageNameOld;	// 前回の画像名
@@ -70,6 +71,4 @@ public class UserForm {
 		this.imageNameOld = imageNameOld;
 		this.encoding = encoding;
 	}
-
-
 }
