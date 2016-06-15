@@ -23,8 +23,8 @@ public class Comment  extends Model{
 	private String	comment;		// コメント内容
 
 	@ManyToOne
-	@JoinColumn(name = "user")
-	private User	user;			// コメントしたユーザ情報
+	@JoinColumn(name = "human")
+	private User	human;			// コメントしたユーザ情報
 
 	@ManyToOne
 	@JoinColumn(name = "post")
@@ -42,7 +42,7 @@ public class Comment  extends Model{
 	public Comment(){
 		this.id = 0L;
 		this.comment = "";
-		this.user = null;
+		this.human = null;
 		this.post = null;
 		this.date = new Date();
 	}
@@ -57,7 +57,7 @@ public class Comment  extends Model{
 	 */
 	public Comment(String comment, User user, Post post){
 		this.comment = comment;
-		this.user = user;
+		this.human = user;
 		this.post = post;
 		this.date = new Date();
 	}
@@ -98,10 +98,10 @@ public class Comment  extends Model{
 
 	// コメントしたユーザ情報
 	public void setUser(User user){
-		this.user = user;
+		this.human = user;
 	}
 	public User getUser(){
-		return user;
+		return human;
 	}
 
 	// 投稿情報

@@ -39,8 +39,8 @@ public class Post  extends Model{
 	private Goods			goods;				// 商品
 
 	@ManyToOne
-	@JoinColumn(name = "user")
-	private User			user;				// ユーザー
+	@JoinColumn(name = "human")
+	private User			human;				// ユーザー
 
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
 	private List<Comment>	comment;			// コメント
@@ -62,7 +62,7 @@ public class Post  extends Model{
 		this.postTitle ="";
 		this.postComment = "";
 		this.goods = null;
-		this.user = null;
+		this.human = null;
 		this.comment = null;
 		this.date = new Date();
 	}
@@ -97,7 +97,7 @@ public class Post  extends Model{
 		this.postTitle = postTitle;
 		this.postComment = postComment;
 		this.goods = goods;
-		this.user = user;
+		this.human = user;
 		this.date = new Date();
 	}
 
@@ -141,10 +141,10 @@ public class Post  extends Model{
 
 	// ユーザー
 	public void setUser(User user){
-		this.user = user;
+		this.human = user;
 	}
 	public User getUser(){
-		return user;
+		return human;
 	}
 
 	// コメント

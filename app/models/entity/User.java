@@ -39,13 +39,13 @@ public class User extends Model{
 	@Lob
 	private byte[]			imageData;	// 画像データー(バイナリー)
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Comment>	comment;	// コメント情報
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Post>		post;		// 投稿した情報
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Iine>		iine;		// いいねした情報
 
 	/*
