@@ -28,8 +28,6 @@ function iineChange(){
       iine.innerHTML = "★";
       iine.value = "true";      
     }
-    //クッキーにvalue状態を保存
-    $.cookie("iineVal",iine.value);
 
     //postIdを取得
     var url   = location.href;

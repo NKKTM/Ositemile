@@ -183,7 +183,7 @@ public class PostModelService {
 	 */
 	public List<Post> getPostListByUserId(Long userId){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("user.id = " + userId).findList();
+		List<Post> postList = find.where("human.id = " + userId).findList();
 		return checkPost(postList);
 	}
 
@@ -282,7 +282,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
 										+"postComment LIKE '%"+keyword+"%'"+" OR "
-										+"user.userName LIKE '%"+keyword+"%'"+" OR "
+										+"human.userName LIKE '%"+keyword+"%'"+" OR "
 										+"goods.goodsName LIKE '%"+keyword+"%'")
 									.orderBy("date desc")
 									.findPagingList(LIMIT)

@@ -7,6 +7,7 @@ package models.entity;
 import java.util.List;
 
 
+import javax.persistence.Column;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -35,17 +36,19 @@ public class User extends Model{
 	private String			department;	// 部署名
 	private boolean			admin;		// 管理者権限を持つか否か
 
+    @Column(columnDefinition="text")	
+	private String			imageEncData; //エンコーディング後の画像データ
 	private String			imageName;	// 画像名
 	@Lob
 	private byte[]			imageData;	// 画像データー(バイナリー)
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Comment>	comment;	// コメント情報
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Post>		post;		// 投稿した情報
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Iine>		iine;		// いいねした情報
 
 	/*
@@ -190,6 +193,13 @@ public class User extends Model{
 		return admin;
 	}
 
+	// エンコーディング後の画像データー
+	public void setImageEncData(String imageEncData){
+		this.imageEncData = imageEncData;
+	}
+	public String getImageEncData(){
+		return this.imageEncData;
+	}
 
 	// 画像データー
 	public void setImageData(byte[] image){

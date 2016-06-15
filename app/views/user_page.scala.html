@@ -1,4 +1,4 @@
-@(loginId: String,user: models.entity.User, postList: List[models.entity.Post],postListSize: Int,imageData:String)
+@(loginId: String,user: models.entity.User, postList: List[models.entity.Post],postListSize: Int)
 
 @num = @{932108L}
 <link href="@routes.Assets.at("stylesheets/userpage/userpage.css")" rel="stylesheet">
@@ -13,7 +13,7 @@
                     <div class="panel-body user-info-panel">
 
 							<div class="userpage-box">
-                    			<img class="userpage-image" src="data:image/png;base64,@imageData" alt="base64test">
+                    			<img class="userpage-image" src="data:image/png;base64,@user.getImageEncData()" alt="base64test">
 							</div>
                         <h3>@user.getUserName()</h3>
                         <h5>部署：<span>@user.getDepartment()</span></h5>

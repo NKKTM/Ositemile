@@ -40,7 +40,7 @@ public class IineModelService {
 	 */
 	public List<Iine> getIineListByUserId(Long userId){
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
-		List<Iine> iineList =  find.where().eq("user.id",userId).findList();
+		List<Iine> iineList =  find.where().eq("human.id",userId).findList();
 		return iineList;
 	}
 
@@ -52,7 +52,7 @@ public class IineModelService {
 	 */
 	public Iine getIineById(Long postId, Long userId){
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
-		Iine iine =  find.where("post.id = "+postId+ " and user.id = "+userId).findUnique();;
+		Iine iine =  find.where("post.id = "+postId+ " and human.id = "+userId).findUnique();;
 		return iine;
 	}	
 
