@@ -6,11 +6,11 @@
 
 @num = @{932108L}
 
-<link href="@routes.Assets.at("stylesheets/introduction/introduction.css")" rel="stylesheet">
+
 <script src="@routes.Assets.at("javascripts/iine.js")" type="text/javascript"></script>
 
 @main(loginId) {
-
+<link href="@routes.Assets.at("stylesheets/Introduction/introduction.css")" rel="stylesheet">
 <div class="container-fluid">
 
 	<div class="row introduction-full-box">
@@ -35,7 +35,7 @@
 				@if(loginId == null){
 					<div class="iineBtn"><button id="iineBtnNanashi">☆</button>
 						<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
-					</div>					
+					</div>
 				}else{
 					@if(iine == false){
 						<div class="iineBtn"><button id="iineBtn" value="false">☆</button>
@@ -45,7 +45,7 @@
 					@if(iine == true){
 						<div class="iineBtn"><button id="iineBtn" value="true">★</button>
 							<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
-						</div>				
+						</div>
 					}
 				}
 			</div>

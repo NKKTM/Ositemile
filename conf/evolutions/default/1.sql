@@ -50,7 +50,7 @@ create table userTable (
   department                varchar(255),
   admin                     boolean,
   image_name                varchar(255),
-  image_data                bytea,
+  image_data                blob,
   constraint pk_userTable primary key (id))
 ;
 
