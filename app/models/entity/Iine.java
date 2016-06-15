@@ -24,8 +24,8 @@ public class Iine extends Model{
 	private Post			post;				// 投稿情報
 
 	@ManyToOne
-	@JoinColumn(name = "user")	
-	private User			user;				// いいねを押したユーザー情報	
+	@JoinColumn(name = "human")	
+	private User			human;				// いいねを押したユーザー情報	
 
 	/*
 	 *	デフォルトコンストラクタ
@@ -45,7 +45,7 @@ public class Iine extends Model{
 	 */
 	public Iine(Post post,User user){
 		this.post = post;
-		this.user = user;
+		this.human = user;
 	}
 
 	/*
@@ -81,10 +81,10 @@ public class Iine extends Model{
 
 	// ユーザー情報
 	public void setUser(User user){
-		this.user = user;
+		this.human = user;
 	}
 	public User getUser(){
-		return user;
+		return human;
 	}
 
 

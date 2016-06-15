@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import play.db.ebean.Model;
 import play.data.validation.Constraints;
@@ -20,6 +21,7 @@ import play.db.ebean.*;
 
 
 @Entity
+@Table(name = "userTable")
 public class User extends Model{
 	@Id
 	private Long			id;			// ID
@@ -37,13 +39,13 @@ public class User extends Model{
 	@Lob
 	private byte[]			imageData;	// 画像データー(バイナリー)
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Comment>	comment;	// コメント情報
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Post>		post;		// 投稿した情報
 
-	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="human",cascade = CascadeType.ALL)
 	private List<Iine>		iine;		// いいねした情報
 
 	/*

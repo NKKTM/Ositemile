@@ -70,7 +70,7 @@ public class CommentModelService {
 	 */
 	public List<Comment> getCommetnListByPostId(Long userId){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
-		List<Comment> commentList =  find.where().eq("user.id",userId).findList();
+		List<Comment> commentList =  find.where().eq("human.id",userId).findList();
 		return commentList;
 	}
 
