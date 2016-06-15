@@ -15,7 +15,7 @@ import play.db.ebean.Model.Finder;
 
 public class PostModelService {
 
-	final static public Integer LIMIT = 9;  // １ページあたりの表示件数
+	final static public Integer LIMIT = 12;  // １ページあたりの表示件数
 
 	/*
 	 *	投稿サービスの生成
@@ -75,7 +75,12 @@ public class PostModelService {
 		//カテゴリがそれ以外の場合
 			postList = find.where().ilike("goods.category", category).findList();
 		}
-		int maxPage = postList.size()/LIMIT + 1;
+		int maxPage; 
+		if(postList.size()%LIMIT == 0){
+			maxPage = postList.size()/LIMIT;
+		}else{
+			maxPage = postList.size()/LIMIT + 1;
+		}
 		System.out.println("maxPage："+maxPage);
 		return maxPage;
 	}

@@ -284,14 +284,11 @@ public class Application extends Controller {
     	 User user = UserModelService.use().getUserById(userId);
     	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
     	 Collections.reverse(postList);
-    	 int postListSize = 0;
-    	 if(postList!=null){
-    		 postListSize = postList.size();
-    	 }
+         List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
 
-         return ok(user_page.render(loginId,user,postList,postListSize));
+         return ok(user_page.render(loginId,user,postList,iineList));
     }
 
     //loginIdからユーザーページのリンクを作る
