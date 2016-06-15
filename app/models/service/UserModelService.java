@@ -137,6 +137,7 @@ public class UserModelService {
 		oldUser.setProfile(newUser.getProfile());
 		oldUser.setDepartment(newUser.getDepartment());
 		oldUser.setImageData(newUser.getImageData());
+		oldUser.setImageEncData(newUser.getImageEncData());
 		oldUser.update();
 		return oldUser;
 	}

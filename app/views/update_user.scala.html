@@ -15,7 +15,7 @@
 		<!-- 前回の画像データー -->
 		@inputText(userForm("imageDataOld"),args= 'type->"hidden" , 'value->"@user.getImageData")
 		@inputText(userForm("imageNameOld"),args= 'type->"hidden" , 'value->"@user.getImageName")
-		@inputText(userForm("encoding"),args= 'type->"hidden" , 'value->"@userForm.get().encoding")
+		@inputText(userForm("encoding"),args= 'type->"hidden" , 'value->"@user.getImageEncData")
 
 		<h4 class="edit-user-title">お名前<span class="edit-name-caution">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*本名推奨</span></h4>
 		@inputText(userForm("userName"),args='_label->"お名前",'class->"edit_user_form edit_user_text")

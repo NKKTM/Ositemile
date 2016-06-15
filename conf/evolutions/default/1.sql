@@ -49,6 +49,7 @@ create table userTable (
   profile                   varchar(255),
   department                varchar(255),
   admin                     boolean,
+  image_enc_data            text,
   image_name                varchar(255),
   image_data                blob,
   constraint pk_userTable primary key (id))
