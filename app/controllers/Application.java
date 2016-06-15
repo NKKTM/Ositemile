@@ -112,6 +112,7 @@ public class Application extends Controller {
             File file = new File("public/images/unknown.png");
             try {
 				user.setImageData(MakeImage.getBytesFromImage(ImageIO.read(file), "png"));
+                user.setImageEncData(Base64.getEncoder().encodeToString(user.getImageData()));                
 				user.setImageName("unknown.png");
 			} catch (IOException e) {
 				// TODO 自動生成された catch ブロック
@@ -289,11 +290,7 @@ public class Application extends Controller {
     	 String loginId = session().get("loginId");
          System.out.println("loginId:"+loginId);
 
-         if(user.getImageData() != null){
-        	 String base64encodeing_str = Base64.getEncoder().encodeToString(user.getImageData());
-        	 return ok(user_page.render(loginId,user,postList,postListSize,base64encodeing_str));
-         }
-         return ok(user_page.render(loginId,user,postList,postListSize,null));
+         return ok(user_page.render(loginId,user,postList,postListSize));
     }
 
     //loginIdからユーザーページのリンクを作る
@@ -444,7 +441,7 @@ public class Application extends Controller {
     							   null,					// 画像名
     							   user.getImageData(),		// 前回の画像データ
     							   user.getImageName(),		// 前回の画像名
-    							   Base64.getEncoder().encodeToString(user.getImageData()));	// エンコーディングされたデータ
+    							   user.getImageEncData());	// エンコーディングされたデータ
     	Form<UserForm> userForm = form(UserForm.class).fill(userFormtemp);
 
     	System.out.println("画像データー："+user.getImageData());
@@ -493,15 +490,16 @@ public class Application extends Controller {
 		    		read = ImageIO.read(image.getFile());
 					newUser.setImageData(new MakeImage().getBytesFromImage(read,extensionName));
 					System.out.println(newUser.getImageData());
+                    newUser.setImageEncData(Base64.getEncoder().encodeToString(newUser.getImageData()));
 	    		}catch(Exception e){
 
 	    		}
 	    	}else if( userForm.get().imageNameOld != null ){
 	    		// 画像指定されず前回の画像がある場合
 	    		newUser.setImageName(userForm.get().imageNameOld);
-	    		//newUser.setImageData(userForm.get().imageDataOld);
 	    		String encodingData = userForm.get().encoding;
 	    		System.out.println("************"+encodingData);
+                newUser.setImageEncData(encodingData);
 	    		newUser.setImageData(Base64.getDecoder().decode(encodingData));
 	    		System.out.println(userForm.get().imageDataOld);
 	    	} else{
