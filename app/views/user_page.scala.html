@@ -1,4 +1,4 @@
-@(loginId: String,user: models.entity.User, postList: List[models.entity.Post],postListSize: Int)
+@(loginId: String,user: models.entity.User, postList: List[models.entity.Post], iineList: List[models.entity.Iine])
 
 @num = @{932108L}
 <link href="@routes.Assets.at("stylesheets/userpage/userpage.css")" rel="stylesheet">
@@ -22,14 +22,24 @@
                        @Html(user.getProfile())
                     </div>
                 </div>
-                <div class="panel panel-success post-count">
+
+                <div id="postCounter" class="panel panel-success post-count" style="float:left;">
                     <div class="panel-heading">
-                       <p>投稿した数</p>
+                       <p>投稿</p>
                     </div>
                     <div class="panel-body">
-                        <h4>@postListSize</h4>
+                        <h4>@postList.size()</h4>
                     </div>
                 </div>
+                <div id="iineCounter" class="panel panel-success post-count" style="float:right;">
+                    <div class="panel-heading">
+                       <p>いいね</p>
+                    </div>
+                    <div class="panel-body">
+                        <h4>@iineList.size()</h4>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>                
                 @if(loginId == user.getLoginId()){
                 <a class="btn edit-user-btn" href="@routes.Application.updateUserForm(num+user.getId)">プロフィール編集</a>
                 }
@@ -37,48 +47,100 @@
         </div>
         <!-- /.ユーザー情報div -->
 
-        <!-- ユーザーが投稿した記事が入るdiv -->
+        <!-- ユーザーが投稿、いいねした記事が入るdiv -->
         <div class="col-xs-12 col-sm-9 col-md-9 post-container">
             <div class="row">
-                <h4 class="post-list-title">投稿一覧</h4>
-                @if(postListSize == 0){
-                	<h3 class="no-post">投稿はまだありません。</h3>
-                }
-                @if(postList != null){
-					@for((post,i) <- postList.zipWithIndex){
-                <div class="col-xs-12 col-sm-4 col-md-4 post-one">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <p>@post.getDateStr()</p>
-                            <h4>@post.getPostTitle()</h4>
-                            <a href="/introduction/@post.getId()"></a>
-                        </div>
-                        <div class="panel-body">
-
-                            <a href="/introduction/@post.getId()"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
-							<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
-                            <div class="up-post-comment">
-                            	@Html(post.getPostComment())
+                <!-- 投稿一覧 -->
+                <div class="post-list" id="postListBox">
+                    <h4 class="post-list-title">投稿一覧</h4>
+                    @if(postList.size() == 0){
+                        <h3 class="no-post">投稿はまだありません。</h3>
+                    }
+                    @if(postList != null){
+                        @for((post,i) <- postList.zipWithIndex){
+                    <div class="col-xs-12 col-sm-4 col-md-4 post-one">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <p>@post.getDateStr()</p>
+                                <h4>@post.getPostTitle()</h4>
+                                <a href="/introduction/@post.getId()"></a>
                             </div>
-                            <a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
-                        </div>
-                        <div class="panel-footer">
-                            <p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
+                            <div class="panel-body">
+
+                                <a href="/introduction/@post.getId()"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
+                                <p class="posted-item-name">@post.getGoods().getGoodsName()</p>
+                                <div class="up-post-comment">
+                                    @Html(post.getPostComment())
+                                </div>
+                                <a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
+                            </div>
+                            <div class="panel-footer">
+                                <p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
+                            </div>
                         </div>
                     </div>
+                    @if(i%3 == 2){
+                        <div style="clear:both;"></div>
+                    }
+                        }
+                    }
                 </div>
-                 @if(i%3 == 2){
-                 	<div style="clear:both;"></div>
-                 }
-                }
-             }
 
+                <!-- いいね一覧 -->
+                <div class="iine-list" id="iineListBox" style="display:none;">
+                    <h4 class="post-list-title">いいね一覧</h4>
+                    @if(iineList.size() == 0){
+                        <h3 class="no-post">いいねした投稿はまだありません。</h3>
+                    }
+                    @if(iineList != null){
+                        @for((iine,i) <- iineList.zipWithIndex){
+                    <div class="col-xs-12 col-sm-4 col-md-4 post-one">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <p>@iine.getPost.getDateStr()</p>
+                                <h4>@iine.getPost().getPostTitle()</h4>
+                                <a href="/introduction/@iine.getPost.getId()"></a>
+                            </div>
+                            <div class="panel-body">
+
+                                <a href="/introduction/@iine.getPost().getId()"><img class="post-img" src="@iine.getPost().getGoods().getImageUrl()"></a>
+                                <p class="posted-item-name">@iine.getPost.getGoods().getGoodsName()</p>
+                                <div class="up-post-comment">
+                                    @Html(iine.getPost.getPostComment())
+                                </div>
+                                <a class="category-label" href="@routes.Application.index(1,iine.getPost.getGoods().getCategory())"><span class="label label-default">@iine.getPost.getGoods().getCategory()</span></a>
+                            </div>
+                            <div class="panel-footer">
+                                <p>投稿者：<a class="contributor" href="@routes.Application.userPage(iine.getPost.getUser().getId+num)">@iine.getPost.getUser().getUserName()</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    @if(i%3 == 2){
+                        <div style="clear:both;"></div>
+                    }
+                        }
+                    }
+                </div>    
 
             </div>
         </div>
-        <!-- /.ユーザーが投稿した記事が入るdiv -->
+        <!-- /.ユーザー投稿、いいねした記事が入るdiv -->        
     </div>
     <!-- /.row -->
 </div>
 <!-- /.container -->
+
+<script type="text/javascript">
+    $('#postCounter').click(function(){
+        $('#postListBox').css('display', 'block');
+        $('#iineListBox').css('display', 'none');
+        console.log("きてるよ");
+    }); 
+    $('#iineCounter').click(function(){
+        $('#postListBox').css('display', 'none');
+        $('#iineListBox').css('display', 'block');       
+        console.log("きてるううう");        
+    });           
+</script>
+
 }
