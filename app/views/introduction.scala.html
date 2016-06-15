@@ -70,12 +70,17 @@
 							<hr class="introduction-hr">
 							<div class="introduction-commnet-box2 ">
 								<div class="introduction-commnet-box3 introduction-commnet">
+
 									<div class="intro-com-pictbox">
-										<img class="userpage-image" src="data:image/png;base64,@comment.getUser().getImageData()" alt="base64test">
+										<a href="@routes.Application.userPage(comment.getUser().getId+num)"><img class="userpage-image" src="data:image/png;base64,@comment.getUser().getImageEncData()" alt="base64test"></a>
 									</div>
-									<span class="comment-user"><a href="@routes.Application.userPage(comment.getUser().getId+num)">@comment.getUser().getUserName()</a></span>
-									<span class="comment-date">@comment.getDateStr()</span>
-									<div class="comment-data">@Html(comment.getComment())</div>
+									<div class="intro-com-namebox">
+										<span class="comment-user"><a href="@routes.Application.userPage(comment.getUser().getId+num)">@comment.getUser().getUserName()</a></span>
+										<span class="comment-date">@comment.getDateStr()</span>
+										<div class="comment-data">@Html(comment.getComment())</div>
+									</div>
+
+
 								</div>
 							</div>
 						}
