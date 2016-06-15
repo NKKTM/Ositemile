@@ -106,6 +106,7 @@ public class Application extends Controller {
             user.setUserName(registerForm.get().userName);
             user.setPassword(registerForm.get().password);
             if(UserModelService.use().checkLoginId(registerForm.get().loginId)){
+            	//id重複チェック：重複している場合
             	return ok(register.render(registerForm,"このIDはすでに使われています。"));
             }
             user.setLoginId(registerForm.get().loginId);
@@ -368,7 +369,7 @@ public class Application extends Controller {
             result.put("iineBtn", "エラー");
             return badRequest(result);
         }
-    } 
+    }
 
     // いいねリスト
     public static Result iineListForPost(Long postId) {

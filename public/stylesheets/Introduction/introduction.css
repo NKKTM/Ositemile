@@ -5,24 +5,25 @@
 .introduction-postcommnet-box{
 	width: 100%;
     padding-top: 25px;
-    padding-left: 40px;
-    padding-right: 40px;    
+    padding-left: 3%;
+    padding-right: 3%;
     padding-bottom: 25px;
     margin: 10px auto;
-    background-color: #fafafa;
-    border-radius: 6px;    
+    background-color: #fefefe;
+    border-radius: 6px;
 }
 
 .post-user{
     float: left;
+    color:#6a696a;
 }
 .post-user a, .comment-user a, .iineBtn a{
     color: gray;
-    font-weight: 500;        
+    font-weight: 500;
 }
 
 .comment-date{
-    margin-right: 10px;
+    margin-left: 10px;
 }
 .comment-data{
     margin-top: 5px;
@@ -30,18 +31,19 @@
 
 .post-date{
     float: right;
+     color:#6a696a;
 }
 
 .introduction-commnet-box{
     width: 100%;
-    background-color: #fafafa;
+    background-color: #fefefe;
     border-radius: 6px;
     margin-top: 20px;
     margin-bottom: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 4%;
+    padding-right: 4%;
     overflow: hidden;
 }
 
@@ -93,7 +95,7 @@ textarea{
     margin-top: 0px;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 40px;
+    padding-left: 10px;
     padding-right: 10px;
     overflow: hidden;
 }
@@ -181,6 +183,7 @@ button.push-item-comment:hover{
     border-left: 6px solid #ffb9a6;
     font-weight: 500;
     margin-top: 10px;
+    color: gray;
 }
 
 .item-name{
@@ -197,7 +200,7 @@ button.push-item-comment:hover{
 }
 
 .iineBtn{
-    text-align: right;             
+    text-align: right;
 }
 
 .iineBtn button{
@@ -211,5 +214,55 @@ button.push-item-comment:hover{
 }
 
 .iineBtn button:hover{
-    background-color: #eee;    
+    background-color: #eee;
+}
+
+.intro-post-title{
+	color:#6a696a;
+	margin-bottom:30px;
+	margin-top:25px;
+	padding: 0.5em 0.1em 0.5em 0.1em;
+	border-top: 2px solid #ffb9a6;
+    border-bottom: 2px solid #ffb9a6;
+    font-weight: 700;
+}
+
+.intro-post-com{
+	font-size:1.09em;
+	color:#616161;
+}
+
+.introduction-commnet-title > h3{
+	padding: .25em 0 .25em .75em;
+    border-left: 6px solid #ffb9a6;
+    font-weight: 500;
+    margin-top: 10px;
+    color: gray;
+}
+
+.introduction-hr{
+	border-top: 1px dotted #9e9e9e;
+}
+
+.com-button{
+	background-color:#ffb9a6;
+	border:0px;
+	color:white;
+}
+
+.com-button:hover{
+	background-color:#ffb9a6;
+	border:0px;
+	opacity:0.5;
+	color:white;
+}
+
+.form-control{
+	margin-top:15px;
+}
+
+.intro-nocomment{
+	color:gray;
+	bacground-color:#fefefe;
+	margin-top:30px;
 }

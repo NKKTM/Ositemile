@@ -29,17 +29,18 @@
 
 .edit-user_btn{
 	background-color: #ffb9a6;
-    color: #515151;
+    color: #fafafa;
     margin-top: 20px;
     margin-right: 5%;
     width: 25%;
     height: 40px;
     margin-top:5px;
+    border:0px;
 }
 
 button.edit-user_btn:hover{
 	background-color: #ffb9a6;
-	color: #515151;
+	color: #fafafa;
 	opacity:0.7;
 }
 

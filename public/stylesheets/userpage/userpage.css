@@ -14,4 +14,14 @@
     height: 150px;
     overflow:hidden;
     width: 150px;
+    margin: 0 auto 0 auto;
+    border:1px solid #c7c5c9;
+}
+
+.user-info-panel{
+	text-align:center;
+}
+
+.up-post-comment{
+	margin-bottom:10px;
 }
