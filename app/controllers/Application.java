@@ -113,7 +113,7 @@ public class Application extends Controller {
             File file = new File("public/images/unknown.png");
             try {
 				user.setImageData(MakeImage.getBytesFromImage(ImageIO.read(file), "png"));
-                user.setImageEncData(Base64.getEncoder().encodeToString(user.getImageData()));                
+                user.setImageEncData(Base64.getEncoder().encodeToString(user.getImageData()));
 				user.setImageName("unknown.png");
 			} catch (IOException e) {
 				// TODO 自動生成された catch ブロック
@@ -407,6 +407,7 @@ public class Application extends Controller {
             // postにコメント情報を格納
             Post updatePost = PostModelService.use().getPostListById(postId);
             updatePost.getComment().add(comment);
+            updatePost.setCommentCnt(PostModelService.use().getPostListById(postId).getComment().size());	// コメント数の保存
             updatePost.update();
 
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
@@ -538,5 +539,26 @@ public class Application extends Controller {
     		System.out.println("投稿検索バインドエラーあり!!!");
     		return redirect(controllers.routes.Application.index(1,"ALL"));
     	}
+    }
+
+    // 投稿のソート
+    public static Result sortPost(Integer page ,String sortName){
+   		List<Post> postList = null;
+    	List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();				// カテゴリーリスト
+    	switch(sortName){
+    	case "日付新しい順":
+    		postList = PostModelService.use().getPostList(page);
+    		return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    	case "日付古い順":
+    		postList = PostModelService.use().getPostList(page);
+    		Collections.reverse(postList);
+    		return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    	case "いいね":
+    		break;
+    	case "コメント":
+    		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
+    		return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    	}
+    	return null;
     }
 }

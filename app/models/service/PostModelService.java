@@ -290,4 +290,17 @@ public class PostModelService {
 									.getList();
 		return postList;
 	}
+
+	/*
+	 *	コメントの多い順の投稿リストを取得
+	 *	@param Integer pageNumber : ページング
+	 *	@return Postのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Post> getPostCommentSort(Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.orderBy("commentCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
+		return postList;
+	}
 }
