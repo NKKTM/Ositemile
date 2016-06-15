@@ -1,5 +1,6 @@
 .introduction-color-box{
-    padding-right: 4%;
+    padding-right: 3%;
+    padding-left: 3%;
 }
 
 .introduction-postcommnet-box{
@@ -23,10 +24,13 @@
 }
 
 .comment-date{
-    margin-left: 10px;
+    margin-left: 20px;
+    color:#616161;
+    font-size:90%;
 }
 .comment-data{
     margin-top: 5px;
+    color:#616161;
 }
 
 .post-date{
@@ -42,8 +46,8 @@
     margin-bottom: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 4%;
-    padding-right: 4%;
+    padding-left: 3%;
+    padding-right: 3%;
     overflow: hidden;
 }
 
@@ -139,7 +143,7 @@ textarea{
 
 .item-info-box{
     padding-left:3%;
-    padding-right:4%;
+    padding-right:3%;
     margin-top:10px;
 }
 
@@ -266,4 +270,55 @@ button.push-item-comment:hover{
 	color:gray;
 	bacground-color:#fefefe;
 	margin-top:30px;
+}
+
+.intro-com-pictbox{
+	border-radius: 9px;
+    height: 50px;
+    overflow: hidden;
+    width: 50px;
+    margin: 0 auto 0 0;
+    border: 1px solid #c7c5c9;
+    float:left;
+}
+
+.intro-com-namebox{
+    float: left;
+    display: inline;
+    margin-left: 20px;
+}
+
+.userpage-image{
+	position: relative;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.userpage-image:hover{
+	opacity:0.7;
+}
+
+.comment-user>a{
+	font-weight:700;
+	font-size:110%;
+}
+
+.container-fluid{
+	padding-left:0px;
+}
+
+@media (min-width: 992px){
+.introduction-color-box{
+	padding-left: 1%;
+}
+
+.item-info-box{
+	padding-right: 1%;
+}
+
 }
