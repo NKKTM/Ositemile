@@ -35,14 +35,14 @@
                         <a href="/iineListForPost/@post.getId()"><span id="iineNum">@post.getIine().size()</span>いいね</a>
                     </div>
                 }else{
-                    @if(iineBooleanList.get(i) == false){
+                    @if(iine == false){
                         <div class="iineBtn">
                             <button class="iineBtnLonined" value="false">☆</button>
                             <input type="hidden" value="@post.getId()">
                             <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
                         </div>
                     }
-                    @if(iineBooleanList.get(i) == true){
+                    @if(iine == true){
                         <div class="iineBtn">
                             <button class="iineBtnLonined" value="true">★</button>
                             <input type="hidden" value="@post.getId()">  
