@@ -1,4 +1,4 @@
-@(loginId: String,user: models.entity.User, postList: List[models.entity.Post], iineList: List[models.entity.Iine])
+@(loginId: String,user: models.entity.User, postList: List[models.entity.Post], iineList: List[models.entity.Iine], postBooleanList: List[Boolean],iineBooleanList: List[Boolean])
 
 @num = @{932108L}
 <link href="@routes.Assets.at("stylesheets/userpage/userpage.css")" rel="stylesheet">
@@ -76,6 +76,27 @@
                             </div>
                             <div class="panel-footer">
                                 <p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
+                                <!-- いいねボタン -->
+                                @if(loginId == null){
+                                    <div class="iineBtn"><button class="iineBtnNanashi">☆</button>
+                                        <a href="/iineListForPost/@post.getId()"><span id="iineNum">@post.getIine().size()</span>いいね</a>
+                                    </div>
+                                }else{
+                                    @if(postBooleanList.get(i) == false){
+                                        <div class="iineBtn">
+                                            <button class="iineBtnLonined" value="false">☆</button>
+                                            <input type="hidden" value="@post.getId()">
+                                            <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
+                                        </div>
+                                    }
+                                    @if(postBooleanList.get(i) == true){
+                                        <div class="iineBtn">
+                                            <button class="iineBtnLonined" value="true">★</button>
+                                            <input type="hidden" value="@post.getId()">  
+                                            <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
+                                        </div>
+                                    }
+                                }                              
                             </div>
                         </div>
                     </div>
@@ -97,21 +118,42 @@
                     <div class="col-xs-12 col-sm-4 col-md-4 post-one">
                         <div class="panel">
                             <div class="panel-heading">
-                                <p>@iine.getPost.getDateStr()</p>
+                                <p>@iine.getPost().getDateStr()</p>
                                 <h4>@iine.getPost().getPostTitle()</h4>
-                                <a href="/introduction/@iine.getPost.getId()"></a>
+                                <a href="/introduction/@iine.getPost().getId()"></a>
                             </div>
                             <div class="panel-body">
 
                                 <a href="/introduction/@iine.getPost().getId()"><img class="post-img" src="@iine.getPost().getGoods().getImageUrl()"></a>
-                                <p class="posted-item-name">@iine.getPost.getGoods().getGoodsName()</p>
+                                <p class="posted-item-name">@iine.getPost().getGoods().getGoodsName()</p>
                                 <div class="up-post-comment">
                                     @Html(iine.getPost.getPostComment())
                                 </div>
-                                <a class="category-label" href="@routes.Application.index(1,iine.getPost.getGoods().getCategory())"><span class="label label-default">@iine.getPost.getGoods().getCategory()</span></a>
+                                <a class="category-label" href="@routes.Application.index(1,iine.getPost.getGoods().getCategory())"><span class="label label-default">@iine.getPost().getGoods().getCategory()</span></a>
                             </div>
                             <div class="panel-footer">
-                                <p>投稿者：<a class="contributor" href="@routes.Application.userPage(iine.getPost.getUser().getId+num)">@iine.getPost.getUser().getUserName()</a></p>
+                                <p>投稿者：<a class="contributor" href="@routes.Application.userPage(iine.getPost.getUser().getId+num)">@iine.getPost().getUser().getUserName()</a></p>
+                                <!-- いいねボタン -->
+                                @if(loginId == null){
+                                    <div class="iineBtn"><button class="iineBtnNanashi">☆</button>
+                                        <a href="/iineListForPost/@iine.getPost().getId()"><span id="iineNum">@iine.getPost().getIine.size()</span>いいね</a>
+                                    </div>
+                                }else{
+                                    @if(iineBooleanList.get(i) == false){
+                                        <div class="iineBtn">
+                                            <button class="iineBtnLonined" value="false">☆</button>
+                                            <input type="hidden" value="@iine.getPost().getId()">
+                                            <a href="/iineListForPost/@iine.getPost().getId()"><span id="iineNum@iine.getPost().getId()">@iine.getPost().getIine.size()</span>いいね</a>
+                                        </div>
+                                    }
+                                    @if(iineBooleanList.get(i) == true){
+                                        <div class="iineBtn">
+                                            <button class="iineBtnLonined" value="true">★</button>
+                                            <input type="hidden" value="@iine.getPost().getId()">  
+                                            <a href="/iineListForPost/@iine.getPost().getId()"><span id="iineNum@iine.getPost().getId()">@iine.getPost().getIine.size()</span>いいね</a>
+                                        </div>
+                                    }
+                                }                                
                             </div>
                         </div>
                     </div>

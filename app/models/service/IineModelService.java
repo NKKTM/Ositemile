@@ -63,15 +63,15 @@ public class IineModelService {
 
 	/*
 	 *	PostListに対して、現在のloginIdがPostに対していいねを押しているかどうかのBooleanListを返す
-	 *	@param Long userId : loginId,  List<Post> ：ポストID
+	 *	@param String , List<Post> ：ポストID
 	 *	@return List<Boolean>
 	 *	@author Hatsune Kitajima
 	 */	
 	public List<Boolean> getBooleanListByPostList(List<Post> postList, String loginId){
 		List<Boolean> booleanList  = new ArrayList<Boolean>();
 		User user = UserModelService.use().getUserByLoginId(loginId);
-		if(user != null){
-			//ログインしている場合のみ実行
+		if(user != null && postList != null){
+			//ログインしているかつ投稿がある場合のみ実行
 			for(Post post :postList){
 				if(getIineById(post.getId(),user.getId()) != null){
 					//いいねが押されている場合
@@ -87,7 +87,35 @@ public class IineModelService {
 			System.out.println(boo);
 		}
 		return booleanList;
-	}	 	
+	}
+
+	/*
+	 *	iineListに対して、現在のloginIdがPostに対していいねを押しているかどうかのBooleanListを返す
+	 *	@param String , List<Iine> ：ポストID
+	 *	@return List<Boolean>
+	 *	@author Hatsune Kitajima
+	 */	
+	public List<Boolean> getBooleanListByIineList(List<Iine> iineList, String loginId){
+		List<Boolean> booleanList  = new ArrayList<Boolean>();
+		User user = UserModelService.use().getUserByLoginId(loginId);
+		if(user != null && iineList != null){
+			//ログインしているかつ投稿がある場合のみ実行
+			for(Iine iine :iineList){
+				if(getIineById(iine.getPost().getId(),user.getId()) != null){
+					//いいねが押されている場合
+					booleanList.add(true);
+				}else{
+					//いいねが押されていない場合
+					booleanList.add(false);
+				}
+			}			
+		}
+
+		for(Boolean boo:booleanList){
+			System.out.println(boo);
+		}
+		return booleanList;
+	}	 		 	
 
 	
 }

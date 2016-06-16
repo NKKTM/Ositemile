@@ -293,9 +293,11 @@ public class Application extends Controller {
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
     	 String loginId = session().get("loginId");
-         System.out.println("loginId:"+loginId);
-
-         return ok(user_page.render(loginId,user,postList,iineList));
+         // いいねが押されているかの判定（postに対して）
+         List<Boolean> postBooleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+         // いいねが押されているかの判定（iineに対して）
+         List<Boolean> iineBooleanList = IineModelService.use().getBooleanListByIineList(iineList,loginId);
+         return ok(user_page.render(loginId,user,postList,iineList,postBooleanList,iineBooleanList));
     }
 
     //loginIdからユーザーページのリンクを作る
@@ -570,6 +572,9 @@ public class Application extends Controller {
     		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
     		break;
     	}
-    	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+        String loginId = session().get("loginId");
+        // いいねが押されているかの判定
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);         
+    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
     }
 }
