@@ -35,22 +35,27 @@
 				<div style="clear:both;"></div>
 				<h3 class="intro-post-title">@post.getPostTitle()</h3>
 				<div class="intro-post-com">@Html(post.getPostComment())</div>
-				@if(loginId == null){
-					<div class="iineBtn"><button id="iineBtnNanashi">☆</button>
-						<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
-					</div>
-				}else{
-					@if(iine == false){
-						<div class="iineBtn"><button id="iineBtn" value="false">☆</button>
-							<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
-						</div>
-					}
-					@if(iine == true){
-						<div class="iineBtn"><button id="iineBtn" value="true">★</button>
-							<a href="/iineListForPost/@post.getId()"><span id="iineNum">@iineList.size()</span>いいね</a>
-						</div>
-					}
-				}
+                <!-- いいねボタン -->
+                @if(loginId == null){
+                    <div class="iineBtn"><button class="iineBtnNanashi">☆</button>
+                        <a href="/iineListForPost/@post.getId()"><span id="iineNum">@post.getIine().size()</span>いいね</a>
+                    </div>
+                }else{
+                    @if(iine == false){
+                        <div class="iineBtn">
+                            <button class="iineBtnLonined" value="false">☆</button>
+                            <input type="hidden" value="@post.getId()">
+                            <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
+                        </div>
+                    }
+                    @if(iine == true){
+                        <div class="iineBtn">
+                            <button class="iineBtnLonined" value="true">★</button>
+                            <input type="hidden" value="@post.getId()">  
+                            <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
+                        </div>
+                    }
+                }
 			</div>
 
 

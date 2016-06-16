@@ -1,47 +1,42 @@
-// 初期化
-window.onload = function() {
-};
 
 // いいねボタン（ログインしているとき）
 $(function(){
-  $("#iineBtn").click( function(){
-    iineChange();
+  $(".iineBtnLonined").click( function(){
+    //postIdを取得
+    var postId = $(this).next().val();
+    console.log("postIdは"+postId);  
+
+    //iineBtnをvalueによってスタイル変更,その後value反転
+    if(this.value === "true"){
+      this.innerHTML = "☆";
+      this.value = "false";
+    }else if(this.value === "false"){
+      this.innerHTML = "★";
+      this.value = "true";      
+    }
+
+    //ajaxの処理
+    var jsondata = {'iineBtn': $(this).val()};
+    $.post("/iineBtn/"+postId,
+      jsondata,
+      function (result) {
+        $("#iineNum"+postId).html(result.iineNum);
+      },
+      "json"
+    );
+
   })
 })
 
 // いいねボタン（ログインしていない時→新規登録へ遷移）
 $(function(){
-  $("#iineBtnNanashi").click( function(){
+  $(".iineBtnNanashi").click( function(){
       window.location.href = '/login';
   })
 })
 
 // いいねの変更処理を行う関数
-function iineChange(){
+function iineChange(postId){
 
-    //iineBtnをvalueによってスタイル変更,その後value反転
-    var iine = document.getElementById('iineBtn');
-    if(iine.value === "true"){
-      iine.innerHTML = "☆";
-      iine.value = "false";
-    }else if(iine.value === "false"){
-      iine.innerHTML = "★";
-      iine.value = "true";      
-    }
 
-    //postIdを取得
-    var url   = location.href;
-    params    = url.split("/");
-    var postId = params[4];
-
-    //ajaxの処理
-    var jsondata = {'iineBtn': $("#iineBtn").val()};
-    $.post("/iineBtn/"+postId,
-      jsondata,
-      function (result) {
-        var iineNum = document.getElementById('iineNum');
-        iineNum.innerHTML = result.iineNum;
-      },
-      "json"
-    );
 }

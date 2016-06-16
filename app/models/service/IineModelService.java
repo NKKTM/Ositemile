@@ -5,8 +5,13 @@
 package models.service;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import models.entity.Iine;
+import models.entity.User;
+import models.entity.Post;
+import models.service.UserModelService;
+
 import play.db.ebean.Model.Finder;
 
 public class IineModelService {
@@ -35,7 +40,7 @@ public class IineModelService {
 	/*
 	 *	ユーザーIDと一致したリスト取得
 	 *	@param Long userId : ユーザーID
-	 *	@return いいねのリスト
+	 *	@return そのユーザーに対して押されたいいねのリスト
 	 *	@author Hatsune Kitajima
 	 */
 	public List<Iine> getIineListByUserId(Long userId){
@@ -54,7 +59,35 @@ public class IineModelService {
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
 		Iine iine =  find.where("post.id = "+postId+ " and human.id = "+userId).findUnique();;
 		return iine;
-	}	
+	}
+
+	/*
+	 *	PostListに対して、現在のloginIdがPostに対していいねを押しているかどうかのBooleanListを返す
+	 *	@param Long userId : loginId,  List<Post> ：ポストID
+	 *	@return List<Boolean>
+	 *	@author Hatsune Kitajima
+	 */	
+	public List<Boolean> getBooleanListByPostList(List<Post> postList, String loginId){
+		List<Boolean> booleanList  = new ArrayList<Boolean>();
+		User user = UserModelService.use().getUserByLoginId(loginId);
+		if(user != null){
+			//ログインしている場合のみ実行
+			for(Post post :postList){
+				if(getIineById(post.getId(),user.getId()) != null){
+					//いいねが押されている場合
+					booleanList.add(true);
+				}else{
+					//いいねが押されていない場合
+					booleanList.add(false);
+				}
+			}			
+		}
+
+		for(Boolean boo:booleanList){
+			System.out.println(boo);
+		}
+		return booleanList;
+	}	 	
 
 	
 }
