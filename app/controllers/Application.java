@@ -441,11 +441,12 @@ public class Application extends Controller {
     	User user = UserModelService.use().getUserById(userId);
     	// ユーザーフォームの作成
     	UserForm userFormtemp = new UserForm();
+    	String profile = PostModelService.use().reverseSanitize(user.getProfile());
     	userFormtemp.setUserForm(user.getUserName(),		// ユーザー名
     							   user.getPassword(),		// パスワード
     							   user.getLoginId(),		// ログインID
     							   user.getAdmin(),			// 管理者かどうか
-    							   user.getProfile(),		// プロフィール
+    							   profile,		// プロフィール
     							   user.getDepartment(),	// 部署名
     							   null,					// 画像名
     							   user.getImageData(),		// 前回の画像データ
@@ -580,5 +581,36 @@ public class Application extends Controller {
     	String loginId = session().get("loginId");
     	List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
     	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage("ALL"),sortName,Form.form(models.form.SearchPostForm.class)));
+    }
+
+    // 投稿情報の編集
+    public static Result editPost(Long postId){
+    	// 投稿情報取得
+    	Post post = PostModelService.use().getPostListById(postId);
+
+    	// フォームの初期化
+    	UpdatePostForm postFormtemp = new UpdatePostForm();
+    	postFormtemp.postTitle = post.getPostTitle();
+    	postFormtemp.postComment = PostModelService.use().reverseSanitize(post.getPostComment());
+    	Form<UpdatePostForm> updatePostForm = form(UpdatePostForm.class).fill(postFormtemp);
+
+    	// ログインID取得
+    	String loginId = session().get("loginId");
+
+    	// 編集画面へ遷移
+    	return ok(updatePost.render(loginId,updatePostForm,postId));
+    }
+
+    // 投稿情報の更新
+    public static Result updatePost(Long postId){
+    	// 投稿情報取得
+    	Post post = PostModelService.use().getPostListById(postId);
+    	Form<UpdatePostForm> updatePostForm = Form.form(UpdatePostForm.class).bindFromRequest();
+    	if( !updatePostForm.hasErrors() ){
+    		post.setPostTitle(updatePostForm.get().postTitle);
+    		post.setPostComment(updatePostForm.get().postComment);
+    		post.update();
+    	}
+    	return redirect(controllers.routes.Application.introduction(postId));
     }
 }

@@ -1,0 +1,26 @@
+@(loginId: String, updatePostForm: Form[models.form.UpdatePostForm],postId : Long)
+
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
+
+@num = @{932108L}
+
+@import helper._
+
+@main(loginId) {
+<link href="@routes.Assets.at("stylesheets/post_item/edit_profile.css")" rel="stylesheet">
+
+<div class="profile-form">
+	<h4 class="edit-user-head">プロフィール編集</h4>
+	@form(action=routes.Application.updatePost(postId),'enctype->"multipart/form-data"){
+
+		<h4 class="edit-user-title">投稿タイトル<span class="edit-name-caution">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*必須</span></h4>
+		@inputText(updatePostForm("postTitle"),args='_label->"投稿タイトル",'class->"edit_user_form edit_user_text")
+
+		<h4 class="edit-user-title">投稿コメント<span class="edit-name-caution">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*必須</span></h4>
+		@textarea(updatePostForm("postComment"),args='_label->"コメント",'class->"form-control edit_user_form edit_user_textarea" ,'cols -> "80",'rows -> "10")
+
+		<br>
+		<button type="submit" class="btn btn-default edit-user_btn">編集</button>
+	}
+</div>
+}
