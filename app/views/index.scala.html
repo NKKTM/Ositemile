@@ -39,8 +39,8 @@
 	                        <span class="category-title">　@category</span>
 	                    }
 	                </div>
-	                <div class="col-xs-6 col-sm-6">
-                   @form(action=routes.Application.searchPostBykeyword(1),'enctype->"multipart/form-data",'class->"searchPostFrom"){
+	               <div class="col-xs-6 col-sm-6">
+                   @form(action=routes.Application.searchPostBykeyword(1,""),'enctype->"multipart/form-data",'class->"searchPostFrom"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
                    		<button type="submit" class="btn btn-default keyword">検索</button>
                    }
@@ -49,10 +49,10 @@
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle sort-button" type="button" data-toggle="dropdown">ソート</button>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="presentation"><a href="@routes.Application.sortPost(page,"日付新しい順")">日付　新しい順</a></li>
-                                <li role="presentation"><a href="@routes.Application.sortPost(page,"日付古い順")">日付　古い順</a></li>
-                                <li role="presentation"><a href="@routes.Application.sortPost(page,"いいね")">いいね</a></li>
-                                <li role="presentation"><a href="@routes.Application.sortPost(page,"コメント")">コメント</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"日付新しい順")">日付　新しい順</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"日付古い順")">日付　古い順</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"いいね")">いいね</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"コメント")">コメント</a></li>
                             </ul>
                         </div>
                     </div>                   
@@ -107,8 +107,6 @@
                     }
 
 				</div>
-				<p>@request.path</p>
-				<p>@request.host</p>
 
 				@if( request.path.contains( "sortPost" ) ){
 					<p>@helper.pagenateForSort(page,maxPage,category)</p>
