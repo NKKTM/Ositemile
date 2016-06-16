@@ -5,7 +5,7 @@
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
 @import url(https://fonts.googleapis.com/css?family=Chango);
 @import url(https://fonts.googleapis.com/css?family=Raleway:600);
-@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);/* google fonts “ú–{Œê */
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);/* google fonts â€œÃºâ€“{Å’Ãª */
 
 
 
@@ -66,15 +66,15 @@ a.navbar-brand:hover{
 
 body
 {
-/* font-family: 'Noto Sans JP', sans-serif; */@/* google fonts “ú–{Œê */
+/* font-family: 'Noto Sans JP', sans-serif; */Â@/* google fonts â€œÃºâ€“{Å’Ãª */
 
 }
 
 .navbar-brand{
-	/* font-family: 'Londrina Outline', cursive; */ /*‚P “ñdü‰Âˆ¤‚¢Š´‚¶ */
-	font-family: 'Raleway', sans-serif; /*‚Q Š„‚ÆD‚«@ŠÛ‚¢‚¯‚ÇƒVƒ“ƒvƒ‹ */
-	/* font-family: 'Quantico', sans-serif; */ /*‚R ­‚µŽlŠp‚¢Š´‚¶ ‚Å‚à‰Âˆ¤‚¢@‚Q‚Ì•û‚ªD‚« */
-	font-size: 28px !important;@
+	/* font-family: 'Londrina Outline', cursive; */ /*â€šP â€œÃ±ÂdÂÃ¼â€°Ã‚Ë†Â¤â€šÂ¢Å Â´â€šÂ¶ */
+	font-family: 'Raleway', sans-serif; /*â€šQ Å â€žâ€šÃ†ÂDâ€šÂ«Â@Å Ã›â€šÂ¢â€šÂ¯â€šÃ‡Æ’VÆ’â€œÆ’vÆ’â€¹ */
+	/* font-family: 'Quantico', sans-serif; */ /*â€šR ÂÂ­â€šÂµÅ½lÅ pâ€šÂ¢Å Â´â€šÂ¶ â€šÃ…â€šÃ â€°Ã‚Ë†Â¤â€šÂ¢Â@â€šQâ€šÃŒâ€¢Ã»â€šÂªÂDâ€šÂ« */
+	font-size: 28px !important;Â@
 }
 
 .navbar-right{
@@ -93,6 +93,11 @@ body
 .container-fluid>.navbar-header{
 	margin-right: 0px !important;
 }
+
+.navbar-collapse{
+	padding-left: 28px;
+}
+
 .footer{
 	background-color: #49d385;
 }
@@ -104,9 +109,12 @@ body
 	padding-left:0px;
 }
 
+.contributor-box{
+	text-align:left;
+}
+
 .contributor{
 	color:gray;
-	font-weight:500;
 }
 
 a.contributor:hover{
@@ -218,10 +226,34 @@ div{
 	margin:solid 1px black;
 }
 
+.iineBtn{
+	text-align: right;
+}
+
+.iineBtn a{
+    color: gray;
+    font-weight: 500;
+}
+
+
+.iineBtn button{
+	padding: 0;
+    font-size: 16px;
+    text-align: right;
+    color: #ffb9a6;
+    background-color:#fafafa;
+    background:none;
+    border:0;
+    outline: none;
+}
+
+.iineBtn button:hover{
+    background-color: #eee;
+}
 
 
 
-/*user-page•”•ª*/
+/*user-pageâ€¢â€â€¢Âª*/
 .user-info-box{
 	height: auto;
 	/*border:solid 1px black;*/
@@ -230,8 +262,8 @@ div{
 
 .post-container{
 	height: 800px;
-	/*border:solid 1px black;*/
-	padding-right: 0px;
+/*	border:solid 1px black;
+*/	padding-right: 0px;
 	padding-left: 0px;
 }
 
@@ -343,6 +375,9 @@ hr{
 	border-bottom-left-radius:8px;
 }
 
+.panel-footer div{
+}
+
 .no-post{
 	color:gray;
 }
@@ -364,17 +399,13 @@ a.edit-user-btn:hover{
 }
 
 .searchPostFrom{
-	float:left;
+	text-align: right;
 }
 
 .searchPostFrom > input{
 	height:34px;
 	border-radius:4px;
 	border:solid 1px #c1c0c2;
-}
-
-.categoryInfoBox{
-	margin-bottom:15px;
 }
 
 .categoryInfo{
@@ -389,9 +420,6 @@ a.edit-user-btn:hover{
 }
 
 @media (min-width: 992px){
-	.searchPostFrom{
-		float:right;
-	}
 
 	.post-container{
 	height: 800px;
@@ -405,6 +433,24 @@ a.edit-user-btn:hover{
 		border-radius:8px;
 		padding-right:10px;
 		padding-left:11px;
+	}
+
+}
+
+.sort-button-box{
+	text-align: left;
+	margin-bottom: 10px;
+}
+
+
+@media (max-width: 767px){
+	.searchPostFrom{
+		float:right;
+	}
+
+	.sort-button-box{
+		float: left;
+		margin-bottom: 10px;
 	}
 
 }

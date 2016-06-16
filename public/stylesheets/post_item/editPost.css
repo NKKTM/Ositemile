@@ -1,0 +1,11 @@
+.edit-post-button{
+	float : right;
+}
+
+.edit-post-button > a{
+	color: gray;
+}
+
+.edit-post-box{
+	margin-bottom:20px;
+}

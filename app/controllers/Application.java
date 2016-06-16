@@ -75,13 +75,20 @@ public class Application extends Controller {
 
 
     public static Result index(Integer page,String category) {
+        // ポストのリスト取得
         List<Post> postList;
         if(category.equals("ALL")){
             postList = PostModelService.use().getPostList(page);
         }else{
             postList = PostModelService.use().getPostListByCategory(page,category);
         }
-        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class)));
+        // セッションId取得
+        String loginId = session().get("loginId");
+
+        // いいねが押されているかの判定
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+
+        return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class)));
     }
 
     //ログイン画面
@@ -286,9 +293,11 @@ public class Application extends Controller {
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
     	 String loginId = session().get("loginId");
-         System.out.println("loginId:"+loginId);
-
-         return ok(user_page.render(loginId,user,postList,iineList));
+         // いいねが押されているかの判定（postに対して）
+         List<Boolean> postBooleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+         // いいねが押されているかの判定（iineに対して）
+         List<Boolean> iineBooleanList = IineModelService.use().getBooleanListByIineList(iineList,loginId);
+         return ok(user_page.render(loginId,user,postList,iineList,postBooleanList,iineBooleanList));
     }
 
     //loginIdからユーザーページのリンクを作る
@@ -434,11 +443,12 @@ public class Application extends Controller {
     	User user = UserModelService.use().getUserById(userId);
     	// ユーザーフォームの作成
     	UserForm userFormtemp = new UserForm();
+    	String profile = PostModelService.use().reverseSanitize(user.getProfile());
     	userFormtemp.setUserForm(user.getUserName(),		// ユーザー名
     							   user.getPassword(),		// パスワード
     							   user.getLoginId(),		// ログインID
     							   user.getAdmin(),			// 管理者かどうか
-    							   user.getProfile(),		// プロフィール
+    							   profile,		// プロフィール
     							   user.getDepartment(),	// 部署名
     							   null,					// 画像名
     							   user.getImageData(),		// 前回の画像データ
@@ -528,13 +538,22 @@ public class Application extends Controller {
     	}
     }
 
-    public static Result searchPostBykeyword(Integer page){
+    public static Result searchPostBykeyword(Integer page,String searchedKeyword){
     	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
     	if(!searchForm.hasErrors()){
     		System.out.println("投稿検索バインドエラーなし");
-    		String keyword = searchForm.get().keyword;
+    		String keyword = "";
+            String loginId = session().get("loginId");
+	    	if(searchedKeyword != ""){
+	    		searchForm.get().keyword = searchedKeyword;
+	    		keyword = searchedKeyword;
+	    	}else{
+	    		keyword = searchForm.get().keyword;
+	    	}
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
-    		return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage("ALL"),"ALL",searchForm));
+            // いいねが押されているかの判定
+            List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
     		return redirect(controllers.routes.Application.index(1,"ALL"));
@@ -548,6 +567,7 @@ public class Application extends Controller {
     	switch(sortName){
     	case "日付新しい順":
     		postList = PostModelService.use().getPostList(page);
+
     		break;
     	case "日付古い順":
     		postList = PostModelService.use().getPostList(page);
@@ -560,7 +580,47 @@ public class Application extends Controller {
     		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
     		break;
     	}
-    	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+        String loginId = session().get("loginId");
+        // いいねが押されているかの判定
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    }
+
+    // 投稿情報の編集
+    public static Result editPost(Long postId){
+    	// 投稿情報取得
+    	Post post = PostModelService.use().getPostListById(postId);
+
+    	// フォームの初期化
+    	UpdatePostForm postFormtemp = new UpdatePostForm();
+    	postFormtemp.postTitle = post.getPostTitle();
+    	postFormtemp.postComment = PostModelService.use().reverseSanitize(post.getPostComment());
+    	Form<UpdatePostForm> updatePostForm = form(UpdatePostForm.class).fill(postFormtemp);
+
+    	// ログインID取得
+    	String loginId = session().get("loginId");
+
+    	// 編集画面へ遷移
+    	return ok(updatePost.render(loginId,updatePostForm,postId));
+    }
+
+    // 投稿情報の更新
+    public static Result updatePost(Long postId){
+    	// 投稿情報取得
+    	Post post = PostModelService.use().getPostListById(postId);
+    	Form<UpdatePostForm> updatePostForm = Form.form(UpdatePostForm.class).bindFromRequest();
+    	if( !updatePostForm.hasErrors() ){
+
+    		post.setPostTitle(updatePostForm.get().postTitle);
+    		post.setPostComment(PostModelService.use().sanitizeString(updatePostForm.get().postComment));
+    		post.update();
+    		return redirect(controllers.routes.Application.introduction(postId));
+    	}else{
+    		// ログインID取得
+    		String loginId = session().get("loginId");
+    		return ok(updatePost.render(loginId,updatePostForm,postId));
+    	}
+
     }
 
     //ランキング

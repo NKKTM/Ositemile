@@ -1,6 +1,7 @@
-@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
+@(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 @import helper._
+@import play.mvc._
 
 @num = @{932108L}
 
@@ -30,7 +31,7 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
             	<div class="row sampleRow categoryInfoBox">
-            		<div class="col-xs-12 col-sm-6 col-md-6 categoryInfo">
+            		<div class="col-xs-6 col-sm-6 col-md-6 categoryInfo">
 		                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">カテゴリー</a>
 	                    @if(category.equals("ALL")){
 	                        <span class="category-title">　新着記事</span>
@@ -38,25 +39,23 @@
 	                        <span class="category-title">　@category</span>
 	                    }
 	                </div>
-	                <div class="col-xs-12 col-sm-6 col-md-6">
-                   @form(action=routes.Application.searchPostBykeyword(1),'enctype->"multipart/form-data",'class->"searchPostFrom"){
+	               <div class="col-xs-6 col-sm-6 col-md-6">
+                   @form(action=routes.Application.searchPostBykeyword(1,""),'enctype->"multipart/form-data",'class->"searchPostFrom"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
                    		<button type="submit" class="btn btn-default keyword">検索</button>
                    }
                    </div>
-                </div>
-                <div class="row">
-                	<div class="col-xs-12 col-sm-3 col-md-3">
-						<div class="dropdown">
-							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">ソート</button>
-							<ul class="dropdown-menu" role="menu">
-								<li role="presentation"><a href="@routes.Application.sortPost(page,"日付新しい順")">日付　新しい順</a></li>
-								<li role="presentation"><a href="@routes.Application.sortPost(page,"日付古い順")">日付　古い順</a></li>
-								<li role="presentation"><a href="@routes.Application.sortPost(page,"いいね")">いいね</a></li>
-								<li role="presentation"><a href="@routes.Application.sortPost(page,"コメント")">コメント</a></li>
-							</ul>
-						</div>
-					</div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 sort-button-box">
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle sort-button" type="button" data-toggle="dropdown">ソート</button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"日付新しい順")">日付　新しい順</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"日付古い順")">日付　古い順</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"いいね")">いいね</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,"コメント")">コメント</a></li>
+                            </ul>
+                        </div>
+                    </div>                   
                 </div>
 
                 <div class="row sampleRow">
@@ -76,7 +75,28 @@
 									<a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
 								</div>
 								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
+									<div class="contributor-box">投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></div>
+                                    <!-- いいねボタン -->
+                                    @if(loginId == null){
+                                        <div class="iineBtn"><button class="iineBtnNanashi">☆</button>
+                                            <a href="/iineListForPost/@post.getId()"><span id="iineNum">@post.getIine().size()</span></a>
+                                        </div>
+                                    }else{
+                                        @if(iineBooleanList.get(i) == false){
+                                            <div class="iineBtn">
+                                                <button class="iineBtnLonined" value="false">☆</button>
+                                                <input type="hidden" value="@post.getId()">
+                                                <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span></a>
+                                            </div>
+                                        }
+                                        @if(iineBooleanList.get(i) == true){
+                                            <div class="iineBtn">
+                                                <button class="iineBtnLonined" value="true">★</button>
+                                                <input type="hidden" value="@post.getId()">  
+                                                <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span></a>
+                                            </div>
+                                        }
+                                    }
 								</div>
 							</div>
 						</div>
@@ -87,7 +107,20 @@
                     }
 
 				</div>
-                <p>@helper.pagenateForIndex(page,maxPage,category)</p>
+
+				@if( request.path.contains( "sortPost" ) ){
+					<p>@helper.pagenateForSort(page,maxPage,category)</p>
+				}
+				@if( request.path.contains( "search" ) ) {
+					@if( searchForm.get().keyword != "" ){
+						<p>@helper.pagenateForSearch(page,maxPage,category,searchForm.get().keyword)</p>
+					}
+
+				}
+				@if( !request.path.contains( "sortPost" ) && !request.path.contains( "search" )){
+					<p>@helper.pagenateForIndex(page,maxPage,category)</p>
+				}
+
                     <!-- ページング  -->
             </div>
         </div>

@@ -11,7 +11,7 @@
 	  <div class="col-xs-12 col-sm-12 col-md-12 search-item">
 	  	@form(action=routes.Application.postSearchItem(),'enctype->"multipart/form-data") {
 	  		<h4 class="search-title">投稿する商品を検索</h4>
-	  		@inputText(searchForm("searchWord"),args='class->"shearch-item-input")(helper.search_item_caution, implicitly[Lang])
+	  		@inputText(searchForm("searchWord"),args='class->"shearch-item-input",'maxLength->"50")(helper.search_item_caution, implicitly[Lang] )
 	  		<button type="submit" class="btn btn-default">検索</button>
 	  	}
 	  </div>
@@ -22,7 +22,7 @@
   		<div class="row sampleRow">
   	@for(item <- goodsList){
 
-	  		<div class="col-xs-6 col-sm-2 col-md-2 searched-item">
+	  		<div class="col-xs-6 col-sm-3 col-md-2 searched-item">
 	  			<div class="searched-item-inside">
 			  		@if(item.getImageUrl()==null){
 			  			<img class="search-item-image" alt="..." src="@routes.Assets.at("images/noimage150x150.png")">

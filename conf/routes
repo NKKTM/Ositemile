@@ -9,15 +9,15 @@ GET     /		                    controllers.Application.index(page:Integer?=1,cat
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # ログイン・ログアウト
-GET		/login						controllers.Application.login()
-GET		/authenticate				controllers.Application.authenticate()
-GET		/authenticateSuccess		controllers.Application.authenticateSuccess()
-GET		/logout						controllers.Application.logout()
+GET			/login						controllers.Application.login()
+POST		/authenticate				controllers.Application.authenticate()
+GET			/authenticateSuccess		controllers.Application.authenticateSuccess()
+GET			/logout						controllers.Application.logout()
 
 
 # 新規登録
-GET		/register					controllers.Application.register()
-GET		/registerDB					controllers.Application.registerDB()
+GET			/register					controllers.Application.register()
+POST		/registerDB					controllers.Application.registerDB()
 
 # 管理者権限付与
 GET		/wuntopufapurakrnkfro/:id	controllers.Application.grantAdmin(id:Long)
@@ -42,7 +42,7 @@ GET		/postDelete/:postId		controllers.AdminApplication.postDelete(postId:Long)
 
 # 商品ページ
 GET		/introduction/:postId		controllers.Application.introduction(postId:Long)
-GET		/commentCreate				controllers.Application.commentCreate()
+POST		/commentCreate			controllers.Application.commentCreate()
 
 # いいね関係
 POST	/iineBtn/:postId				controllers.Application.iineBtn(postId:Long)
@@ -50,20 +50,21 @@ GET		/iineListForPost/:postId		controllers.Application.iineListForPost(postId:Lo
 
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
-GET     /postInput                  controllers.Application.postInput()
+POST    /postInput                  controllers.Application.postInput()
 GET     /postCreate                 controllers.Application.postCreate()
+GET		/editPost/:postId			controllers.Application.editPost(postId : Long)
+POST	/updatePost/:postId			controllers.Application.updatePost(postId : Long)
 
 #ユーザーページ
 GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
 GET    /userPageByLoginId                   controllers.Application.getUserPageByLoginid(loginId:String)
 
 #ユーザー情報アップデート
-
 GET   /myProfileEdit:formatedUserId                  controllers.Application.updateUserForm(formatedUserId: Long)
-POST   /myProfileUpdate:formatedUserId                             controllers.Application.DoUpdate(formatedUserId: Long)
+POST   /myProfileUpdate:formatedUserId               controllers.Application.DoUpdate(formatedUserId: Long)
 
 #ポストの検索
-GET   /index/:page/                  controllers.Application.searchPostBykeyword(page:Integer)
+POST   /search/:page/                  controllers.Application.searchPostBykeyword(page:Integer,keyword:String)
 
 #ソート
 GET		/sortPost/:page,sortName			controllers.Application.sortPost(page:Integer,sortName : String)

@@ -91,6 +91,25 @@ public class PostModelService {
 	}
 
 	/*
+	 *	ページングのためのMaxページ取得(検索用)
+	 *	@param  String : keyword キーワード
+	 *	@return MaxPage
+	 *			失敗時：null
+	 *	@author Hatsune Kitajima
+	 */
+	public int getMaxPageForSearch(String keyword){
+		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword);
+		int maxPage;
+		if(postList.size()%LIMIT == 0){
+			maxPage = postList.size()/LIMIT;
+		}else{
+			maxPage = postList.size()/LIMIT + 1;
+		}
+		System.out.println("maxPage："+maxPage);
+		return maxPage;
+	}
+
+	/*
 	 *	１ページあたりの投稿リストを取得
 	 *	@param 取得したいページ数
 	 *	@return Postのリスト
@@ -286,7 +305,6 @@ public class PostModelService {
 	 *@return String　list<Post>
 	 *@author yuki kawakami
 	 */
-
 	public List<Post> searchPostByKeyword(String keyword,Integer pageNumber){
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
@@ -298,6 +316,23 @@ public class PostModelService {
 									.findPagingList(LIMIT)
 									.getPage(pageNum)
 									.getList();
+		return postList;
+	}
+
+	/*
+	 *トップページの投稿検索(ページングなし)
+	 *@param string キーワード
+	 *@return String　list<Post>
+	 *@author yuki kawakami
+	 */
+	public List<Post> searchPostByKeyword(String keyword){
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
+										+"postComment LIKE '%"+keyword+"%'"+" OR "
+										+"human.userName LIKE '%"+keyword+"%'"+" OR "
+										+"goods.goodsName LIKE '%"+keyword+"%'")
+									.orderBy("date desc")
+									.findList();
 		return postList;
 	}
 
