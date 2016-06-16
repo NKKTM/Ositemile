@@ -51,7 +51,7 @@ create table userTable (
   admin                     boolean,
   image_enc_data            text,
   image_name                varchar(255),
-  image_data                bytea,
+  image_data                blob,
   constraint pk_userTable primary key (id))
 ;
 
