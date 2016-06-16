@@ -52,6 +52,8 @@ GET		/iineListForPost/:postId		controllers.Application.iineListForPost(postId:Lo
 GET		/postSearchItem				controllers.Application.postSearchItem()
 GET     /postInput                  controllers.Application.postInput()
 GET     /postCreate                 controllers.Application.postCreate()
+GET		/editPost/:postId			controllers.Application.editPost(postId : Long)
+GET		/updatePost/:postId					controllers.Application.updatePost(postId : Long)
 
 #ユーザーページ
 GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
