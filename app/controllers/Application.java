@@ -610,7 +610,12 @@ public class Application extends Controller {
     		post.setPostTitle(updatePostForm.get().postTitle);
     		post.setPostComment(updatePostForm.get().postComment);
     		post.update();
+    		return redirect(controllers.routes.Application.introduction(postId));
+    	}else{
+    		// ログインID取得
+    		String loginId = session().get("loginId");
+    		return ok(updatePost.render(loginId,updatePostForm,postId));
     	}
-    	return redirect(controllers.routes.Application.introduction(postId));
+
     }
 }
