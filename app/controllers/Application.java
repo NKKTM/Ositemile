@@ -528,13 +528,19 @@ public class Application extends Controller {
     	}
     }
 
-    public static Result searchPostBykeyword(Integer page){
+    public static Result searchPostBykeyword(Integer page,String searchedKeyword){
     	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
     	if(!searchForm.hasErrors()){
     		System.out.println("投稿検索バインドエラーなし");
-    		String keyword = searchForm.get().keyword;
+    		String keyword = "";
+	    	if(searchedKeyword != ""){
+	    		searchForm.get().keyword = searchedKeyword;
+	    		keyword = searchedKeyword;
+	    	}else{
+	    		keyword = searchForm.get().keyword;
+	    	}
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
-    		return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage("ALL"),"ALL",searchForm));
+    		return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
     		return redirect(controllers.routes.Application.index(1,"ALL"));
@@ -548,6 +554,7 @@ public class Application extends Controller {
     	switch(sortName){
     	case "日付新しい順":
     		postList = PostModelService.use().getPostList(page);
+
     		break;
     	case "日付古い順":
     		postList = PostModelService.use().getPostList(page);
@@ -560,6 +567,6 @@ public class Application extends Controller {
     		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
     		break;
     	}
-    	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),sortName,Form.form(models.form.SearchPostForm.class)));
     }
 }

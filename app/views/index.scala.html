@@ -1,6 +1,7 @@
 @(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 @import helper._
+@import play.mvc._
 
 @num = @{932108L}
 
@@ -39,7 +40,7 @@
 	                    }
 	                </div>
 	                <div class="col-xs-12 col-sm-6 col-md-6">
-                   @form(action=routes.Application.searchPostBykeyword(1),'enctype->"multipart/form-data",'class->"searchPostFrom"){
+                   @form(action=routes.Application.searchPostBykeyword(1,""),'enctype->"multipart/form-data",'class->"searchPostFrom"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
                    		<button type="submit" class="btn btn-default keyword">検索</button>
                    }
@@ -87,7 +88,22 @@
                     }
 
 				</div>
-                <p>@helper.pagenateForIndex(page,maxPage,category)</p>
+				<p>@request.path</p>
+				<p>@request.host</p>
+
+				@if( request.path.contains( "sortPost" ) ){
+					<p>@helper.pagenateForSort(page,maxPage,category)</p>
+				}
+				@if( request.path.contains( "search" ) ) {
+					@if( searchForm.get().keyword != "" ){
+						<p>@helper.pagenateForSearch(page,maxPage,category,searchForm.get().keyword)</p>
+					}
+
+				}
+				@if( !request.path.contains( "sortPost" ) && !request.path.contains( "search" )){
+					<p>@helper.pagenateForIndex(page,maxPage,category)</p>
+				}
+
                     <!-- ページング  -->
             </div>
         </div>
