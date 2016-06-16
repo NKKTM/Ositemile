@@ -1,5 +1,5 @@
 #heroku実行URL
-- https://secure-garden-85446.herokuapp.com/
+- https://immense-ocean-26090.herokuapp.com/
 
 #楽天API情報
 - アプリID/デベロッパーID(applicationId/developerId)：1084889951156254811
