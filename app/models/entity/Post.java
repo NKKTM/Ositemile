@@ -46,10 +46,12 @@ public class Post  extends Model{
 	private List<Comment>	comment;			// コメント
 
 	@OneToMany(mappedBy="post",cascade = CascadeType.ALL)
-	private List<Iine>	iine;			// コメント	
+	private List<Iine>	iine;			// コメント
 
 	private String          dateStr;            //画面に表示する日付のString
 	private Date			date;				// 日付
+	private int				commentCnt;			// コメント数
+	private int				iineCnt;			// いいね数
 
 	/*
 	 *	デフォルトコンストラクタ
@@ -120,7 +122,6 @@ public class Post  extends Model{
 		this.setUser(user);
 		return this;
 	}
-
 	//*****セッター・ゲッター*****
 
 	// ID
@@ -161,7 +162,7 @@ public class Post  extends Model{
 	}
 	public List<Iine> getIine(){
 		return iine;
-	}	
+	}
 
 	// 投稿コメント
 	public void setPostComment(String postComment){
@@ -195,4 +196,19 @@ public class Post  extends Model{
 		return this.dateStr;
 	}
 
+	// コメント数
+	public void setCommentCnt(int commentCnt){
+		this.commentCnt = commentCnt;
+	}
+	public int getCommentCnt(){
+		return commentCnt;
+	}
+
+	// いいね数
+	public void setIineCnt(int iineCnt){
+		this.iineCnt = iineCnt;
+	}
+	public int getIineCnt(){
+		return iineCnt;
+	}
 }

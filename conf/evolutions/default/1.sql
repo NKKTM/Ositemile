@@ -38,6 +38,8 @@ create table post (
   human                     bigint,
   date_str                  varchar(255),
   date                      timestamp,
+  comment_cnt               integer,
+  iine_cnt                  integer,
   constraint pk_post primary key (id))
 ;
 

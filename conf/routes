@@ -64,3 +64,6 @@ POST   /myProfileUpdate:formatedUserId                             controllers.A
 
 #ポストの検索
 GET   /index/:page/                  controllers.Application.searchPostBykeyword(page:Integer)
+
+#ソート
+GET		/sortPost/:page,sortName			controllers.Application.sortPost(page:Integer,sortName : String)

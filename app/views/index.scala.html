@@ -45,8 +45,21 @@
                    }
                    </div>
                 </div>
-                <div class="row sampleRow">
+                <div class="row">
+                	<div class="col-xs-12 col-sm-3 col-md-3">
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">ソート</button>
+							<ul class="dropdown-menu" role="menu">
+								<li role="presentation"><a href="@routes.Application.sortPost(page,"日付新しい順")">日付　新しい順</a></li>
+								<li role="presentation"><a href="@routes.Application.sortPost(page,"日付古い順")">日付　古い順</a></li>
+								<li role="presentation"><a href="@routes.Application.sortPost(page,"いいね")">いいね</a></li>
+								<li role="presentation"><a href="@routes.Application.sortPost(page,"コメント")">コメント</a></li>
+							</ul>
+						</div>
+					</div>
+                </div>
 
+                <div class="row sampleRow">
                     @if(postList != null){
                 		@for((post,i) <- postList.zipWithIndex){
 						<div class="col-xs-12 col-sm-3 col-md-3">
