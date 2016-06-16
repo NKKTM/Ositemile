@@ -75,7 +75,7 @@ public class PostModelService {
 		//カテゴリがそれ以外の場合
 			postList = find.where().ilike("goods.category", category).findList();
 		}
-		int maxPage; 
+		int maxPage;
 		if(postList.size()%LIMIT == 0){
 			maxPage = postList.size()/LIMIT;
 		}else{
@@ -306,6 +306,22 @@ public class PostModelService {
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		List<Post> postList = find.orderBy("commentCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
+		return postList;
+	}
+
+	/*
+	 *	いいねの多い順に投稿リストを取得
+	 *	@param Integer pageNumber : ページング
+	 *	@return Postのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Post> getPostIineSort(Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.orderBy("iineCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
+		for(int i = 0; i < postList.size();i++){
+			System.out.println("いいねカウント数："+postList.get(i).getIineCnt());
+		}
 		return postList;
 	}
 }

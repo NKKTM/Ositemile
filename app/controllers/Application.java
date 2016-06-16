@@ -356,6 +356,9 @@ public class Application extends Controller {
             }
             //いいね数を格納
             int iineNum = IineModelService.use().getIineListByPostId(postId).size();
+            // 投稿にいいね数を格納
+            post.setIineCnt(iineNum);
+            post.save();
             result.put("iineNum",iineNum);
             return ok(result);
         } else {
@@ -545,18 +548,19 @@ public class Application extends Controller {
     	switch(sortName){
     	case "日付新しい順":
     		postList = PostModelService.use().getPostList(page);
-    		return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    		break;
     	case "日付古い順":
     		postList = PostModelService.use().getPostList(page);
     		Collections.reverse(postList);
-    		return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    		break;
     	case "いいね":
+    		postList = PostModelService.use().getPostIineSort(page);
     		break;
     	case "コメント":
     		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
-    		return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    		break;
     	}
-    	return null;
+    	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
     }
 
 }

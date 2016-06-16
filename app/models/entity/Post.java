@@ -51,6 +51,7 @@ public class Post  extends Model{
 	private String          dateStr;            //画面に表示する日付のString
 	private Date			date;				// 日付
 	private int				commentCnt;			// コメント数
+	private int				iineCnt;			// いいね数
 
 	/*
 	 *	デフォルトコンストラクタ
@@ -201,5 +202,13 @@ public class Post  extends Model{
 	}
 	public int getCommentCnt(){
 		return commentCnt;
+	}
+
+	// いいね数
+	public void setIineCnt(int iineCnt){
+		this.iineCnt = iineCnt;
+	}
+	public int getIineCnt(){
+		return iineCnt;
 	}
 }
