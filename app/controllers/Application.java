@@ -563,4 +563,10 @@ public class Application extends Controller {
     	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
     }
 
+    //ランキング
+    public static Result rankingPost() throws ParseException{
+    	List<Post> postList = PostModelService.use().getIineRanking();
+    	return ok(ranking.render(session().get("loginId"),postList));
+    }
+
 }

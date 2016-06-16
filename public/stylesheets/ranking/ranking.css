@@ -1,1 +1,24 @@
 @CHARSET "UTF-8";
+
+.rank-item-img{
+	height:100px;
+	width:100px;
+	border: solid 1px black;
+}
+
+.ranking-num{
+
+}
+
+.rank-item-img{
+
+}
+
+.rank-item-info{
+
+}
+
+.rank-fullbox{
+	margin-left:10%;
+	margin-right:10%;
+}

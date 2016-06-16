@@ -67,3 +67,6 @@ GET   /index/:page/                  controllers.Application.searchPostBykeyword
 
 #ソート
 GET		/sortPost/:page,sortName			controllers.Application.sortPost(page:Integer,sortName : String)
+
+#ランキング
+GET    /ranking                            controllers.Application.rankingPost()

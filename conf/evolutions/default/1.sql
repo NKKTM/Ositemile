@@ -27,6 +27,7 @@ create table iine (
   id                        bigint not null,
   post                      bigint,
   human                     bigint,
+  date                      timestamp,
   constraint pk_iine primary key (id))
 ;
 

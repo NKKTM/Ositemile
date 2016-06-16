@@ -1,40 +1,49 @@
-@((loginId: String, postList:List[models.entity.Post])
+@(loginId: String,postList:List[models.entity.Post])
 
 @main(loginId) {
 <link href="@routes.Assets.at("stylesheets/ranking/ranking.css")" rel="stylesheet">
 
-<div class="container-fluid">
+ @for(post <- postList){
+ 	<p>@post.getId()</p>
+ }
+
+<div class="container-fluid rank-fullbox">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="row">
-				<div class="col-xs-1 col-sm-1 col-md-1 ranking-num">
-
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 ran-item-img">
-				</div>
-				<div class="col-xs-7 col-sm-7 col-md-7 ran-item-info">
-				</div>
-			</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 ranking-num">
+						<p>１位</p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 rank-item-imgbox">
+						<div class="rank-item-img"></div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 rank-item-info">
+						<p>タイトル</p>
+						<p>商品名</p>
+					</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="row">
-				<div class="col-xs-1 col-sm-1 col-md-1">
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-				</div>
-				<div class="col-xs-7 col-sm-7 col-md-7">
-				</div>
-			</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 ranking-num">
+						<p>１位</p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 rank-item-imgbox">
+						<div class="rank-item-img"></div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 rank-item-info">
+						<p>タイトル</p>
+						<p>商品名</p>
+					</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12">
-			<div class="row">
-				<div class="col-xs-1 col-sm-1 col-md-1">
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4">
-				</div>
-				<div class="col-xs-7 col-sm-7 col-md-7">
-				</div>
-			</div>
+					<div class="col-xs-2 col-sm-2 col-md-2 ranking-num">
+						<p>１位</p>
+					</div>
+					<div class="col-xs-4 col-sm-4 col-md-4 rank-item-imgbox">
+						<div class="rank-item-img"></div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 rank-item-info">
+						<p>タイトル</p>
+						<p>商品名</p>
+					</div>
 		</div>
 	</div>
 </div>
