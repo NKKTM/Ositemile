@@ -31,7 +31,7 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
             	<div class="row sampleRow categoryInfoBox">
-            		<div class="col-xs-6 col-sm-6 categoryInfo">
+            		<div class="col-xs-6 col-sm-6 col-md-6 categoryInfo">
 		                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">カテゴリー</a>
 	                    @if(category.equals("ALL")){
 	                        <span class="category-title">　新着記事</span>
@@ -39,13 +39,13 @@
 	                        <span class="category-title">　@category</span>
 	                    }
 	                </div>
-	               <div class="col-xs-6 col-sm-6">
+	               <div class="col-xs-6 col-sm-6 col-md-6">
                    @form(action=routes.Application.searchPostBykeyword(1,""),'enctype->"multipart/form-data",'class->"searchPostFrom"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
                    		<button type="submit" class="btn btn-default keyword">検索</button>
                    }
                    </div>
-                    <div class="col-xs-12 col-sm-12 sort-button-box">
+                    <div class="col-xs-12 col-sm-12 col-md-12 sort-button-box">
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle sort-button" type="button" data-toggle="dropdown">ソート</button>
                             <ul class="dropdown-menu" role="menu">
@@ -61,7 +61,7 @@
                 <div class="row sampleRow">
                     @if(postList != null){
                 		@for((post,i) <- postList.zipWithIndex){
-						<div class="col-xs-12 col-sm-3">
+						<div class="col-xs-12 col-sm-3 col-md-3">
 							<div class="panel">
 								<div class="panel-heading">
 									<p>@post.getDateStr()</p>

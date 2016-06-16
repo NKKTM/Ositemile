@@ -99,9 +99,9 @@ body
 
 .col-xs-12,.col-sm-6,.col-md-4{
 	/* border: solid 1px black; */
-/*	border-radius:8px;
+	border-radius:8px;
 	padding-right:0px;
-	padding-left:0px;*/
+	padding-left:0px;
 }
 
 .contributor-box{
@@ -256,10 +256,10 @@ div{
 }
 
 .post-container{
-/*	height: 800px;
-	border:solid 1px black;
-	padding-right: 0px;
-	padding-left: 0px;*/
+	height: 800px;
+/*	border:solid 1px black;
+*/	padding-right: 0px;
+	padding-left: 0px;
 }
 
 .post-one{
@@ -394,8 +394,8 @@ a.edit-user-btn:hover{
 }
 
 .searchPostFrom{
-/*	float:left;
-*/}
+	text-align: right;
+}
 
 .searchPostFrom > input{
 	height:34px;
@@ -414,10 +414,7 @@ a.edit-user-btn:hover{
 	margin-left:10px;
 }
 
-/*@media (min-width: 992px){*/
-	.searchPostFrom{
-		float:right;
-	}
+@media (min-width: 992px){
 
 	.post-container{
 	height: 800px;
@@ -433,10 +430,10 @@ a.edit-user-btn:hover{
 		padding-left:11px;
 	}
 
-/*}*/
+}
 
 .sort-button-box{
-	float: left;
+	text-align: left;
 	margin-bottom: 10px;
 }
 
