@@ -93,6 +93,11 @@ body
 .container-fluid>.navbar-header{
 	margin-right: 0px !important;
 }
+
+.navbar-collapse{
+	padding-left: 28px;
+}
+
 .footer{
 	background-color: #49d385;
 }
