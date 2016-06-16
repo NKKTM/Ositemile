@@ -549,7 +549,7 @@ public class Application extends Controller {
 	    	}
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
             // いいねが押されているかの判定
-            List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);            
+            List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
     		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
@@ -577,6 +577,8 @@ public class Application extends Controller {
     		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
     		break;
     	}
-    	return ok(index.render(session().get("loginId"),postList,categoryList,page,PostModelService.use().getMaxPage("ALL"),sortName,Form.form(models.form.SearchPostForm.class)));
+    	String loginId = session().get("loginId");
+    	List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage("ALL"),sortName,Form.form(models.form.SearchPostForm.class)));
     }
 }
