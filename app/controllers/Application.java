@@ -75,13 +75,20 @@ public class Application extends Controller {
 
 
     public static Result index(Integer page,String category) {
+        // ポストのリスト取得
         List<Post> postList;
         if(category.equals("ALL")){
             postList = PostModelService.use().getPostList(page);
         }else{
             postList = PostModelService.use().getPostListByCategory(page,category);
         }
-        return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class)));
+        // セッションId取得
+        String loginId = session().get("loginId");
+
+        // いいねが押されているかの判定
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+
+        return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class)));
     }
 
     //ログイン画面
@@ -529,8 +536,11 @@ public class Application extends Controller {
     	if(!searchForm.hasErrors()){
     		System.out.println("投稿検索バインドエラーなし");
     		String keyword = searchForm.get().keyword;
+            String loginId = session().get("loginId");
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
-    		return ok(index.render(session().get("loginId"),postList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage("ALL"),"ALL",searchForm));
+            // いいねが押されているかの判定
+            List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);            
+    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage("ALL"),"ALL",searchForm));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
     		return redirect(controllers.routes.Application.index(1,"ALL"));

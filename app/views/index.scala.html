@@ -1,4 +1,4 @@
-@(loginId: String, postList: List[models.entity.Post], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
+@(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 @import helper._
 
@@ -63,7 +63,28 @@
 									<a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
 								</div>
 								<div class="panel-footer">
-									<p>投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></p>
+									<div class="contributor-box">投稿者：<a class="contributor" href="@routes.Application.userPage(post.getUser().getId+num)">@post.getUser().getUserName()</a></div>
+                                    <!-- いいねボタン -->
+                                    @if(loginId == null){
+                                        <div class="iineBtn"><button class="iineBtnNanashi">☆</button>
+                                            <a href="/iineListForPost/@post.getId()"><span id="iineNum">@post.getIine().size()</span>いいね</a>
+                                        </div>
+                                    }else{
+                                        @if(iineBooleanList.get(i) == false){
+                                            <div class="iineBtn">
+                                                <button class="iineBtnLonined" value="false">☆</button>
+                                                <input type="hidden" value="@post.getId()">
+                                                <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
+                                            </div>
+                                        }
+                                        @if(iineBooleanList.get(i) == true){
+                                            <div class="iineBtn">
+                                                <button class="iineBtnLonined" value="true">★</button>
+                                                <input type="hidden" value="@post.getId()">  
+                                                <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
+                                            </div>
+                                        }
+                                    }
 								</div>
 							</div>
 						</div>
