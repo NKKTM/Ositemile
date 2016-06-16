@@ -1,0 +1,31 @@
+@(page: Integer, maxPage: Integer,category: String,keyword : String)
+<ul class="pager pager-margin">
+@page match {
+    case i if i <= 1 => { <li class="previous disabled"><a href="#">&larr; 前へ</a></li> }
+    case _ => { <li class="previous"><a href="@routes.Application.searchPostBykeyword(page-1,keyword)">&larr; 前へ</a></li> }
+}
+
+@if(maxPage < 5){
+	@for(currentPage <- 1 to maxPage) {
+	    @if(page == currentPage) {
+	        <li class="disabled"><span>@currentPage</span></li>
+	    } else {
+	        <li ><a href="@routes.Application.searchPostBykeyword(currentPage,keyword)">@currentPage</a></li>
+	    }
+	}
+}else{
+	@for(currentPage <- 1 to maxPage) {
+	    @if(page-2 == currentPage || page-1 == currentPage || page+1 == currentPage || page+2 == currentPage) {
+	  		<li ><a href="@routes.Application.searchPostBykeyword(currentPage,keyword)">@{currentPage}</a></li>
+	  	}
+	  	@if(page == currentPage){
+	    	<li class="disabled"><a href="@routes.Application.searchPostBykeyword(currentPage,keyword)">@{currentPage}</a></li>
+	    }
+	}
+}
+
+@page match {
+    case i if i >= maxPage => { <li class="next disabled"><a href="#">次へ &rarr;</a></li> }
+    case _ => { <li class="next"><a href="@routes.Application.searchPostBykeyword(page+1,keyword)">次へ &rarr;</a></li> }
+}
+</ul>

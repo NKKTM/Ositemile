@@ -1,6 +1,7 @@
 @(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 @import helper._
+@import play.mvc._
 
 @num = @{932108L}
 
@@ -57,7 +58,6 @@
                     </div>                   
                 </div>
 
-
                 <div class="row sampleRow">
                     @if(postList != null){
                 		@for((post,i) <- postList.zipWithIndex){
@@ -107,7 +107,22 @@
                     }
 
 				</div>
-                <p>@helper.pagenateForIndex(page,maxPage,category)</p>
+				<p>@request.path</p>
+				<p>@request.host</p>
+
+				@if( request.path.contains( "sortPost" ) ){
+					<p>@helper.pagenateForSort(page,maxPage,category)</p>
+				}
+				@if( request.path.contains( "search" ) ) {
+					@if( searchForm.get().keyword != "" ){
+						<p>@helper.pagenateForSearch(page,maxPage,category,searchForm.get().keyword)</p>
+					}
+
+				}
+				@if( !request.path.contains( "sortPost" ) && !request.path.contains( "search" )){
+					<p>@helper.pagenateForIndex(page,maxPage,category)</p>
+				}
+
                     <!-- ページング  -->
             </div>
         </div>
