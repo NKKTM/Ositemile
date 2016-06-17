@@ -1,0 +1,162 @@
+@CHARSET "UTF-8";
+
+.rank-item-img{
+	height:100px;
+	width:100px;
+	border: solid 1px black;
+}
+
+.ranking-num{
+	width:20%;
+}
+
+.rank-item-imgbox{
+	width:80%;
+}
+
+.rank-item-info{
+	width:95%;
+}
+
+.rank-item-info > p{
+	color:#605f60;
+}
+
+.rank-fullbox{
+	margin-left:3%;
+	margin-right:3%;
+	margin-top:10px;
+}
+
+.rank-onerow{
+	background-color:white;
+	margin-bottom:7px;
+	padding-top:10px;
+	padding-bottom:10px;
+
+}
+
+.icon-crown{
+	font-size:280%;
+	color:#ffdf00;
+}
+
+.rank-no2{
+	color:#c0c0c0;
+}
+
+.rank-no3{
+	color:#CD7F32;
+}
+
+.rank-item-img{
+	border: solid 1px #9b9b9b;
+    height: 100px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.rank-item-img:hover{
+	opacity:0.6;
+}
+
+.rank-item-name{
+	overflow: hidden;
+    -o-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.iine-num{
+	color:#ff7b58;
+	font-size:150%;
+	font-weight:bold;
+}
+
+.rank-number{
+	color:gray;
+	font-size:150%;
+	font-weight:bold;
+}
+
+.number-from4{
+	padding-top:60%;
+	height:100%;
+}
+
+.rank-post-title{
+	overflow: hidden;
+    -o-text-overflow: ellipsis;
+    -webkit-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size:110%;
+	font-weight:bold;
+}
+
+.rank-post-title > a{
+	color:gray;
+	text-decoration:underline;
+}
+
+.rank-post-title > a:hover{
+	opacity:0.5;
+}
+
+.toukousya{
+	font-size:50%;
+}
+
+.rank-type{
+	margin-top:40px;
+}
+
+.dropdown{
+	float:right;
+}
+
+.dropdown-toggle{
+	padding-right:5px;
+	padding-left:5px;
+	font-size:90%;
+	color:gray;
+}
+
+.rank-type{
+	font-size:120%;
+	font-weight:bold;
+	margin-bottom:20px;
+	padding: .25em 0 .25em .75em;
+    padding-left: 9px;
+    border-left: 6px solid #ffb9a6;
+    color: gray;
+    font-weight: 500;
+}
+
+@media (min-width: 750px){
+	.rank-fullbox{
+		margin-left:10%;
+		margin-right:10%;
+		margin-top:25px;
+	}
+
+	.ranking-num{
+		width:8.33%;
+	}
+
+	.rank-item-imgbox{
+		width:25%;
+	}
+
+	.rank-item-info{
+		width:66.66%;
+	}
+
+	.rank-type{
+		margin-top:0px;
+		margin-bottom:20px;
+	}
+
+}

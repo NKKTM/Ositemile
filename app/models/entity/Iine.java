@@ -4,6 +4,8 @@
  */
 package models.entity;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,12 +22,14 @@ public class Iine extends Model{
 	private Long			id;					// ID
 
 	@ManyToOne
-	@JoinColumn(name = "post")	
+	@JoinColumn(name = "post")
 	private Post			post;				// 投稿情報
 
 	@ManyToOne
-	@JoinColumn(name = "human")	
-	private User			human;				// いいねを押したユーザー情報	
+	@JoinColumn(name = "human")
+	private User			human;				// いいねを押したユーザー情報
+
+	Date					date;				//日付
 
 	/*
 	 *	デフォルトコンストラクタ
@@ -46,6 +50,7 @@ public class Iine extends Model{
 	public Iine(Post post,User user){
 		this.post = post;
 		this.human = user;
+		this.date = new Date();
 	}
 
 	/*
@@ -87,6 +92,12 @@ public class Iine extends Model{
 		return human;
 	}
 
-
+	//日付
+	public void setDate(Date date){
+		this.date = date;
+	}
+	public Date getDate(){
+		return this.date;
+	}
 
 }

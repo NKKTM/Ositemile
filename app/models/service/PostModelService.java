@@ -4,14 +4,19 @@
  */
 package models.service;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import models.entity.Post;
 import play.db.ebean.Model.Finder;
+
 
 public class PostModelService {
 
@@ -354,9 +359,142 @@ public class PostModelService {
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		List<Post> postList = find.orderBy("iineCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
-		for(int i = 0; i < postList.size();i++){
-			System.out.println("いいねカウント数："+postList.get(i).getIineCnt());
-		}
 		return postList;
+	}
+
+	/*
+	 *	いいねの多い順に投稿リストのうち上位２０件(ランキング用)
+	 *	@param なし
+	 *	@return Postのリスト
+	 *	@author yuki kawakami
+	 */
+	public List<Post> getRankIine(){
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.orderBy("iineCnt desc,commentCnt desc").findPagingList(20).getPage(0).getList();
+		return postList;
+	}
+
+	/*
+	 *	先週投稿されたpostのいいねの多い順に投稿リストを取得
+	 *	@param なし
+	 *	@return Postのリスト
+	 *	@author yuki kawakami
+	 */
+	public List<Post> getRankIineWeek() throws ParseException{
+		List<Timestamp> period = getPeriod();
+		Timestamp firstDay = period.get(0);
+		Timestamp lastDay = period.get(1);
+
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where( "'" + firstDay + "' < date"+" AND date < '"+ lastDay+"'").orderBy("iineCnt desc,commentCnt desc").findPagingList(20).getPage(0).getList();
+
+		return postList;
+	}
+
+	/*
+	 *	コメントの多い順投稿リストのうち上位２０件(ランキング用)
+	 *	@param なし
+	 *	@return Postのリスト
+	 *	@author yuki kawakami
+	 */
+	public List<Post> getRankCmt(){
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.orderBy("commentCnt desc,iineCnt desc").findPagingList(20).getPage(0).getList();
+		return postList;
+	}
+
+	/*
+	 *	先週投稿されたpostのコメントの多い順に投稿リストを取得
+	 *	@param なし
+	 *	@return Postのリスト
+	 *	@author yuki kawakami
+	 */
+	public List<Post> getRankCmtWeek() throws ParseException{
+		List<Timestamp> period = getPeriod();
+		Timestamp firstDay = period.get(0);
+		Timestamp lastDay = period.get(1);
+
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where( "'" + firstDay + "' < date"+" AND date < '"+ lastDay+"'").orderBy("commentCnt desc,iineCnt desc").findPagingList(20).getPage(0).getList();
+
+		return postList;
+	}
+
+
+	/*
+	 * その日からの先週の期間を返す(ランキング用)
+	 * @param なし
+	 * @return Timestampのリスト (index0：先週の始まる日,index1：先週の終わりの日)
+	 * @author yuki kawakami
+	 */
+	public List<Timestamp> getPeriod() throws ParseException{
+		List<Timestamp> period = new ArrayList<Timestamp>();
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		SimpleDateFormat fmt1 = new SimpleDateFormat("yyyy/MM/dd 00:00:00.000");
+		//今日の曜日を取得
+		int week = cal1.get(Calendar.DAY_OF_WEEK);
+
+		String firstDayStr = null;
+		String lastDayStr = null;
+		//曜日で場合分け
+		switch (week){
+			case 1://日
+				cal1.add(Calendar.DAY_OF_MONTH, -7);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,0);
+				lastDayStr = fmt1.format(cal2.getTime());
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+			case 2://月
+				cal1.add(Calendar.DAY_OF_MONTH, -8);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,-1);
+				lastDayStr = fmt1.format(cal2.getTime());
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+			case 3://火
+				cal1.add(Calendar.DAY_OF_MONTH, -9);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,-2);
+				lastDayStr = fmt1.format(cal2.getTime());
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+			case 4://水
+				cal1.add(Calendar.DAY_OF_MONTH, -10);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,-3);
+				lastDayStr = fmt1.format(cal2.getTime());
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+			case 5://木
+				cal1.add(Calendar.DAY_OF_MONTH, -11);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,-4);
+				lastDayStr = fmt1.format(cal2.getTime());
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+			case 6://金
+				cal1.add(Calendar.DAY_OF_MONTH, -12);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,-5);
+				lastDayStr = fmt1.format(cal2.getTime());
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+			case 7://土
+				cal1.add(Calendar.DAY_OF_MONTH, -13);
+				firstDayStr = fmt1.format(cal1.getTime());
+				cal2.add(Calendar.DAY_OF_MONTH,-6);
+				period.add(new Timestamp(fmt1.parse(firstDayStr).getTime()));
+				period.add(new Timestamp(fmt1.parse(lastDayStr).getTime()));
+				break;
+		}
+		return period;
 	}
 }

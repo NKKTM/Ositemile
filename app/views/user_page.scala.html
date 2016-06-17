@@ -39,7 +39,7 @@
                         <h4>@iineList.size()</h4>
                     </div>
                 </div>
-                <div style="clear:both;"></div>                
+                <div style="clear:both;"></div>
                 @if(loginId == user.getLoginId()){
                 <a class="btn edit-user-btn" href="@routes.Application.updateUserForm(num+user.getId)">プロフィール編集</a>
                 }
@@ -69,9 +69,9 @@
 
                                 <a href="/introduction/@post.getId()"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
                                 <p class="posted-item-name">@post.getGoods().getGoodsName()</p>
-                                <div class="up-post-comment">
+                                <p class="post-comment">
                                     @Html(post.getPostComment())
-                                </div>
+                                </p>
                                 <a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>
                             </div>
                             <div class="panel-footer">
@@ -92,11 +92,11 @@
                                     @if(postBooleanList.get(i) == true){
                                         <div class="iineBtn">
                                             <button class="iineBtnLonined" value="true">★</button>
-                                            <input type="hidden" value="@post.getId()">  
+                                            <input type="hidden" value="@post.getId()">
                                             <a href="/iineListForPost/@post.getId()"><span id="iineNum@post.getId()">@post.getIine().size()</span>いいね</a>
                                         </div>
                                     }
-                                }                              
+                                }
                             </div>
                         </div>
                     </div>
@@ -149,11 +149,11 @@
                                     @if(iineBooleanList.get(i) == true){
                                         <div class="iineBtn">
                                             <button class="iineBtnLonined" value="true">★</button>
-                                            <input type="hidden" value="@iine.getPost().getId()">  
+                                            <input type="hidden" value="@iine.getPost().getId()">
                                             <a href="/iineListForPost/@iine.getPost().getId()"><span id="iineNum@iine.getPost().getId()">@iine.getPost().getIine.size()</span>いいね</a>
                                         </div>
                                     }
-                                }                                
+                                }
                             </div>
                         </div>
                     </div>
@@ -162,11 +162,11 @@
                     }
                         }
                     }
-                </div>    
+                </div>
 
             </div>
         </div>
-        <!-- /.ユーザー投稿、いいねした記事が入るdiv -->        
+        <!-- /.ユーザー投稿、いいねした記事が入るdiv -->
     </div>
     <!-- /.row -->
 </div>
@@ -177,12 +177,12 @@
         $('#postListBox').css('display', 'block');
         $('#iineListBox').css('display', 'none');
         console.log("きてるよ");
-    }); 
+    });
     $('#iineCounter').click(function(){
         $('#postListBox').css('display', 'none');
-        $('#iineListBox').css('display', 'block');       
-        console.log("きてるううう");        
-    });           
+        $('#iineListBox').css('display', 'block');
+        console.log("きてるううう");
+    });
 </script>
 
 }

@@ -232,11 +232,13 @@ button.push-item-comment:hover{
 	border-top: 2px solid #ffb9a6;
     border-bottom: 2px solid #ffb9a6;
     font-weight: 700;
+    word-wrap: break-word;
 }
 
 .intro-post-com{
 	font-size:1.09em;
 	color:#616161;
+	word-wrap: break-word;
 }
 
 .introduction-commnet-title > h3{
