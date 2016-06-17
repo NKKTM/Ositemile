@@ -546,8 +546,6 @@ public class Application extends Controller {
 	    	}else{
 
 	    		keyword = searchForm.get().keyword;
-	    		System.out.println("+++++++++++++++++++++++++++++++++"+keyword);
-	    		System.out.println("+++++++++++++++++++++++++++++++++");
 	    	}
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
             // いいねが押されているかの判定
@@ -569,7 +567,9 @@ public class Application extends Controller {
     		break;
     	case "日付古い順":
     		postList = PostModelService.use().getPostList(page);
-    		Collections.reverse(postList);
+    		if( postList != null ){
+    			Collections.reverse(postList);
+    		}
     		break;
     	case "いいね":
     		postList = PostModelService.use().getPostIineSort(page);
