@@ -9,6 +9,7 @@ import play.data.validation.Constraints.Required;
 
 public class UserForm {
 	@Required(message="必須項目です。")
+	@MaxLength(value = 16, message = "16文字以下で入力してください。")
 	public String			userName;		// ユーザー名
 	public String			password;		// パスワード
 	public String			loginId;		// ログインID

@@ -582,7 +582,7 @@ public class Application extends Controller {
     	}
         String loginId = session().get("loginId");
         // いいねが押されているかの判定
-        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);         
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
     	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
     }
 
@@ -610,10 +610,16 @@ public class Application extends Controller {
     	Post post = PostModelService.use().getPostListById(postId);
     	Form<UpdatePostForm> updatePostForm = Form.form(UpdatePostForm.class).bindFromRequest();
     	if( !updatePostForm.hasErrors() ){
+
     		post.setPostTitle(updatePostForm.get().postTitle);
-    		post.setPostComment(updatePostForm.get().postComment);
+    		post.setPostComment(PostModelService.use().sanitizeString(updatePostForm.get().postComment));
     		post.update();
+    		return redirect(controllers.routes.Application.introduction(postId));
+    	}else{
+    		// ログインID取得
+    		String loginId = session().get("loginId");
+    		return ok(updatePost.render(loginId,updatePostForm,postId));
     	}
-    	return redirect(controllers.routes.Application.introduction(postId));
+
     }
 }

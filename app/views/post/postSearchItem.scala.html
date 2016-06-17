@@ -11,7 +11,7 @@
 	  <div class="col-xs-12 col-sm-12 col-md-12 search-item">
 	  	@form(action=routes.Application.postSearchItem(),'enctype->"multipart/form-data") {
 	  		<h4 class="search-title">投稿する商品を検索</h4>
-	  		@inputText(searchForm("searchWord"),args='class->"shearch-item-input")(helper.search_item_caution, implicitly[Lang])
+	  		@inputText(searchForm("searchWord"),args='class->"shearch-item-input",'maxLength->"50")(helper.search_item_caution, implicitly[Lang] )
 	  		<button type="submit" class="btn btn-default">検索</button>
 	  	}
 	  </div>
