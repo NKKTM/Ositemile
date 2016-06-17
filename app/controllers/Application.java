@@ -412,6 +412,7 @@ public class Application extends Controller {
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
+            System.out.println("こめんんんんと："+comment.getComment());
 
             // postにコメント情報を格納
             Post updatePost = PostModelService.use().getPostListById(postId);
