@@ -1,7 +1,7 @@
 @(loginId:String, iineList: List[models.entity.Iine])
 
 @num = @{932108L}
-<link href="@routes.Assets.at("stylesheets/userpage/userpage.css")" rel="stylesheet">
+<link href="@routes.Assets.at("stylesheets/iine/iineListForPost.css")" rel="stylesheet">
 
 @import helper._
 
@@ -9,13 +9,13 @@
         <!-- コンテント -->
 		<div class="container user-page-wrap" style="padding-bottom:50px;">
  			<div class="row">
-                <h3 style="margin-bottom:20px;">　いいねを押してくれたユーザー（@iineList.size()）</h3>
+                <h3 style="margin-bottom:20px;">　いいねを押したユーザー（@iineList.size()）</h3>
             </div>
             <div class="row sampleRow">
                 @if(iineList != null){
             		@for((iine,i) <- iineList.zipWithIndex){
 				       <!-- ユーザー情報div -->
-				        <div class="col-xs-12 col-sm-3 col-md-3 user-info-box">
+				        <div class="col-xs-6 col-sm-4 col-md-3 user-info-box">
 				            <div class="user-info">
 				                <div class="panel panel-default profile-panel">
 				                    <a href="@routes.Application.userPage(iine.getUser().getId()+num)" style="color:#000;text-decoration:none">              
@@ -27,9 +27,6 @@
 				                        <h5>部署：<span>@iine.getUser().getDepartment()</span></h5>
 				                    </div>
 				                    </a>
-				                    <div class="panel-footer">
-				                       @Html(iine.getUser().getProfile())
-				                    </div>
 				                </div>
 				            </div>
 				        </div>
