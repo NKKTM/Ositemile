@@ -43,8 +43,13 @@
 
 
   	}
-  	</div>
-  </div>
+	@if(goodsList.size() == 0){
+	  	</div>
+			<h4 class="search-caution" style="padding-left:8%">該当する商品はありません</h4>  	
+	  	</div>
+	}
+}else{
+
 }
 
 }
