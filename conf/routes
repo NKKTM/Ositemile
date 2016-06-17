@@ -51,7 +51,7 @@ GET		/iineListForPost/:postId		controllers.Application.iineListForPost(postId:Lo
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
 POST    /postInput                  controllers.Application.postInput()
-GET     /postCreate                 controllers.Application.postCreate()
+POST     /postCreate                 controllers.Application.postCreate()
 GET		/editPost/:postId			controllers.Application.editPost(postId : Long)
 POST	/updatePost/:postId			controllers.Application.updatePost(postId : Long)
 

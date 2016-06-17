@@ -185,7 +185,7 @@ public class Application extends Controller {
     @Security.Authenticated(SecuredAdmin.class)
     public static Result admin() {
         System.out.println("管理者ログインできてます。");
-        return redirect("/");
+        return redirect("/postList");
     }
 
 
