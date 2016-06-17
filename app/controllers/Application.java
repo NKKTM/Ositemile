@@ -624,9 +624,28 @@ public class Application extends Controller {
     }
 
     //ランキング
-    public static Result rankingPost() throws ParseException{
-    	List<Post> postList = PostModelService.use().getIineRanking();
-    	return ok(ranking.render(session().get("loginId"),postList));
+    public static Result rankingPost(String type) throws ParseException{
+    	List<Post> postList = null;
+    	int flag = 1;
+    	switch(type){
+    		case "good":
+    			flag = 1;
+    			postList = PostModelService.use().getRankIine();
+    			break;
+    		case "good-weekly":
+    			flag = 2;
+    			postList = PostModelService.use().getRankIineWeek();
+    			break;
+    		case "cmt":
+    			flag = 3;
+    			postList = PostModelService.use().getRankCmt();
+    			break;
+    		case "cmt-weekly":
+    			flag = 4;
+    			postList = PostModelService.use().getRankCmtWeek();
+    			break;
+    	}
+    	return ok(ranking.render(session().get("loginId"),postList,flag));
     }
 
 }

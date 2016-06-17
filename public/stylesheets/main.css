@@ -5,7 +5,7 @@
 @import url(https://fonts.googleapis.com/css?family=Sigmar+One);
 @import url(https://fonts.googleapis.com/css?family=Chango);
 @import url(https://fonts.googleapis.com/css?family=Raleway:600);
-@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);/* google fonts “ú–{Œê */
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjp.css);/* google fonts 窶愿ｺ窶怒ﾅ津ｪ */
 
 
 
@@ -66,15 +66,15 @@ a.navbar-brand:hover{
 
 body
 {
-/* font-family: 'Noto Sans JP', sans-serif; */@/* google fonts “ú–{Œê */
+/* font-family: 'Noto Sans JP', sans-serif; */ﾂ　/* google fonts 窶愿ｺ窶怒ﾅ津ｪ */
 
 }
 
 .navbar-brand{
-	/* font-family: 'Londrina Outline', cursive; */ /*‚P “ñdü‰Âˆ¤‚¢Š´‚¶ */
-	font-family: 'Raleway', sans-serif; /*‚Q Š„‚ÆD‚«@ŠÛ‚¢‚¯‚ÇƒVƒ“ƒvƒ‹ */
-	/* font-family: 'Quantico', sans-serif; */ /*‚R ­‚µŽlŠp‚¢Š´‚¶ ‚Å‚à‰Âˆ¤‚¢@‚Q‚Ì•û‚ªD‚« */
-	font-size: 28px !important;@
+	/* font-family: 'Londrina Outline', cursive; */ /*窶啀 窶愿ｱﾂ重ﾂ静ｼ窶ｰﾃね�ﾂ､窶堋｢ﾅ�ﾂｴ窶堋ｶ */
+	font-family: 'Raleway', sans-serif; /*窶啣 ﾅ�窶樞�堙�ﾂ好窶堋ｫﾂ　ﾅ�ﾃ帚�堋｢窶堋ｯ窶堙�ﾆ歎ﾆ停�愴致ﾆ停�ｹ */
+	/* font-family: 'Quantico', sans-serif; */ /*窶啌 ﾂ渉ｭ窶堋ｵﾅｽlﾅ�p窶堋｢ﾅ�ﾂｴ窶堋ｶ 窶堙�窶堙�窶ｰﾃね�ﾂ､窶堋｢ﾂ　窶啣窶堙娯�｢ﾃｻ窶堋ｪﾂ好窶堋ｫ */
+	font-size: 28px !important;ﾂ　
 }
 
 .navbar-right{
@@ -253,7 +253,7 @@ div{
 
 
 
-/*user-page•”•ª*/
+/*user-page窶｢窶昶�｢ﾂｪ*/
 .user-info-box{
 	height: auto;
 	/*border:solid 1px black;*/
@@ -305,6 +305,7 @@ hr{
 }
 
 .panel-heading h4{
+	font-size:120%;
 	overflow: hidden;
 	-o-text-overflow: ellipsis;
 	-webkit-text-overflow: ellipsis;
@@ -442,6 +443,16 @@ a.edit-user-btn:hover{
 	margin-bottom: 10px;
 }
 
+.toggle-btn{
+	padding-right:5px;
+	padding-left:5px;
+	color:gray;
+}
+
+.icon-search{
+	font-size:80%;
+	color:gray;
+}
 
 @media (max-width: 767px){
 	.searchPostFrom{

@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!-- 読み込み -->
+<link href="@routes.Assets.at("stylesheets/css/whhg.css")" rel="stylesheet">
 <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet">
 <!-- 自作css -->
 <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
@@ -36,11 +37,12 @@
         <div class="collapse navbar-collapse" id="navbar1">
             <ul class="nav navbar-nav">
                 <li><a href="/">ホーム</a></li>
-                <li class="nav-last-item"><a href="@routes.Application.postSearchItem()">商品を投稿する</a></li>
+                <li><a href="@routes.Application.postSearchItem()">商品を投稿する</a></li>
+                <li class="nav-last-item"><a href="@routes.Application.rankingPost("good-weekly")">ランキング</a></li>
             </ul>
                 <ul class="nav navbar-nav navbar-right">
                 @if(loginId == null){
-                    <li class="nav-username"><p>名無しのからあげ さん</p></li>
+                    <li class="nav-username"><p>ゲスト さん</p></li>
                     <li><a href="@routes.Application.login()">ログイン</a></li>
                 }else{
                     <li class="nav-username"><a href="@routes.Application.getUserPageByLoginid(loginId)">@loginId さん</a></li>

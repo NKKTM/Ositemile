@@ -70,4 +70,4 @@ POST   /search/:page/                  controllers.Application.searchPostBykeywo
 GET		/sortPost/:page,sortName			controllers.Application.sortPost(page:Integer,sortName : String)
 
 #ランキング
-GET    /ranking                            controllers.Application.rankingPost()
+GET    /ranking                            controllers.Application.rankingPost(type:String)
