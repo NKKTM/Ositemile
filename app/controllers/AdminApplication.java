@@ -227,8 +227,8 @@ public class AdminApplication extends Controller {
 			}
 		}
 
-		// 投稿削除
-		List<Post> post =  AdminPostModelService.use().delete(postId);
+		// 投稿取得
+		List<Post> post =  PostModelService.use().getPostList();
 		return ok(postList.render("",post,postSearchForm,bool));
 	}
 
