@@ -51,7 +51,7 @@ GET		/iineListForPost/:postId		controllers.Application.iineListForPost(postId:Lo
 # POST
 GET		/postSearchItem				controllers.Application.postSearchItem()
 POST    /postInput                  controllers.Application.postInput()
-GET     /postCreate                 controllers.Application.postCreate()
+POST     /postCreate                 controllers.Application.postCreate()
 GET		/editPost/:postId			controllers.Application.editPost(postId : Long)
 POST	/updatePost/:postId			controllers.Application.updatePost(postId : Long)
 
@@ -64,7 +64,7 @@ GET   /myProfileEdit:formatedUserId                  controllers.Application.upd
 POST   /myProfileUpdate:formatedUserId               controllers.Application.DoUpdate(formatedUserId: Long)
 
 #ポストの検索
-POST   /search/:page/                  controllers.Application.searchPostBykeyword(page:Integer,keyword:String)
+GET   /search/:page/                  controllers.Application.searchPostBykeyword(page:Integer,keyword:String)
 
 #ソート
 GET		/sortPost/:page,sortName			controllers.Application.sortPost(page:Integer,sortName : String)

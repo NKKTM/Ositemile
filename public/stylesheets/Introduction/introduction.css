@@ -31,6 +31,7 @@
 .comment-data{
     margin-top: 5px;
     color:#616161;
+    word-break:break-all;
 }
 
 .post-date{
@@ -206,6 +207,7 @@ button.push-item-comment:hover{
 
 .iineBtn{
     text-align: right;
+    margin-top:10px;
 }
 
 .iineBtn button{
@@ -274,20 +276,33 @@ button.push-item-comment:hover{
 	margin-top:30px;
 }
 
+.intro-com-pictbox-parents{
+    width: 12%;
+}
+
 .intro-com-pictbox{
+    display: inline-block;
 	border-radius: 9px;
     height: 50px;
     overflow: hidden;
     width: 50px;
-    margin: 0 auto 0 0;
+    margin: 0 auto 10px 0;
     border: 1px solid #c7c5c9;
+
     float:left;
 }
 
 .intro-com-namebox{
-    float: left;
-    display: inline;
-    margin-left: 20px;
+    display: inline-block;
+    width: 85%;
+    padding-left: 3%;
+}
+
+@media(max-width: 480px){
+    .intro-com-namebox{   
+        padding-left: 5%;     
+        width: 80%;
+    }
 }
 
 .userpage-image{
@@ -315,12 +330,11 @@ button.push-item-comment:hover{
 }
 
 @media (min-width: 992px){
-.introduction-color-box{
-	padding-left: 1%;
-}
+    .introduction-color-box{
+    	padding-left: 1%;
+    }
 
-.item-info-box{
-	padding-right: 1%;
-}
-
+    .item-info-box{
+    	padding-right: 1%;
+    }
 }

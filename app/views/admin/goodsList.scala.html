@@ -17,8 +17,8 @@
 				</select>
 			}
 
-			@inputText(goodsForm("goodsName"),args='_label->"商品名")
-			@inputText(goodsForm("category"),args='_label->"カテゴリー")
+			@inputText(goodsForm("goodsName"),args='_label->"商品名",'maxLength->"50")
+			@inputText(goodsForm("category"),args='_label->"カテゴリー",'maxLength->"50")
 			<input type="submit" id="searchsubmit" value="検索" class="btn primary">
 		}
 	</div>

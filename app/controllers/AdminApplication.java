@@ -27,6 +27,8 @@ import models.service.admin.AdminCommentModelService;
 import models.service.admin.AdminGoodsModelService;
 import models.service.admin.AdminPostModelService;
 import models.service.admin.AdminUserModelService;
+import models.service.admin.AdminIineModelService;
+
 
 import com.avaje.ebean.Ebean;
 
@@ -119,6 +121,14 @@ public class AdminApplication extends Controller {
 			}
 		}
 
+		// いいね削除
+		List<Iine> iine = IineModelService.use().getIineListByUserId(userId);
+		if( iine != null ){
+			for(int i = 0; i < iine.size(); i++){
+				AdminIineModelService.use().delete(iine.get(i).getId());
+			}
+		}
+
 		// ユーザー削除
 		List<User> user =  AdminUserModelService.use().delete(userId);
 
@@ -172,6 +182,15 @@ public class AdminApplication extends Controller {
 				AdminCommentModelService.use().delete(comment.get(i).getId());
 			}
 		}
+
+		// いいね削除
+		List<Iine> iine = IineModelService.use().getIineListByPostId(postId);
+		if( iine != null ){
+			for(int i = 0; i < iine.size(); i++){
+				AdminIineModelService.use().delete(iine.get(i).getId());
+			}
+		}		
+		
 
 		List<Goods> goods = GoodsModelService.use().getGoodsList();
 		return ok(goodsList.render("",goods,goodsSearchForm,bool));
@@ -227,8 +246,16 @@ public class AdminApplication extends Controller {
 			}
 		}
 
-		// 投稿削除
-		List<Post> post =  AdminPostModelService.use().delete(postId);
+		// いいね削除
+		List<Iine> iine = IineModelService.use().getIineListByPostId(postId);
+		if( iine != null ){
+			for(int i = 0; i < iine.size(); i++){
+				AdminIineModelService.use().delete(iine.get(i).getId());
+			}
+		}		
+
+		// 投稿取得
+		List<Post> post =  PostModelService.use().getPostList();
 		return ok(postList.render("",post,postSearchForm,bool));
 	}
 

@@ -8,16 +8,15 @@
 <link rel="icon" type="image/png" href="@routes.Assets.at("images/ositemile04.png")" sizes="32x32">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-<!-- 読み込み -->
-<link href="@routes.Assets.at("stylesheets/css/whhg.css")" rel="stylesheet">
+<!-- Bootstrap読み込み -->
+<link href="@routes.Assets.at("stylesheets/bootstrap-3.3.1.min.css")" rel="stylesheet">
 <link href="@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet">
 <!-- 自作css -->
+<link href="@routes.Assets.at("stylesheets/css/whhg.css")" rel="stylesheet">
 <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
 <link href="@routes.Assets.at("stylesheets/simple-sidebar.css")" rel="stylesheet">
 <!-- js読み込み -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
 <script src="@routes.Assets.at("javascripts/iine.js")" type="text/javascript"></script>
 </head>
 <body>
@@ -67,9 +66,8 @@
 </footer> -->
 
 <!-- スライドバーの動き用js -->
-<script src="http://bootstrap3.cyberlab.info/jquery/jquery-1.11.2.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="http://bootstrap3.cyberlab.info/bootstrap/assets/js/docs.min.js"></script>
+<script src="@routes.Assets.at("javascripts/jquery-1.11.2.min.js")"></script>
+<script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
 <script>
     $("#menu-toggle").click(function(e) {
         e.preventDefault();

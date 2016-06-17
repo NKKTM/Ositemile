@@ -185,7 +185,7 @@ public class Application extends Controller {
     @Security.Authenticated(SecuredAdmin.class)
     public static Result admin() {
         System.out.println("管理者ログインできてます。");
-        return redirect("/");
+        return redirect("/postList");
     }
 
 
@@ -194,10 +194,6 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result postSearchItem() throws Exception{
     	Form<SearchItemForm> searchForm = form(SearchItemForm.class).bindFromRequest();
-        // アイテムを探すワードを取得
-//        String[] params = {"searchWord"};
-//        DynamicForm searchWord = Form.form();
-//        searchWord = searchWord.bindFromRequest(params);
         Form<Goods> goodsForm = Form.form(Goods.class);
         if(searchForm.hasErrors()){
         	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
@@ -210,7 +206,6 @@ public class Application extends Controller {
 	        System.out.println("searchWordStr:"+searchWordStr);
 	        // URLと結合
 	        String searchUrl = AMAZON_URL + searchWordStr;
-	//        System.out.println("searchUrl："+searchUrl);
 	        Element elementRoot = AmazonModelService.use().getElement(searchUrl);
 	        List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
 	        return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
@@ -412,6 +407,7 @@ public class Application extends Controller {
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
+            System.out.println("こめんんんんと："+comment.getComment());
 
             // postにコメント情報を格納
             Post updatePost = PostModelService.use().getPostListById(postId);
@@ -548,6 +544,7 @@ public class Application extends Controller {
 	    		searchForm.get().keyword = searchedKeyword;
 	    		keyword = searchedKeyword;
 	    	}else{
+
 	    		keyword = searchForm.get().keyword;
 	    	}
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
@@ -567,11 +564,12 @@ public class Application extends Controller {
     	switch(sortName){
     	case "日付新しい順":
     		postList = PostModelService.use().getPostList(page);
-
     		break;
     	case "日付古い順":
     		postList = PostModelService.use().getPostList(page);
-    		Collections.reverse(postList);
+    		if( postList != null ){
+    			Collections.reverse(postList);
+    		}
     		break;
     	case "いいね":
     		postList = PostModelService.use().getPostIineSort(page);
