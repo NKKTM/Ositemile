@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url(https://fonts.googleapis.com/css?family=Montserrat+Subrayada);
 @import url(https://fonts.googleapis.com/css?family=Londrina+Outline);
 @import url(https://fonts.googleapis.com/css?family=Plaster);
@@ -209,6 +210,11 @@ body{
 	position: relative;
 }
 
+.search-form{
+	width:100%;
+	margin-bottom:10px;
+}
+
 #header > div.navbar-header > a > img{
 	max-height:45px;
 	width:auto;
@@ -400,7 +406,7 @@ a.edit-user-btn:hover{
 }
 
 .searchPostFrom{
-	text-align: right;
+	text-align: left;
 }
 
 .searchPostFrom > input{
@@ -411,6 +417,7 @@ a.edit-user-btn:hover{
 
 .categoryInfo{
 	margin-bottom:15px;
+	width:100%;
 }
 
 .category-title{
@@ -418,6 +425,11 @@ a.edit-user-btn:hover{
 	color:gray;
 	border-left:6px solid #ffb9a6;
 	margin-left:10px;
+}
+
+.pager{
+	padding-bottom:50px;
+	margin-bottom:5px;
 }
 
 @media (min-width: 992px){
@@ -436,6 +448,23 @@ a.edit-user-btn:hover{
 		padding-left:11px;
 	}
 
+	.search-form{
+		width:50%;
+	}
+
+}
+
+@media (min-width: 767px){
+	.categoryInfo{
+		width:50%;
+	}
+	.search-form{
+		width:50%;
+	}
+
+	.searchPostFrom{
+		text-align: right;
+	}
 }
 
 .sort-button-box{
@@ -454,9 +483,40 @@ a.edit-user-btn:hover{
 	color:gray;
 }
 
+.pagetop {
+    display: none;
+    position: fixed;
+    bottom: 2%;
+    right: 15px;
+}
+.pagetop a {
+    display: block;
+    background-color: #ccc;
+    text-align: center;
+    color: #222;
+    font-size: 12px;
+    text-decoration: none;
+    padding: 5px 10px;
+	filter:alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+.pagetop a:hover {
+    display: block;
+    background-color: #ff7b58;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    text-decoration: none;
+    padding:5px 10px;
+	filter:alpha(opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+
 @media (max-width: 767px){
 	.searchPostFrom{
-		float:right;
+		float:left;
 	}
 
 	.sort-button-box{

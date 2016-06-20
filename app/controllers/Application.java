@@ -539,6 +539,7 @@ public class Application extends Controller {
     	}
     }
 
+    //投稿のキーワード検索(タイトル、本文、ユーザー、商品名から検索)
     public static Result searchPostBykeyword(Integer page,String searchedKeyword){
     	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
     	if(!searchForm.hasErrors()){
@@ -596,10 +597,10 @@ public class Application extends Controller {
             case "コメント":
                 postList = PostModelService.use().getPostCommentSort(page,category);
                 break;
-            }        
+            }
         }
         // indexに必要な値を取得
-        List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();        
+        List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();
         String loginId = session().get("loginId");
         List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
     	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName));

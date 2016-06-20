@@ -56,9 +56,11 @@
     </div>
 </nav>
 <div class="content-container">
+
 @content
 
 </div>
+<p class="pagetop"><a href="#wrap">▲</a></p>
 <!-- <footer class="footer">
   <div class="container">
     <p class="text-muted">Created By Team NKK </p>
@@ -74,6 +76,21 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
-
+<script>
+$(document).ready(function() {
+  var pagetop = $('.pagetop');
+    $(window).scroll(function () {
+       if ($(this).scrollTop() > 100) {
+            pagetop.fadeIn();
+       } else {
+            pagetop.fadeOut();
+            }
+       });
+       pagetop.click(function () {
+           $('body, html').animate({ scrollTop: 0 }, 500);
+              return false;
+   });
+});
+</script>
 </body>
 </html>
