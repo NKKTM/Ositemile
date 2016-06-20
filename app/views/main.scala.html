@@ -74,6 +74,13 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
+<!-- ボタンの連続クリックを禁止するjs -->
+<script>
+function DisableButton(obj) {
+    obj.disabled = true;
+    obj.form.submit();
+}
+</script>
 
 </body>
 </html>

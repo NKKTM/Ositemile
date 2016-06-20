@@ -24,7 +24,15 @@
         @inputText(registerForm("loginId"))<br>
           <p>Password</p>
       	@inputPassword(registerForm("password"))
-          <p class="submit"><input type="submit" value="登録"></p>
+          <p class="submit"><input type="submit" value="登録" onclick="DisableButton(this);"></p>
       }
     </div>
   </div>
+
+<!-- ボタンの連続クリックを禁止するjs -->
+<script>
+function DisableButton(obj) {
+    obj.disabled = true;
+    obj.form.submit();
+}
+</script>  
