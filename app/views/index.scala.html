@@ -36,7 +36,7 @@
 	                    <span class="category-title">　@category</span>
 	                </div>
 
-	               <div class="col-xs-6 col-sm-6 col-md-6">
+	               <div class="col-xs-6 col-sm-6 col-md-6 search-form">
                    @form(action=routes.Application.searchPostBykeyword(1,"","日付新しい順"),'enctype->"multipart/form-data",'class->"searchPostFrom",'maxLength->"50"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
                    		<button type="submit" class="btn btn-default keyword"><i class="icon-search"></i></button>
@@ -51,7 +51,7 @@
                                 <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"日付新しい順")">日付　新しい順</a></li>
                                 <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"日付古い順")">日付　古い順</a></li>
                                 <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"いいね")">いいね</a></li>
-                                <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"コメント")">コメント</a></li>                                
+                                <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"コメント")">コメント</a></li>
                                 }
                             }else{
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"日付新しい順")">日付　新しい順</a></li>
