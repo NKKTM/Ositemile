@@ -76,6 +76,7 @@
         $("#wrapper").toggleClass("toggled");
     });
 </script>
+<!-- ページトップjs -->
 <script>
 $(document).ready(function() {
   var pagetop = $('.pagetop');
@@ -91,6 +92,14 @@ $(document).ready(function() {
               return false;
    });
 });
+</script>
+
+<!-- ボタンの連続クリックを禁止するjs -->
+<script>
+function DisableButton(obj) {
+    obj.disabled = true;
+    obj.form.submit();
+}
 </script>
 </body>
 </html>

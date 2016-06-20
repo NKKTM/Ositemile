@@ -420,17 +420,25 @@ a.edit-user-btn:hover{
 	width:100%;
 }
 
-.category-title, .sort-name, .search-word{
+.category-title, .sort-name{
 	font-size:90%;
 	color:gray;
 	border-left:6px solid #ffb9a6;
 	margin-left:10px;
 }
 
+
 .pager{
 	padding-bottom:50px;
 	margin-bottom:5px;
 }
+
+.hit-number{
+	font-size:90%;
+	color:gray;
+}
+
+
 
 @media (min-width: 992px){
 

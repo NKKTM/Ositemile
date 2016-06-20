@@ -1,4 +1,4 @@
-@(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm],sortName:String)
+@(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm],sortName:String,postListSize:Integer)
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f)}
 @import helper._
 @import play.mvc._
@@ -60,7 +60,12 @@
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"コメント")">コメント</a></li>
                             }
                             </ul>
-                            <span class="sort-name">　@sortName</span>
+                            @if(sortName.equals("いいね") || sortName.equals("コメント")){
+                                <span class="sort-name"><span>　@sortName</span>順</span>
+                            }else{
+                                <span class="sort-name">　@sortName</span>                            
+                            }
+                            <span class="hit-number">：@postListSize 件</span>
                         </div>
                     </div>
                 </div>
