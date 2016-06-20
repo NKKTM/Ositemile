@@ -27,6 +27,9 @@
 		}
 	}
 	<div class="row">
+		@if(postList.size==0){
+			<h4>先週投稿された記事はありません。</h4>
+		}
 	@for((post,i) <- postList.zipWithIndex){
 			<div class="col-xs-12 col-sm-12 col-md-12 rank-onerow">
 					<div class="col-xs-1 col-sm-1 col-md-1 ranking-num">
