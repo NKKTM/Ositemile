@@ -543,25 +543,21 @@ public class Application extends Controller {
 	    		searchForm.get().keyword = searchedKeyword;
 	    		keyword = searchedKeyword;
 	    	}else{
-	    		keyword = searchForm.get().keyword;
+                return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
 	    	}
             // PostList取得
             List<Post> postList = new ArrayList<Post>();
             switch(sortName){
             case "日付新しい順":
-                System.out.println("ここにいますううううううううううう");
                 postList = PostModelService.use().searchPostByKeyword(keyword,page);
                 break;
             case "日付古い順":
-                System.out.println("ここですうううううううううううううう");            
                 postList = PostModelService.use().searchPostOldSortByKeyword(keyword,page);
                 break;
             case "いいね":
-                System.out.println("いいねですうううううううううううううう");                        
                 postList = PostModelService.use().searchPostIineSortByKeyword(keyword,page);
                 break;
             case "コメント":
-                System.out.println("コメントですうううううううううううううう");                                    
                 postList = PostModelService.use().searchPostCommentSortByKeyword(keyword,page);
                 break;
             }

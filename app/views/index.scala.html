@@ -33,11 +33,7 @@
             	<div class="row sampleRow categoryInfoBox">
             		<div class="col-xs-6 col-sm-6 col-md-6 categoryInfo">
 		                <a href="#menu-toggle" class="btn btn-default toggle-btn" id="menu-toggle">カテゴリー</a>
-	                    @if(category.equals("ALL")){
-	                        <span class="category-title">　新着記事</span>
-	                    }else{
-	                        <span class="category-title">　@category</span>
-	                    }
+	                    <span class="category-title">　@category</span>
 	                </div>
 	               <div class="col-xs-6 col-sm-6 col-md-6">
                    @form(action=routes.Application.searchPostBykeyword(1,"","日付新しい順"),'enctype->"multipart/form-data",'class->"searchPostFrom",'maxLength->"50"){
@@ -63,6 +59,7 @@
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"コメント")">コメント</a></li>
                             }
                             </ul>
+                            <span class="sort-name">　@sortName</span>
                         </div>
                     </div>
                 </div>

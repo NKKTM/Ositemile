@@ -413,12 +413,13 @@ a.edit-user-btn:hover{
 	margin-bottom:15px;
 }
 
-.category-title{
+.category-title, .sort-name, .search-word{
 	font-size:90%;
 	color:gray;
 	border-left:6px solid #ffb9a6;
 	margin-left:10px;
 }
+
 
 @media (min-width: 992px){
 
