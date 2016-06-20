@@ -302,6 +302,7 @@ public class Application extends Controller {
     }
 
     //loginIdからユーザーページのリンクを作る
+    @Security.Authenticated(Secured.class)    
     public static Result getUserPageByLoginid(String loginId){
     	User user = UserModelService.use().getUserByLoginId(loginId);
     	Long formatedUserId = user.getId() + 932108L;
