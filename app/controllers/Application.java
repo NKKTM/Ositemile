@@ -534,26 +534,44 @@ public class Application extends Controller {
     	}
     }
 
-    public static Result searchPostBykeyword(Integer page,String searchedKeyword){
+    public static Result searchPostBykeyword(Integer page,String searchedKeyword,String sortName){
     	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
     	if(!searchForm.hasErrors()){
     		System.out.println("投稿検索バインドエラーなし");
     		String keyword = "";
-            String loginId = session().get("loginId");
 	    	if(searchedKeyword != ""){
 	    		searchForm.get().keyword = searchedKeyword;
 	    		keyword = searchedKeyword;
 	    	}else{
-
 	    		keyword = searchForm.get().keyword;
 	    	}
-    		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
-            // いいねが押されているかの判定
+            // PostList取得
+            List<Post> postList = new ArrayList<Post>();
+            switch(sortName){
+            case "日付新しい順":
+                System.out.println("ここにいますううううううううううう");
+                postList = PostModelService.use().searchPostByKeyword(keyword,page);
+                break;
+            case "日付古い順":
+                System.out.println("ここですうううううううううううううう");            
+                postList = PostModelService.use().searchPostOldSortByKeyword(keyword,page);
+                break;
+            case "いいね":
+                System.out.println("いいねですうううううううううううううう");                        
+                postList = PostModelService.use().searchPostIineSortByKeyword(keyword,page);
+                break;
+            case "コメント":
+                System.out.println("コメントですうううううううううううううう");                                    
+                postList = PostModelService.use().searchPostCommentSortByKeyword(keyword,page);
+                break;
+            }
+            //indexに必要な値を取得
+            String loginId = session().get("loginId");                        
             List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
-    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,"新しい順"));
+    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,sortName));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
-    		return redirect(controllers.routes.Application.index(1,"ALL","新しい順"));
+    		return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
     	}
     }
 
