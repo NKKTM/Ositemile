@@ -352,6 +352,67 @@ public class PostModelService {
 	}
 
 	/*
+	 *トップページの投稿検索（古い順）
+	 *@param string キーワード
+	 *@return String　list<Post>
+	 *@author Hatsune Kitajima
+	 */
+	public List<Post> searchPostOldSortByKeyword(String keyword,Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
+										+"postComment LIKE '%"+keyword+"%'"+" OR "
+										+"human.userName LIKE '%"+keyword+"%'"+" OR "
+										+"goods.goodsName LIKE '%"+keyword+"%'")
+									.orderBy("date asc")
+									.findPagingList(LIMIT)
+									.getPage(pageNum)
+									.getList();
+		return postList;
+	}
+
+	/*
+	 *トップページの投稿検索（いいね順）
+	 *@param string キーワード
+	 *@return String　list<Post>
+	 *@author Hatsune Kitajima
+	 */
+	public List<Post> searchPostIineSortByKeyword(String keyword,Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
+										+"postComment LIKE '%"+keyword+"%'"+" OR "
+										+"human.userName LIKE '%"+keyword+"%'"+" OR "
+										+"goods.goodsName LIKE '%"+keyword+"%'")
+									.orderBy("iineCnt desc")
+									.findPagingList(LIMIT)
+									.getPage(pageNum)
+									.getList();
+		return postList;
+	}
+
+
+	/*
+	 *トップページの投稿検索（コメント順）
+	 *@param string キーワード
+	 *@return String　list<Post>
+	 *@author Hatsune Kitajima
+	 */
+	public List<Post> searchPostCommentSortByKeyword(String keyword,Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
+										+"postComment LIKE '%"+keyword+"%'"+" OR "
+										+"human.userName LIKE '%"+keyword+"%'"+" OR "
+										+"goods.goodsName LIKE '%"+keyword+"%'")
+									.orderBy("commentCnt desc")
+									.findPagingList(LIMIT)
+									.getPage(pageNum)
+									.getList();
+		return postList;
+	}					
+
+	/*
 	 *トップページの投稿検索(ページングなし)
 	 *@param string キーワード
 	 *@return String　list<Post>

@@ -16,11 +16,11 @@
                     カテゴリー
                 </li>
                     <li class="sidebar-category">
-                        <a href="@routes.Application.index(1,"ALL","新しい順")">ALL</a>
+                        <a href="@routes.Application.index(1,"ALL","日付新しい順")">ALL</a>
                     </li>
                 @for(categoryTmp <- categoryList){
                     <li class="sidebar-category">
-                        <a href="@routes.Application.index(1,categoryTmp,"新しい順")">@categoryTmp</a>
+                        <a href="@routes.Application.index(1,categoryTmp,"日付新しい順")">@categoryTmp</a>
                     </li>
                 }
             </ul>
@@ -33,14 +33,11 @@
             	<div class="row sampleRow categoryInfoBox">
             		<div class="col-xs-6 col-sm-6 col-md-6 categoryInfo">
 		                <a href="#menu-toggle" class="btn btn-default toggle-btn" id="menu-toggle">カテゴリー</a>
-	                    @if(category.equals("ALL")){
-	                        <span class="category-title">　新着記事</span>
-	                    }else{
-	                        <span class="category-title">　@category</span>
-	                    }
+	                    <span class="category-title">　@category</span>
 	                </div>
-	               <div class="col-xs-6 col-sm-6 col-md-6 search-form">
-                   @form(action=routes.Application.searchPostBykeyword(1,""),'enctype->"multipart/form-data",'class->"searchPostFrom",'maxLength->"50"){
+
+	               <div class="col-xs-6 col-sm-6 col-md-6">
+                   @form(action=routes.Application.searchPostBykeyword(1,"","日付新しい順"),'enctype->"multipart/form-data",'class->"searchPostFrom",'maxLength->"50"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
                    		<button type="submit" class="btn btn-default keyword"><i class="icon-search"></i></button>
                    }
@@ -49,11 +46,21 @@
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle toggle-btn" type="button" data-toggle="dropdown">並び替え</button>
                             <ul class="dropdown-menu" role="menu">
+                            @if( request.path.contains( "search" ) ) {
+                                @if( searchForm.get().keyword != "" ){
+                                <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"日付新しい順")">日付　新しい順</a></li>
+                                <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"日付古い順")">日付　古い順</a></li>
+                                <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"いいね")">いいね</a></li>
+                                <li role="presentation"><a href="@routes.Application.searchPostBykeyword(1,searchForm.get().keyword,"コメント")">コメント</a></li>                                
+                                }
+                            }else{
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"日付新しい順")">日付　新しい順</a></li>
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"日付古い順")">日付　古い順</a></li>
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"いいね")">いいね</a></li>
                                 <li role="presentation"><a href="@routes.Application.sortPost(1,category,"コメント")">コメント</a></li>
+                            }
                             </ul>
+                            <span class="sort-name">　@sortName</span>
                         </div>
                     </div>
                 </div>
@@ -113,7 +120,7 @@
 				}
 				@if( request.path.contains( "search" ) ) {
 					@if( searchForm.get().keyword != "" ){
-						<p>@helper.pagenateForSearch(page,maxPage,category,searchForm.get().keyword)</p>
+						<p>@helper.pagenateForSearch(page,maxPage,searchForm.get().keyword,sortName)</p>
 					}
 				}
 				@if( !request.path.contains( "sortPost" ) && !request.path.contains( "search" )){

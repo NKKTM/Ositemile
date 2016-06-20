@@ -420,7 +420,7 @@ a.edit-user-btn:hover{
 	width:100%;
 }
 
-.category-title{
+.category-title, .sort-name, .search-word{
 	font-size:90%;
 	color:gray;
 	border-left:6px solid #ffb9a6;

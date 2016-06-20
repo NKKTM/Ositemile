@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /		                    controllers.Application.index(page:Integer?=1,category:String?="ALL",sortName:String?="新しい順")
+GET     /		                    controllers.Application.index(page:Integer?=1,category:String?="ALL",sortName:String?="日付新しい順")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -64,10 +64,10 @@ GET   /myProfileEdit:formatedUserId                  controllers.Application.upd
 POST   /myProfileUpdate:formatedUserId               controllers.Application.DoUpdate(formatedUserId: Long)
 
 #ポストの検索
-GET   /search/:page/                  controllers.Application.searchPostBykeyword(page:Integer,keyword:String)
+GET   /search/:page/                  controllers.Application.searchPostBykeyword(page:Integer,keyword:String,sortName:String?="日付新しい順")
 
 #ソート
-GET		/sortPost			controllers.Application.sortPost(page:Integer,category:String,sortName : String)
+GET		/sortPost			controllers.Application.sortPost(page:Integer,category:String,sortName:String)
 
 #ランキング
 GET    /ranking                            controllers.Application.rankingPost(type:String)
