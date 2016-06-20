@@ -126,6 +126,38 @@ public class PostModelService {
 	}
 
 	/*
+	 *	１ページあたりの投稿リストを取得（古い順）
+	 *	@param 取得したいページ数
+	 *	@return Postのリスト
+	 *			失敗時：null
+	 *	@author Hatsune Kitajima
+	 */
+	public List<Post> getPostListOld(Integer pageNumber){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.orderBy("date asc").findPagingList(LIMIT)
+							.getPage(pageNum)
+							.getList();
+		return checkPost(postList);
+	}
+
+	/*
+	 *	１ページあたりの投稿リストを取得（古い順,カテゴリ付き）
+	 *	@param 取得したいページ数,カテゴリ
+	 *	@return Postのリスト
+	 *			失敗時：null
+	 *	@author Hatsune Kitajima
+	 */
+	public List<Post> getPostListOld(Integer pageNumber, String category){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where().ilike("goods.category",category).orderBy("date asc").findPagingList(LIMIT)
+							.getPage(pageNum)
+							.getList();
+		return checkPost(postList);
+	}			
+
+	/*
 	 *	投稿IDで特定の投稿情報を取得
 	 *	@param 投稿ID
 	 *	@return 投稿情報
@@ -350,6 +382,19 @@ public class PostModelService {
 	}
 
 	/*
+	 *	コメントの多い順の投稿リストを取得（カテゴリ付き）
+	 *	@param Integer pageNumber : ページング, String category：カテゴリ
+	 *	@return Postのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Post> getPostCommentSort(Integer pageNumber,String category){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where().ilike("goods.category",category).orderBy("commentCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
+		return postList;
+	}	
+
+	/*
 	 *	いいねの多い順に投稿リストを取得
 	 *	@param Integer pageNumber : ページング
 	 *	@return Postのリスト
@@ -361,6 +406,19 @@ public class PostModelService {
 		List<Post> postList = find.orderBy("iineCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
 		return postList;
 	}
+
+	/*
+	 *	いいねの多い順に投稿リストを取得
+	 *	@param Integer pageNumber : ページング
+	 *	@return Postのリスト
+	 *	@author Kotaro Nishida
+	 */
+	public List<Post> getPostIineSort(Integer pageNumber,String category){
+		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
+		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
+		List<Post> postList = find.where().ilike("goods.category",category).orderBy("iineCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
+		return postList;
+	}	
 
 	/*
 	 *	いいねの多い順に投稿リストのうち上位２０件(ランキング用)

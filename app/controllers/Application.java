@@ -74,7 +74,7 @@ public class Application extends Controller {
     private static final String RAKUTEN_GENRE_URL = "https://app.rakuten.co.jp/services/api/IchibaGenre/Search/20140222?applicationId=1084889951156254811&format=xml&genreId=";
 
 
-    public static Result index(Integer page,String category) {
+    public static Result index(Integer page,String category,String sortName) {
         // ポストのリスト取得
         List<Post> postList;
         if(category.equals("ALL")){
@@ -88,7 +88,7 @@ public class Application extends Controller {
         // いいねが押されているかの判定
         List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
 
-        return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class)));
+        return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName));
     }
 
     //ログイン画面
@@ -550,38 +550,54 @@ public class Application extends Controller {
     		List<Post> postList = PostModelService.use().searchPostByKeyword(keyword,page);
             // いいねが押されているかの判定
             List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
-    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm));
+    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,"新しい順"));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
-    		return redirect(controllers.routes.Application.index(1,"ALL"));
+    		return redirect(controllers.routes.Application.index(1,"ALL","新しい順"));
     	}
     }
 
     // 投稿のソート
-    public static Result sortPost(Integer page ,String sortName){
+    public static Result sortPost(Integer page ,String category,String sortName){
    		List<Post> postList = null;
-    	List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();				// カテゴリーリスト
-    	switch(sortName){
-    	case "日付新しい順":
-    		postList = PostModelService.use().getPostList(page);
-    		break;
-    	case "日付古い順":
-    		postList = PostModelService.use().getPostList(page);
-    		if( postList != null ){
-    			Collections.reverse(postList);
-    		}
-    		break;
-    	case "いいね":
-    		postList = PostModelService.use().getPostIineSort(page);
-    		break;
-    	case "コメント":
-    		postList = PostModelService.use().getPostCommentSort(page);					// 投稿リスト
-    		break;
-    	}
+        if(category.equals("ALL")){
+            //カテゴリがALLの場合
+        	switch(sortName){
+        	case "日付新しい順":
+        		postList = PostModelService.use().getPostList(page);
+        		break;
+        	case "日付古い順":
+        		postList = PostModelService.use().getPostListOld(page);
+        		break;
+        	case "いいね":
+        		postList = PostModelService.use().getPostIineSort(page);
+        		break;
+        	case "コメント":
+        		postList = PostModelService.use().getPostCommentSort(page);
+        		break;
+        	}
+        }else{
+            //カテゴリがそれ以外の場合
+            switch(sortName){
+            case "日付新しい順":
+                postList = PostModelService.use().getPostListByCategory(page,category);
+                break;
+            case "日付古い順":
+                postList = PostModelService.use().getPostListOld(page,category);
+                break;
+            case "いいね":
+                postList = PostModelService.use().getPostIineSort(page,category);
+                break;
+            case "コメント":
+                postList = PostModelService.use().getPostCommentSort(page,category);
+                break;
+            }        
+        }
+        // indexに必要な値を取得
+        List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();        
         String loginId = session().get("loginId");
-        // いいねが押されているかの判定
         List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
-    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage("ALL"),"ALL",Form.form(models.form.SearchPostForm.class)));
+    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName));
     }
 
     // 投稿情報の編集
