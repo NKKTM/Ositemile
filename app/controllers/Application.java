@@ -195,6 +195,7 @@ public class Application extends Controller {
     public static Result postSearchItem() throws Exception{
     	Form<SearchItemForm> searchForm = form(SearchItemForm.class).bindFromRequest();
         Form<Goods> goodsForm = Form.form(Goods.class);
+        List<Goods> goodsList = new ArrayList<Goods>();
         if(searchForm.hasErrors()){
         	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
         }else{
@@ -207,7 +208,11 @@ public class Application extends Controller {
 	        // URLと結合
 	        String searchUrl = AMAZON_URL + searchWordStr;
 	        Element elementRoot = AmazonModelService.use().getElement(searchUrl);
-	        List<Goods> goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
+	        if(elementRoot == null){
+	        	return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
+	        }
+	        System.out.println("elementRoot:"+elementRoot);
+	        goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
 	        return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
 	    }
     }

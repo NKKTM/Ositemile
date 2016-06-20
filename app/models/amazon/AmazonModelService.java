@@ -9,19 +9,23 @@ import java.util.List;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.io.InputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import models.entity.Goods;
 
@@ -42,16 +46,47 @@ public class AmazonModelService {
 	 * キーワード検索でxmlを取得し、大枠のxmlの情報を返す
 	 * @param 　楽天apiのurl
 	 * @return Element型 一番大きな外枠(root)のxml
+	 * 			失敗時 null
 	 * @author yuki kawakami
 	 */
 
-	public static Element getElement(String url) throws Exception {
+	public Element getElement(String url)  {
     	// リクエスト送信
-		URL requestUrl = new URL(url);
-		HttpURLConnection connection = (HttpURLConnection)requestUrl.openConnection();
-		InputStream input = connection.getInputStream();
+		URL requestUrl = null;
+		try {
+			requestUrl = new URL(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		HttpURLConnection connection = null;
+		try {
+			connection = (HttpURLConnection)requestUrl.openConnection();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		InputStream input = null;
+		try {
+			input = connection.getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		//DOMを使うためのインスタンス取得
-		Document document= DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
+		Document document = null;
+		try {
+			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(input);
+		} catch (SAXException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+			return null;
+		}
 
 		//root要素取得
 		Element elementRoot = document.getDocumentElement();
@@ -65,10 +100,11 @@ public class AmazonModelService {
 	 * @author yuki kawakami
 	 */
 	public List<Goods> getSearchedGoodsList(Element elementRoot){
+		List<Goods> goodsList = new ArrayList<Goods>();
 		//itemsリスト取得
     	NodeList localNodeList =
     			 ((Element) elementRoot.getElementsByTagName("Items").item(0)).getElementsByTagName("Item");
-    	List<Goods> goodsList = new ArrayList<Goods>();
+
 
     	for (int i = 0; i < localNodeList.getLength(); i++) {
     		String imageUrl=null;
