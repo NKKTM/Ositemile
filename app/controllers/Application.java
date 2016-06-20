@@ -77,18 +77,24 @@ public class Application extends Controller {
     public static Result index(Integer page,String category,String sortName) {
         // ポストのリスト取得
         List<Post> postList;
+        int postListSize = 0;
         if(category.equals("ALL")){
             postList = PostModelService.use().getPostList(page);
+            if(PostModelService.use().getPostList() != null){
+                postListSize = PostModelService.use().getPostList().size();
+            }
         }else{
             postList = PostModelService.use().getPostListByCategory(page,category);
+            if(PostModelService.use().getPostListByCategory(category) != null){
+                postListSize = PostModelService.use().getPostListByCategory(category).size();            
+            }
         }
         // セッションId取得
         String loginId = session().get("loginId");
-
         // いいねが押されているかの判定
-        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);        
 
-        return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName));
+        return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName,postListSize));
     }
 
     //ログイン画面
@@ -540,9 +546,11 @@ public class Application extends Controller {
     		System.out.println("投稿検索バインドエラーなし");
     		String keyword = "";
 	    	if(searchedKeyword != ""){
+                //入力されたキーワードが空ではないとき
 	    		searchForm.get().keyword = searchedKeyword;
 	    		keyword = searchedKeyword;
 	    	}else{
+                //入力されたキーワードが空のとき
                 return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
 	    	}
             // PostList取得
@@ -564,7 +572,8 @@ public class Application extends Controller {
             //indexに必要な値を取得
             String loginId = session().get("loginId");                        
             List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
-    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,sortName));
+            int postListSize = PostModelService.use().searchPostByKeyword(keyword).size();
+    		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,sortName,postListSize));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
     		return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
@@ -574,8 +583,12 @@ public class Application extends Controller {
     // 投稿のソート
     public static Result sortPost(Integer page ,String category,String sortName){
    		List<Post> postList = null;
+        int postListSize = 0;
         if(category.equals("ALL")){
             //カテゴリがALLの場合
+            if(PostModelService.use().getPostList() != null){
+                postListSize = PostModelService.use().getPostList().size();
+            }
         	switch(sortName){
         	case "日付新しい順":
         		postList = PostModelService.use().getPostList(page);
@@ -592,6 +605,7 @@ public class Application extends Controller {
         	}
         }else{
             //カテゴリがそれ以外の場合
+            postListSize = PostModelService.use().getPostListByCategory(category).size();                        
             switch(sortName){
             case "日付新しい順":
                 postList = PostModelService.use().getPostListByCategory(page,category);
@@ -611,7 +625,7 @@ public class Application extends Controller {
         List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();        
         String loginId = session().get("loginId");
         List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
-    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName));
+    	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName,postListSize));
     }
 
     // 投稿情報の編集

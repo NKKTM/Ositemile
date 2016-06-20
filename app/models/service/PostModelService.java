@@ -211,7 +211,7 @@ public class PostModelService {
 
 	/*
 	 *	カテゴリで投稿リスト取得
-	 *	@param String category: カテゴリー
+	 *	@param Integer pageNumber：ページ番号 ,String category: カテゴリー
 	 *	@return Postのリスト
 	 *			失敗時；null
 	 *	@author Kotaro Nishida -> ページング仕様に変更 @author Hatsune Kitajima
@@ -232,6 +232,29 @@ public class PostModelService {
 							.findPagingList(LIMIT)
 							.getPage(pageNum)
 							.getList();
+		return checkPost(postList);
+	}
+
+	/*
+	 *	カテゴリで投稿リスト取得（ページングなし）
+	 *	@param String category: カテゴリー
+	 *	@return Postのリスト
+	 *			失敗時；null
+	 *	@author Hatsune Kitajima
+	 */
+	public List<Post> getPostListByCategory(String categoryName){
+		Finder<Long,Post> find = new Finder<Long ,Post>(Long.class,Post.class);
+		List<Post> postListSize = find.all();		// データーベースに入っているリストサイズ用
+		List<Post> postList = null;
+
+		if( checkPost(postListSize) == null ){
+			// データーベースにデーターがない
+			return null;
+		}
+		// カテゴリーの中身を調べる
+		postList = find.where().ilike("goods.category", categoryName)
+							.orderBy("date desc")
+							.findList();
 		return checkPost(postList);
 	}
 
