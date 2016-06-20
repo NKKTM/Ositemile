@@ -1,5 +1,5 @@
-@(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm])
-@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
+@(loginId: String, postList: List[models.entity.Post], iineBooleanList: List[Boolean], categoryList:List[String] ,page:Integer, maxPage: Integer, category:String, searchForm:Form[models.form.SearchPostForm],sortName:String)
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f)}
 @import helper._
 @import play.mvc._
 
@@ -16,11 +16,11 @@
                     カテゴリー
                 </li>
                     <li class="sidebar-category">
-                        <a href="@routes.Application.index(1,"ALL")">ALL</a>
+                        <a href="@routes.Application.index(1,"ALL","新しい順")">ALL</a>
                     </li>
                 @for(categoryTmp <- categoryList){
                     <li class="sidebar-category">
-                        <a href="@routes.Application.index(1,categoryTmp)">@categoryTmp</a>
+                        <a href="@routes.Application.index(1,categoryTmp,"新しい順")">@categoryTmp</a>
                     </li>
                 }
             </ul>
@@ -49,10 +49,10 @@
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle toggle-btn" type="button" data-toggle="dropdown">並び替え</button>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="presentation"><a href="@routes.Application.sortPost(1,"日付新しい順")">日付　新しい順</a></li>
-                                <li role="presentation"><a href="@routes.Application.sortPost(1,"日付古い順")">日付　古い順</a></li>
-                                <li role="presentation"><a href="@routes.Application.sortPost(1,"いいね")">いいね</a></li>
-                                <li role="presentation"><a href="@routes.Application.sortPost(1,"コメント")">コメント</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,category,"日付新しい順")">日付　新しい順</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,category,"日付古い順")">日付　古い順</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,category,"いいね")">いいね</a></li>
+                                <li role="presentation"><a href="@routes.Application.sortPost(1,category,"コメント")">コメント</a></li>
                             </ul>
                         </div>
                     </div>
@@ -109,13 +109,12 @@
 				</div>
 
 				@if( request.path.contains( "sortPost" ) ){
-					<p>@helper.pagenateForSort(page,maxPage,category)</p>
+					<p>@helper.pagenateForSort(page,maxPage,category,sortName)</p>
 				}
 				@if( request.path.contains( "search" ) ) {
 					@if( searchForm.get().keyword != "" ){
 						<p>@helper.pagenateForSearch(page,maxPage,category,searchForm.get().keyword)</p>
 					}
-
 				}
 				@if( !request.path.contains( "sortPost" ) && !request.path.contains( "search" )){
 					<p>@helper.pagenateForIndex(page,maxPage,category)</p>
