@@ -1,19 +1,25 @@
 @(loginForm: Form[models.form.LoginForm])
 
-@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }  
+@implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
 @import helper._
-
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Ositemile</title>
+<link rel="icon" type="image/png" href="@routes.Assets.at("images/ositemile04.png")" sizes="32x32">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 @* ログインページのみに適応させるstylesheet（+bootstrap）を読み込む *@
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="@routes.Assets.at("stylesheets/bootstrap-3.3.1.min.css")" rel="stylesheet">
+<script src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
 <link href="@routes.Assets.at("stylesheets/login/login.css")" rel="stylesheet">
-
-
+</head>
+<body>
 <div class="container-fluid">
   <div class="row">
-      <div class="col-sm-6">
-        <div class="login-box">
+      <div class="col-sm-6 col-sm-12 login-box">
           <h3>Ositemileログイン</h3>
           <div class="login">
             @form(routes.Application.authenticate()){
@@ -24,15 +30,14 @@
               <p class="submit"><input type="submit" value="ログイン"></p>
             }
           </div>
-        </div>
       </div>
 
-      <div class="col-sm-6">
-        <div class="go-register">
+      <div class="col-sm-6 col-sm-12 go-register">
           <h3>新規登録はこちら</h3>
           <p class="register-button"><a href="@routes.Application.register()">新規登録する</a></p>
-        </div>
       </div>
 
   </div>
 </div>
+</body>
+</html>

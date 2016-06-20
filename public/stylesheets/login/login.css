@@ -16,7 +16,7 @@ h3{
 }
 
 .login{
-	width: 350px;
+	width: 100%px;
 	height: auto;
     padding: 20px;
     margin: 20px auto 10px auto;
@@ -26,16 +26,16 @@ h3{
 }
 
 .login p{
-    font-size: 14px;
+	font-size: 14px;
     margin: 0px;
     padding: 0px;
 }
 
 .login input{
-    width: 300px;
+    width: 90%;
     margin: 0px;
     padding: 0px;
-    font-size: 14px;
+	font-size: 14px;
 }
 
 .login .submit{
@@ -45,7 +45,7 @@ h3{
 
 .login .submit>input{
     width: 60px;
-    font-size: 12px;
+	font-size: 12px;
     padding: 5px;
     margin: 10px 0 0 0;
 }
@@ -88,6 +88,38 @@ h3{
 	font-size:10px;
 }
 
+.submit > input:hover{
+	opacity:0.7;
+}
+
 .login>form>p{
 	color:gray;
+}
+
+.col-sm-6{
+		width:100%;
+}
+
+.register-button{
+	margin-left: 20%;
+}
+
+@media (min-width: 768px){
+	.col-sm-6{
+		width:50%;
+	}
+
+	.login{
+		width: 350px;
+
+	}
+
+
+}
+
+
+@media (min-width: 992px){
+	.login-box>h3{
+		margin-left:20%;
+	}
 }

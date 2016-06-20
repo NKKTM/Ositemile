@@ -10,13 +10,13 @@ h3{
 
 
 .register-box{
-	width: 350px;
+	width: 100%;
     padding: 20px;
     margin: 10px auto;
 }
 
 .register{
-	width: 350px;
+	width: 100%;
 	height: auto;
     padding: 20px;
     margin: 20px auto 10px auto;
@@ -32,7 +32,7 @@ h3{
 }
 
 .register input{
-    width: 300px;
+    width: 100%;
     margin: 0px;
     padding: 0px;
     font-size: 14px;
@@ -62,6 +62,29 @@ h3{
 	font-size:20px;
 }
 
+.submit > input:hover{
+	opacity:0.7px;
+}
+
 .register>form>p{
 	color:gray;
+}
+
+
+
+
+@media (min-width: 768px){
+
+	.register-box{
+		width: 350px;
+
+	}
+
+	.register{
+		width: 350px;
+	}
+
+	.register input{
+    	width: 300px;
+    }
 }

@@ -4,11 +4,20 @@
 
 @import helper._
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Ositemile</title>
+<link rel="icon" type="image/png" href="@routes.Assets.at("images/ositemile04.png")" sizes="32x32">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 @* ログインページのみに適応させるstylesheet（+bootstrap）を読み込む *@
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="@routes.Assets.at("stylesheets/bootstrap-3.3.1.min.css")" rel="stylesheet">
+<script src="@routes.Assets.at("javascripts/jquery.min.js")"></script>
 <link href="@routes.Assets.at("stylesheets/login/register.css")" rel="stylesheet">
-
+</head>
+<body>
   <div class="register-box">
     <h3>Ositemile新規登録</h3>
     <div class="register">
@@ -28,3 +37,5 @@
       }
     </div>
   </div>
+</body>
+</html>
