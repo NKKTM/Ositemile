@@ -27,7 +27,7 @@
             	@inputText(loginForm("loginId"))<br>
               <p>Password</p>
             	@inputPassword(loginForm("password"))
-              <p class="submit"><input type="submit" value="ログイン"></p>
+              <p class="submit"><input type="submit" value="ログイン" onclick="DisableButton(this);"></p>
             }
           </div>
       </div>
@@ -39,5 +39,12 @@
 
   </div>
 </div>
+<!-- ボタンの連続クリックを禁止するjs -->
+<script>
+function DisableButton(obj) {
+    obj.disabled = true;
+    obj.form.submit();
+}
+</script>
 </body>
 </html>

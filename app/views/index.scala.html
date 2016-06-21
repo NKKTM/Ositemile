@@ -39,7 +39,7 @@
 	               <div class="col-xs-6 col-sm-6 col-md-6 search-form">
                    @form(action=routes.Application.searchPostBykeyword(1,"","日付新しい順"),'enctype->"multipart/form-data",'class->"searchPostFrom",'maxLength->"50"){
                    		@inputText(searchForm("keyword"),args='_label->"キーワード",'class->"",'placeholder->"キーワードで投稿検索")
-                   		<button type="submit" class="btn btn-default keyword"><i class="icon-search"></i></button>
+                   		<button type="submit" class="btn btn-default keyword" onclick="DisableButton(this);"><i class="icon-search"></i></button>
                    }
                    </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 sort-button-box">
