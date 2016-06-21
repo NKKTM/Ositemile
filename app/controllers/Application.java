@@ -7,6 +7,7 @@ import play.mvc.*;
 
 import play.data.Form;
 import play.db.ebean.Model.Finder;
+import com.avaje.ebean.*;
 
 import static play.data.Form.*;
 
@@ -362,7 +363,17 @@ public class Application extends Controller {
                 if(IineModelService.use().getIineById(post.getId(),user.getId()) == null){
                     //すでにこのpostIdとuserIdの組み合わせで登録されていなければセーブ
                     Iine iine = new Iine(post,user);
-                    iine.save();
+                    // トランザクション開始
+                    Ebean.beginTransaction(); 
+                    try {                                       
+                        iine.save();
+                        Ebean.commitTransaction(); // コミット
+                    }catch (Exception ex) {
+                      Logger.error("ロールバックします", ex);
+                      Ebean.rollbackTransaction(); // ロールバック
+                    } finally {
+                      Ebean.endTransaction();
+                    } 
                 }
             }else if(iineBtn.equals("false")){
                 // いいねボタンの値がfalseのとき（いいね削除）
