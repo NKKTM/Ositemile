@@ -23,8 +23,10 @@ $(function(){
       $.post("/iineBtn/"+postId,
         jsondata,
         function (result) {   
+          setTimeout(function() {               
           $("#iineNum"+postId).html(result.iineNum);
           allowAjax = true;
+          },100);        
         },
         "json"
       );
