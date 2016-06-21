@@ -87,13 +87,13 @@ public class Application extends Controller {
         }else{
             postList = PostModelService.use().getPostListByCategory(page,category);
             if(PostModelService.use().getPostListByCategory(category) != null){
-                postListSize = PostModelService.use().getPostListByCategory(category).size();            
+                postListSize = PostModelService.use().getPostListByCategory(category).size();
             }
         }
         // セッションId取得
         String loginId = session().get("loginId");
         // いいねが押されているかの判定
-        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);        
+        List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
 
         return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName,postListSize));
     }
@@ -308,7 +308,7 @@ public class Application extends Controller {
     }
 
     //loginIdからユーザーページのリンクを作る
-    @Security.Authenticated(Secured.class)    
+    @Security.Authenticated(Secured.class)
     public static Result getUserPageByLoginid(String loginId){
     	User user = UserModelService.use().getUserByLoginId(loginId);
     	Long formatedUserId = user.getId() + 932108L;
@@ -590,7 +590,7 @@ public class Application extends Controller {
                 break;
             }
             //indexに必要な値を取得
-            String loginId = session().get("loginId");                        
+            String loginId = session().get("loginId");
             List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
             int postListSize = PostModelService.use().searchPostByKeyword(keyword).size();
     		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,sortName,postListSize));
@@ -625,7 +625,7 @@ public class Application extends Controller {
         	}
         }else{
             //カテゴリがそれ以外の場合
-            postListSize = PostModelService.use().getPostListByCategory(category).size();                        
+            postListSize = PostModelService.use().getPostListByCategory(category).size();
             switch(sortName){
             case "日付新しい順":
                 postList = PostModelService.use().getPostListByCategory(page,category);
@@ -687,7 +687,7 @@ public class Application extends Controller {
 
     //ランキング
     public static Result rankingPost(String type) throws ParseException{
-    	List<Post> postList = null;
+    	List<Post> postList = new ArrayList<Post>();
     	int flag = 1;
     	switch(type){
     		case "good":
