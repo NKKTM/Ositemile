@@ -1,30 +1,38 @@
+var allowAjax = true;
 
 // いいねボタン（ログインしているとき）
 $(function(){
   $(".iineBtnLonined").click( function(){
-    //postIdを取得
-    var postId = $(this).next().val();
-    console.log("postIdは"+postId);  
+    if(allowAjax) {
+      allowAjax = false;        
+      //postIdを取得
+      var postId = $(this).next().val();
+      console.log("postIdは"+postId);  
 
-    //iineBtnをvalueによってスタイル変更,その後value反転
-    if(this.value === "true"){
-      this.innerHTML = "☆";
-      this.value = "false";
-    }else if(this.value === "false"){
-      this.innerHTML = "★";
-      this.value = "true";      
+      //iineBtnをvalueによってスタイル変更,その後value反転
+      if(this.value === "true"){
+        this.innerHTML = "☆";
+        this.value = "false";
+      }else if(this.value === "false"){
+        this.innerHTML = "★";
+        this.value = "true";      
+      }
+
+      //ajaxの処理
+      var jsondata = {'iineBtn': $(this).val()};
+      $.post("/iineBtn/"+postId,
+        jsondata,
+        function (result) {   
+          setTimeout(function() {               
+          $("#iineNum"+postId).html(result.iineNum);
+          allowAjax = true;
+          },100);        
+        },
+        "json"
+      );
+    }else{
+      console.log("処理中です");
     }
-
-    //ajaxの処理
-    var jsondata = {'iineBtn': $(this).val()};
-    $.post("/iineBtn/"+postId,
-      jsondata,
-      function (result) {
-        $("#iineNum"+postId).html(result.iineNum);
-      },
-      "json"
-    );
-
   })
 })
 

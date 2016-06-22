@@ -117,9 +117,16 @@ public class AdminApplication extends Controller {
 		List<Post> post = PostModelService.use().getPostListByUserId(userId);
 		if( post != null ){
 			for(int i = 0; i < post.size(); i++){
-				AdminPostModelService.use().delete(post.get(i).getId());
+				// AdminPostModelService.use().delete(post.get(i).getId()); 
+				//ここでGoodsを消す
+				// 商品削除
+				Goods item = GoodsModelService.use().getGoodsListByPostId(post.get(i).getId());
+				if( item != null ){
+					item.delete();
+				}				
+
 			}
-		}
+		}	
 
 		// いいね削除
 		List<Iine> iine = IineModelService.use().getIineListByUserId(userId);

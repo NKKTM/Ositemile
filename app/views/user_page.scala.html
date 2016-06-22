@@ -16,7 +16,7 @@
                     			<img class="userpage-image" src="data:image/png;base64,@user.getImageEncData()" alt="base64test">
 							</div>
                         <h3>@user.getUserName()</h3>
-                        <h5>部署：<span>@user.getDepartment()</span></h5>
+                        <h5 style="word-wrap:break-word;">部署：@user.getDepartment()</h5>
                     </div>
                     <div class="panel-footer">
                        @Html(user.getProfile())
