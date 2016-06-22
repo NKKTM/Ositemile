@@ -86,7 +86,8 @@ public class GoodsModelService {
 	 *	@author Hatsune Kitajima
 	 */
 	public List<String> getGoodsAllCategory(){
-		String sql = "select category from goods group by category";
+		//String sql = "select category from goods group by category";
+		String sql = "select category, count(category) as num from goods group by category order by num desc";
 	    List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
 	    List<String> categoryList = new ArrayList<String>();
 	    for(SqlRow sq: sqlRows){
