@@ -142,16 +142,19 @@ public class AmazonModelService {
 	 */
 
 	public String getCategory(Element elementRoot){
+		String category = "その他";
+		try {
 		NodeList localNodeList =
 				((Element) elementRoot.getElementsByTagName("parents").item(0)).getElementsByTagName("parent");
-		String category = null;
 		Element elementItem = (Element) localNodeList.item(0);
 		//genreNameを取得
 		Element elementGenreName = (Element) elementItem.getElementsByTagName("genreName").item(0);
 		String itemName = elementGenreName.getFirstChild().getNodeValue();
 		System.out.println(itemName);
 		category = itemName;
-
+		}catch(NullPointerException e){
+			e.printStackTrace();
+		}
 		return category;
 	}
 }
