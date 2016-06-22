@@ -207,7 +207,7 @@ public class Application extends Controller {
         	return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
         }else{
         	if(StringUtils.isBlank(searchForm.get().searchWord)){
-        		return ok(postSearchItem.render(session().get("loginId"),null,goodsForm,searchForm));
+        		return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
         	}
 	        String searchWordStr = searchForm.get().searchWord;
 	        searchWordStr = URLEncoder.encode(searchWordStr,"utf-8");
