@@ -86,7 +86,7 @@ public class GoodsModelService {
 	 *	@author Hatsune Kitajima
 	 */
 	public List<String> getGoodsAllCategory(){
-		String sql = "select category from goods group by category"; 
+		String sql = "select category from goods group by category";
 	    List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
 	    List<String> categoryList = new ArrayList<String>();
 	    for(SqlRow sq: sqlRows){
@@ -129,4 +129,5 @@ public class GoodsModelService {
 		}
 		return goods;
 	}
+
 }

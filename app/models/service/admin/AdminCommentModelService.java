@@ -39,11 +39,14 @@ public class AdminCommentModelService {
 
 			// コメント
 			if( (comment != null && !comment.isEmpty()) && (userName != null && !userName.isEmpty()) ){
-				commentList = find.where("comment LIKE '%"+comment+"%'"+" AND "+ " human.userName LIKE '%"+userName+"%'").
-							  findList();
+				commentList = find.where("comment LIKE '%"+comment+"%'"+" AND "+ " human.userName LIKE '%"+userName+"%'")
+						.orderBy(orderby)
+						. findList();
 			}
 			else if( comment != null && !comment.isEmpty()){
-				commentList = find.where("comment LIKE '%"+comment+"%'").orderBy(orderby).findList();
+				commentList = find.where("comment LIKE '%"+comment+"%'").orderBy(orderby)
+						.orderBy(orderby)
+						. findList();
 			}else if( userName != null && !userName.isEmpty() ){
 				// メッセージ
 				commentList = find.where("human.userName LIKE '%"+userName+"%'")

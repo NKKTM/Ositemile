@@ -34,6 +34,8 @@ import javax.imageio.ImageIO;
 import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import akka.japi.Util;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import play.data.DynamicForm;
@@ -364,8 +366,8 @@ public class Application extends Controller {
                     //すでにこのpostIdとuserIdの組み合わせで登録されていなければセーブ
                     Iine iine = new Iine(post,user);
                     // トランザクション開始
-                    Ebean.beginTransaction(); 
-                    try {                                       
+                    Ebean.beginTransaction();
+                    try {
                         iine.save();
                         Ebean.commitTransaction(); // コミット
                     }catch (Exception ex) {
@@ -373,7 +375,7 @@ public class Application extends Controller {
                       Ebean.rollbackTransaction(); // ロールバック
                     } finally {
                       Ebean.endTransaction();
-                    } 
+                    }
                 }
             }else if(iineBtn.equals("false")){
                 // いいねボタンの値がfalseのとき（いいね削除）
@@ -573,6 +575,7 @@ public class Application extends Controller {
                 //入力されたキーワードが空のとき
                 return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
 	    	}
+	    	keyword = models.Util.replaceString(keyword);
             // PostList取得
             List<Post> postList = new ArrayList<Post>();
             switch(sortName){

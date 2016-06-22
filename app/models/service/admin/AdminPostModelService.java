@@ -38,16 +38,20 @@ public class AdminPostModelService {
 
 			// 投稿タイトル＆投稿コメント
 			if( (postTitle != null && !postTitle.isEmpty()) && (postComment != null && !postComment.isEmpty()) ){
-				postList = find.where("postTitle LIKE '%"+postTitle+"%'"+" OR "+ " postComment LIKE '%"+postComment+"%'").
-							  findList();
+				postList = find.where("postTitle LIKE '%"+postTitle+"%'"+" OR "+ " postComment LIKE '%"+postComment+"%'")
+						.orderBy(orderby)
+						. findList();
 			}
 			else if( postTitle != null && !postTitle.isEmpty()){
 				// 投稿タイトル
-				postList = find.where("postTitle LIKE '%"+postTitle+"%'").findList();
+				postList = find.where("postTitle LIKE '%"+postTitle+"%'")
+						.orderBy(orderby)
+						. findList();
 			}else if( postComment != null && !postComment.isEmpty() ){
 				// 投稿コメント
 				postList = find.where("postComment LIKE '%"+postComment+"%'")
-									.findList();
+						.orderBy(orderby)
+						. findList();
 			}else{
 				// 全データ
 				return find.orderBy(orderby).findList();

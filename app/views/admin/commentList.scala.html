@@ -17,6 +17,7 @@
 				</select>
 			}
 			@inputText(commentForm("userName"),args='_label->"ユーザー名",'maxLength->"50")
+			<p>AND</p>
 			@inputText(commentForm("comment"),args='_label->"コメント内容",'maxLength->"50")
 			<input type="submit" id="searchsubmit" value="検索" class="btn primary">
 		}
