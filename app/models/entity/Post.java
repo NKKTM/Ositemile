@@ -4,8 +4,11 @@
  */
 package models.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -66,7 +69,7 @@ public class Post  extends Model{
 		this.goods = null;
 		this.human = null;
 		this.comment = null;
-		this.date = new Date();
+		this.date = models.Util.getJpDate();
 	}
 
 	/*
@@ -80,7 +83,7 @@ public class Post  extends Model{
 				String postComment){
 		this.postTitle = postTitle;
 		this.postComment = postComment;
-		this.date = new Date();
+		this.date = models.Util.getJpDate();
 	}
 
 	/*
@@ -100,7 +103,7 @@ public class Post  extends Model{
 		this.postComment = postComment;
 		this.goods = goods;
 		this.human = user;
-		this.date = new Date();
+		this.date = models.Util.getJpDate();
 	}
 
 	/*

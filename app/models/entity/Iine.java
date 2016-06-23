@@ -4,7 +4,10 @@
  */
 package models.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -50,7 +53,7 @@ public class Iine extends Model{
 	public Iine(Post post,User user){
 		this.post = post;
 		this.human = user;
-		this.date = new Date();
+		this.date = models.Util.getJpDate();
 	}
 
 	/*

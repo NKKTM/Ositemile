@@ -26,6 +26,20 @@
 	margin-bottom:10px;
 }
 
+.iine-list-title{
+	margin-bottom:20px;
+	padding: .25em 0 .25em .75em;
+    padding-left: 9px;
+    border-left: 6px solid #ffb9a6;
+    color: gray;
+    font-weight: 500;
+}
+
+.profile-panel:hover{
+	opacity:0.7;
+	background-color:white;
+}
+
 @media(max-width: 480px){
 
     .userpage-box{

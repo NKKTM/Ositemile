@@ -4,7 +4,10 @@
  */
 package models.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.Entity;
 import javax.persistence.Column;
@@ -19,7 +22,7 @@ public class Comment  extends Model{
 
 	@Id
 	private Long	id;				// ID
-    @Column(columnDefinition="text")	
+    @Column(columnDefinition="text")
 	private String	comment;		// コメント内容
 
 	@ManyToOne
@@ -44,7 +47,7 @@ public class Comment  extends Model{
 		this.comment = "";
 		this.human = null;
 		this.post = null;
-		this.date = new Date();
+		this.date = models.Util.getJpDate();
 	}
 
 	/*
@@ -59,7 +62,7 @@ public class Comment  extends Model{
 		this.comment = comment;
 		this.human = user;
 		this.post = post;
-		this.date = new Date();
+		this.date = models.Util.getJpDate();
 	}
 
 	/*
