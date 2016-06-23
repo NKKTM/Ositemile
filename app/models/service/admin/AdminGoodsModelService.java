@@ -38,16 +38,20 @@ public class AdminGoodsModelService {
 
 			// 商品名&カテゴリー
 			if( (goodsName != null && !goodsName.isEmpty()) && (category != null && !category.isEmpty()) ){
-				goodsList = find.where("goodsName LIKE '%"+goodsName+"%'"+" OR "+ " category LIKE '%"+category+"%'").
-							  findList();
+				goodsList = find.where("goodsName LIKE '%"+goodsName+"%'"+" OR "+ " category LIKE '%"+category+"%'")
+						.orderBy(orderby)
+						. findList();
 			}
 			else if( goodsName != null && !goodsName.isEmpty()){
 				// 商品名
-				goodsList = find.where("goodsName LIKE '%"+goodsName+"%'").findList();
+				goodsList = find.where("goodsName LIKE '%"+goodsName+"%'")
+						.orderBy(orderby)
+						. findList();
 			}else if( category != null && !category.isEmpty() ){
 				// カテゴリー
 				goodsList = find.where("category LIKE '%"+category+"%'")
-									.findList();
+						.orderBy(orderby)
+						. findList();
 			}else{
 				// 全データ
 				return find.orderBy(orderby).findList();

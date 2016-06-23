@@ -56,7 +56,9 @@ public class AdminApplication extends Controller {
 		input = input.bindFromRequest(params);
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
-		List<Comment> comment =  AdminCommentModelService.use().search(commnetSearchForm.get().comment, commnetSearchForm.get().userName,bool);
+		String commentStr =Util.replaceString(commnetSearchForm.get().comment);
+		String userName = Util.replaceString(commnetSearchForm.get().userName);
+		List<Comment> comment =  AdminCommentModelService.use().search(commentStr, userName, bool);
 		return ok(commentList.render("",comment,commnetSearchForm,bool));
 	}
 
@@ -92,7 +94,7 @@ public class AdminApplication extends Controller {
 		input = input.bindFromRequest(params);
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
-		List<User> user =  AdminUserModelService.use().search(userSearchForm.get().userName, userSearchForm.get().loginId,bool);
+		List<User> user =  AdminUserModelService.use().search(Util.replaceString(userSearchForm.get().userName), Util.replaceString(userSearchForm.get().loginId),bool);
 		return ok(userList.render("",user,userSearchForm,bool));
 	}
 
@@ -117,16 +119,16 @@ public class AdminApplication extends Controller {
 		List<Post> post = PostModelService.use().getPostListByUserId(userId);
 		if( post != null ){
 			for(int i = 0; i < post.size(); i++){
-				// AdminPostModelService.use().delete(post.get(i).getId()); 
+				// AdminPostModelService.use().delete(post.get(i).getId());
 				//ここでGoodsを消す
 				// 商品削除
 				Goods item = GoodsModelService.use().getGoodsListByPostId(post.get(i).getId());
 				if( item != null ){
 					item.delete();
-				}				
+				}
 
 			}
-		}	
+		}
 
 		// いいね削除
 		List<Iine> iine = IineModelService.use().getIineListByUserId(userId);
@@ -161,7 +163,7 @@ public class AdminApplication extends Controller {
 		input = input.bindFromRequest(params);
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
-		List<Goods> goods =  AdminGoodsModelService.use().search(goodsSearchForm.get().goodsName, goodsSearchForm.get().category,bool);
+		List<Goods> goods =  AdminGoodsModelService.use().search(Util.replaceString(goodsSearchForm.get().goodsName), Util.replaceString(goodsSearchForm.get().category),bool);
 		return ok(goodsList.render("",goods,goodsSearchForm,bool));
 	}
 
@@ -196,8 +198,8 @@ public class AdminApplication extends Controller {
 			for(int i = 0; i < iine.size(); i++){
 				AdminIineModelService.use().delete(iine.get(i).getId());
 			}
-		}		
-		
+		}
+
 
 		List<Goods> goods = GoodsModelService.use().getGoodsList();
 		return ok(goodsList.render("",goods,goodsSearchForm,bool));
@@ -222,7 +224,7 @@ public class AdminApplication extends Controller {
 		input = input.bindFromRequest(params);
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
-		List<Post> post =  AdminPostModelService.use().search(postSearchForm.get().postTitle, postSearchForm.get().postComment,bool);
+		List<Post> post =  AdminPostModelService.use().search(Util.replaceString(postSearchForm.get().postTitle), Util.replaceString(postSearchForm.get().postComment),bool);
 		return ok(postList.render("",post,postSearchForm,bool));
 	}
 
@@ -259,7 +261,7 @@ public class AdminApplication extends Controller {
 			for(int i = 0; i < iine.size(); i++){
 				AdminIineModelService.use().delete(iine.get(i).getId());
 			}
-		}		
+		}
 
 		// 投稿取得
 		List<Post> post =  PostModelService.use().getPostList();

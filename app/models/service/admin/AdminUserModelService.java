@@ -38,16 +38,20 @@ public class AdminUserModelService {
 
 			// ユーザー名&ログインID
 			if( (userName != null && !userName.isEmpty()) && (loginId != null && !loginId.isEmpty()) ){
-				userList = find.where("userName LIKE '%"+userName+"%'"+" OR "+ " loginId LIKE '%"+loginId+"%'").
-							  findList();
+				userList = find.where("userName LIKE '%"+userName+"%'"+" OR "+ " loginId LIKE '%"+loginId+"%'")
+							.orderBy(orderby)
+							. findList();
 			}
 			else if( userName != null && !userName.isEmpty()){
 				// ユーザー名
-				userList = find.where("userName LIKE '%"+userName+"%'").findList();
+				userList = find.where("userName LIKE '%"+userName+"%'")
+							.orderBy(orderby)
+							. findList();
 			}else if( loginId != null && !loginId.isEmpty() ){
 				// ログインID
 				userList = find.where("loginId LIKE '%"+loginId+"%'")
-									.findList();
+							.orderBy(orderby)
+							. findList();
 			}else{
 				// 全データ
 				return find.orderBy(orderby).findList();
