@@ -56,7 +56,7 @@ GET		/editPost/:postId			controllers.Application.editPost(postId : Long)
 POST	/updatePost/:postId			controllers.Application.updatePost(postId : Long)
 
 #ユーザーページ
-GET    /userPage/:formatedUserId                    controllers.Application.userPage(formatedUserId: Long)
+GET    /userPage/:fnum                controllers.Application.userPage(fnum: Long)
 GET    /userPageByLoginId                   controllers.Application.getUserPageByLoginid(loginId:String)
 
 #ユーザー情報アップデート
