@@ -4,7 +4,10 @@
  */
 package models.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.Entity;
 import javax.persistence.Column;
@@ -19,7 +22,7 @@ public class Comment  extends Model{
 
 	@Id
 	private Long	id;				// ID
-    @Column(columnDefinition="text")	
+    @Column(columnDefinition="text")
 	private String	comment;		// コメント内容
 
 	@ManyToOne
@@ -44,7 +47,18 @@ public class Comment  extends Model{
 		this.comment = "";
 		this.human = null;
 		this.post = null;
-		this.date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    	nowDate.setTimeZone(tz);
+    	String formatedDate = nowDate.format(new Date());
+    	Date date = null;
+    	try {
+			date = nowDate.parse(formatedDate);
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		this.date = date;
 	}
 
 	/*
@@ -59,7 +73,18 @@ public class Comment  extends Model{
 		this.comment = comment;
 		this.human = user;
 		this.post = post;
-		this.date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    	nowDate.setTimeZone(tz);
+    	String formatedDate = nowDate.format(new Date());
+    	Date date = null;
+    	try {
+			date = nowDate.parse(formatedDate);
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		this.date = date;
 	}
 
 	/*

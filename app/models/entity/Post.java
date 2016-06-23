@@ -4,8 +4,11 @@
  */
 package models.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -66,7 +69,18 @@ public class Post  extends Model{
 		this.goods = null;
 		this.human = null;
 		this.comment = null;
-		this.date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    	nowDate.setTimeZone(tz);
+    	String formatedDate = nowDate.format(new Date());
+    	Date date = null;
+    	try {
+			date = nowDate.parse(formatedDate);
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		this.date = date;
 	}
 
 	/*
@@ -80,7 +94,18 @@ public class Post  extends Model{
 				String postComment){
 		this.postTitle = postTitle;
 		this.postComment = postComment;
-		this.date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    	nowDate.setTimeZone(tz);
+    	String formatedDate = nowDate.format(new Date());
+    	Date date = null;
+    	try {
+			date = nowDate.parse(formatedDate);
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		this.date = date;
 	}
 
 	/*
@@ -100,7 +125,18 @@ public class Post  extends Model{
 		this.postComment = postComment;
 		this.goods = goods;
 		this.human = user;
-		this.date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    	nowDate.setTimeZone(tz);
+    	String formatedDate = nowDate.format(new Date());
+    	Date date = null;
+    	try {
+			date = nowDate.parse(formatedDate);
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		this.date = date;
 	}
 
 	/*

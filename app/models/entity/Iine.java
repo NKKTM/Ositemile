@@ -4,7 +4,10 @@
  */
 package models.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -50,7 +53,18 @@ public class Iine extends Model{
 	public Iine(Post post,User user){
 		this.post = post;
 		this.human = user;
-		this.date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    	nowDate.setTimeZone(tz);
+    	String formatedDate = nowDate.format(new Date());
+    	Date date = null;
+    	try {
+			date = nowDate.parse(formatedDate);
+		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		this.date = date;
 	}
 
 	/*
