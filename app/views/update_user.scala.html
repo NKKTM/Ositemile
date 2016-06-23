@@ -1,4 +1,4 @@
-@(loginId: String, userForm: Form[models.form.UserForm], user :models.entity.User)
+@(loginId: String, userForm: Form[models.form.UserForm], user :models.entity.User,imageFileErr : Boolean)
 
 @implicitField = @{ FieldConstructor(inputForm_nolabel_error.f) }
 
@@ -26,7 +26,13 @@
 		@inputText(userForm("department"),args='_label->"部署",'class->"edit_user_form edit_user_text")
 		<h4 class="edit-user-title">自己紹介</h4>
 		@textarea(userForm("profile"),args='_label->"コメント",'class->"form-control edit_user_form edit_user_textarea" ,'cols -> "80",'rows -> "10")
-		@inputText(userForm("imageName"),args='_label->"画像",'type->"file")
+
+
+		@if(imageFileErr){
+			<p class="up-imageErr">選択されたファイルは壊れている可能性があります。</p>
+			<p class="up-imageErr">画像は"png"または"jpeg"ファイルでお願いします。</p>
+		}
+		@inputText(userForm("imageName"),args='_label->"画像",'type->"file",'accept->"image/*")
 		@if( user.getImageEncData != "" || user.getImageEncData != null ){
 			<p class="up-imageMessage">前回の画像があります。<p>
 		}
