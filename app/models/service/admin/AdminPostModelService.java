@@ -6,6 +6,8 @@ package models.service.admin;
 
 import java.util.List;
 
+import com.avaje.ebean.Query;
+
 import models.entity.Post;
 import play.db.ebean.Model.Finder;
 
@@ -37,26 +39,21 @@ public class AdminPostModelService {
 			String orderby = (ascend) ? "date asce": "date desc";
 
 			// 投稿タイトル＆投稿コメント
+			Query<Post> postQuery = null;
 			if( (postTitle != null && !postTitle.isEmpty()) && (postComment != null && !postComment.isEmpty()) ){
-				postList = find.where("postTitle LIKE '%"+postTitle+"%'"+" OR "+ " postComment LIKE '%"+postComment+"%'")
-						.orderBy(orderby)
-						. findList();
+				postQuery = find.where("postTitle LIKE '%"+postTitle+"%'"+" OR "+ " postComment LIKE '%"+postComment+"%'");
 			}
 			else if( postTitle != null && !postTitle.isEmpty()){
 				// 投稿タイトル
-				postList = find.where("postTitle LIKE '%"+postTitle+"%'")
-						.orderBy(orderby)
-						. findList();
+				postQuery = find.where("postTitle LIKE '%"+postTitle+"%'");
 			}else if( postComment != null && !postComment.isEmpty() ){
 				// 投稿コメント
-				postList = find.where("postComment LIKE '%"+postComment+"%'")
-						.orderBy(orderby)
-						. findList();
+				postQuery = find.where("postComment LIKE '%"+postComment+"%'");
 			}else{
 				// 全データ
 				return find.orderBy(orderby).findList();
 			}
-			return postList;
+			return postQuery.orderBy(orderby).findList();
 		}
 		return null;
 	}

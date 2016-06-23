@@ -6,6 +6,8 @@ package models.service.admin;
 
 import java.util.List;
 
+import com.avaje.ebean.Query;
+
 import models.entity.Goods;
 import play.db.ebean.Model.Finder;
 
@@ -37,25 +39,22 @@ public class AdminGoodsModelService {
 			String orderby = (ascend) ? "id asce": "id desc";
 
 			// 商品名&カテゴリー
+			Query<Goods> goodsQuery = null;
 			if( (goodsName != null && !goodsName.isEmpty()) && (category != null && !category.isEmpty()) ){
-				goodsList = find.where("goodsName LIKE '%"+goodsName+"%'"+" OR "+ " category LIKE '%"+category+"%'")
-						.orderBy(orderby)
-						. findList();
+				goodsQuery = find.where("goodsName LIKE '%"+goodsName+"%'"+" OR "+ " category LIKE '%"+category+"%'");
 			}
 			else if( goodsName != null && !goodsName.isEmpty()){
 				// 商品名
-				goodsList = find.where("goodsName LIKE '%"+goodsName+"%'")
-						.orderBy(orderby)
-						. findList();
+				goodsQuery = find.where("goodsName LIKE '%"+goodsName+"%'");
+
 			}else if( category != null && !category.isEmpty() ){
 				// カテゴリー
-				goodsList = find.where("category LIKE '%"+category+"%'")
-						.orderBy(orderby)
-						. findList();
+				goodsQuery = find.where("category LIKE '%"+category+"%'");
+
 			}else{
 				// 全データ
 				return find.orderBy(orderby).findList();
-			}return goodsList;
+			}return goodsQuery.orderBy(orderby).findList();
 		}
 		return null;
 	}
