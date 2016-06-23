@@ -28,7 +28,12 @@
 	}
 	<div class="row">
 		@if(postList.size==0){
-			<h4>先週投稿された記事はありません。</h4>
+		@{flag match {
+	  		case 1 => <h4>投稿された記事はありません。</h4>
+	  		case 2 => <h4>先週投稿された記事はありません。</h4>
+	  		case 3 => <h4>投稿された記事はありません。</h4>
+	  		case 4 => <h4>先週投稿された記事はありません。</h4>
+		}}
 		}
 	@for((post,i) <- postList.zipWithIndex){
 			<div class="col-xs-12 col-sm-12 col-md-12 rank-onerow">
