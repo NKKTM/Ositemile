@@ -47,18 +47,7 @@ public class Comment  extends Model{
 		this.comment = "";
 		this.human = null;
 		this.post = null;
-		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
-    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    	nowDate.setTimeZone(tz);
-    	String formatedDate = nowDate.format(new Date());
-    	Date date = null;
-    	try {
-			date = nowDate.parse(formatedDate);
-		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		this.date = date;
+		this.date = models.Util.getJpDate();
 	}
 
 	/*
@@ -73,18 +62,7 @@ public class Comment  extends Model{
 		this.comment = comment;
 		this.human = user;
 		this.post = post;
-		TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
-    	SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-    	nowDate.setTimeZone(tz);
-    	String formatedDate = nowDate.format(new Date());
-    	Date date = null;
-    	try {
-			date = nowDate.parse(formatedDate);
-		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		this.date = date;
+		this.date = models.Util.getJpDate();
 	}
 
 	/*
