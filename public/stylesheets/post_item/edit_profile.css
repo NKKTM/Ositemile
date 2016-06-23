@@ -57,6 +57,10 @@ button.edit-user_btn:hover{
 	font-size:30px;
 }
 
+.up-imageErr{
+	color:#f00;
+}
+
 @media (min-width: 992px){
 .edit_user_textarea{
 	margin-right:50px;

@@ -481,7 +481,7 @@ public class Application extends Controller {
     	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
     	//Form<User> userForm = form(User.class).fill(user);
 
-    	return ok(update_user.render(loginId,userForm,user));
+    	return ok(update_user.render(loginId,userForm,user,false));
     }
 
     //ユーザー情報の編集を実行する
@@ -522,6 +522,7 @@ public class Application extends Controller {
 	    	if( image != null ){
 	    		// 新しく画像を指定された場合
 
+
 	    		// 拡張子の取得
 	    		newUser.setImageName(image.getFilename());
 	    		int lastDotPosition = image.getFilename().lastIndexOf(".");
@@ -531,6 +532,9 @@ public class Application extends Controller {
 	    		BufferedImage read;
 	    		try{
 		    		read = ImageIO.read(image.getFile());
+		    		if( read == null ){
+		    			return ok(update_user.render(loginId,userForm,user,true));
+		    		}
 					newUser.setImageData(new MakeImage().getBytesFromImage(read,extensionName));
 					System.out.println(newUser.getImageData());
                     newUser.setImageEncData(Base64.getEncoder().encodeToString(newUser.getImageData()));
@@ -555,7 +559,7 @@ public class Application extends Controller {
     	}else{
     		System.out.println("ユーザー編集バインド、エラーあり！！！");
 
-    		return ok(update_user.render(loginId,userForm,user));
+    		return ok(update_user.render(loginId,userForm,user,false));
     	}
     }
 
