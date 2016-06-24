@@ -249,6 +249,15 @@ button.push-item-comment:hover{
     color: gray;
 }
 
+.introduction-full-box > h3{
+	padding: .25em 0 .25em .75em;
+    padding-left: 9px;
+    border-left: 6px solid #ffb9a6;
+    color: gray;
+    font-weight: 500;
+    margin-left:10%;
+}
+
 .introduction-hr{
 	border-top: 1px dotted #9e9e9e;
 }
@@ -299,8 +308,8 @@ button.push-item-comment:hover{
 }
 
 @media(max-width: 480px){
-    .intro-com-namebox{   
-        padding-left: 5%;     
+    .intro-com-namebox{
+        padding-left: 5%;
         width: 80%;
     }
 }

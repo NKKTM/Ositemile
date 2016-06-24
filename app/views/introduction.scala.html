@@ -12,7 +12,9 @@
 <div class="container-fluid">
 
 	<div class="row introduction-full-box">
-
+		@if(post == null){
+			<h3>記事は存在しません。</h3>
+		}else{
 		@*商品表示*@
 		<div class="col-xs-12 col-sm-5 col-md-5 item-info-box">
 			<div class="post-item-info">
@@ -106,7 +108,7 @@
 					}
 				</div>
 			</div>
-		</div>
+		</div>}
 	</div>
 </div>
 }
