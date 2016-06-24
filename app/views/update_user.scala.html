@@ -13,7 +13,7 @@
 	<h4 class="edit-user-head">プロフィール編集</h4>
 	@form(action=routes.Application.DoUpdate(user.getId+num),'enctype->"multipart/form-data"){
 		<!-- 前回の画像データー -->
-		@inputText(userForm("imageDataOld"),args= 'type->"hidden" , 'value->"@user.getImageData")
+		@inputText(userForm("imageDataOld"),args= 'type->"hidden" , 'value->"@Base64.getDcoder().dcode(user.getImageData)")
 		@inputText(userForm("imageNameOld"),args= 'type->"hidden" , 'value->"@user.getImageName")
 		@inputText(userForm("encoding"),args= 'type->"hidden" , 'value->"@user.getImageEncData")
 
