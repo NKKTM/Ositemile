@@ -299,15 +299,19 @@ public class Application extends Controller {
     	 Long userId = formatedUserId-932108L;
     	 User user = UserModelService.use().getUserById(userId);
     	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
+    	 if(user != null){
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
     	 String loginId = session().get("loginId");
-         Collections.reverse(iineList);         
+         Collections.reverse(iineList);
          // いいねが押されているかの判定（postに対して）
          List<Boolean> postBooleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
          // いいねが押されているかの判定（iineに対して）
          List<Boolean> iineBooleanList = IineModelService.use().getBooleanListByIineList(iineList,loginId);
          return ok(user_page.render(loginId,user,postList,iineList,postBooleanList,iineBooleanList));
+         } else {
+        	 return redirect(controllers.routes.Application.logout());
+         }
     }
 
     //loginIdからユーザーページのリンクを作る
@@ -465,23 +469,27 @@ public class Application extends Controller {
     	User user = UserModelService.use().getUserById(userId);
     	// ユーザーフォームの作成
     	UserForm userFormtemp = new UserForm();
-    	String profile = PostModelService.use().reverseSanitize(user.getProfile());
-    	userFormtemp.setUserForm(user.getUserName(),		// ユーザー名
-    							   user.getPassword(),		// パスワード
-    							   user.getLoginId(),		// ログインID
-    							   user.getAdmin(),			// 管理者かどうか
-    							   profile,					// プロフィール
-    							   user.getDepartment(),	// 部署名
-    							   null,					// 画像名
-    							   user.getImageData(),		// 前回の画像データ
-    							   user.getImageName(),		// 前回の画像名
-    							   user.getImageEncData());	// エンコーディングされたデータ
-    	Form<UserForm> userForm = form(UserForm.class).fill(userFormtemp);
-    	System.out.println(user.getImageData());
+    	if(user != null){
+	    	String profile = PostModelService.use().reverseSanitize(user.getProfile());
+	    	userFormtemp.setUserForm(user.getUserName(),		// ユーザー名
+	    							   user.getPassword(),		// パスワード
+	    							   user.getLoginId(),		// ログインID
+	    							   user.getAdmin(),			// 管理者かどうか
+	    							   profile,					// プロフィール
+	    							   user.getDepartment(),	// 部署名
+	    							   null,					// 画像名
+	    							   user.getImageData(),		// 前回の画像データ
+	    							   user.getImageName(),		// 前回の画像名
+	    							   user.getImageEncData());	// エンコーディングされたデータ
+	    	Form<UserForm> userForm = form(UserForm.class).fill(userFormtemp);
+	    	System.out.println(user.getImageData());
 
-    	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
+	    	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
 
-    	return ok(update_user.render(loginId,userForm,user,false));
+	    	return ok(update_user.render(loginId,userForm,user,false));
+    	}else{
+    		return redirect(controllers.routes.Application.logout());
+    	}
     }
 
     //ユーザー情報の編集を実行する

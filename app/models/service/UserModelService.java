@@ -71,8 +71,12 @@ public class UserModelService {
 	public List<Post> getPostByUserId(Long userId){
 		Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 		List<User> userList = find.where().eq("id", userId).findList();
-		List<Post> postList = userList.get(0).getPost();
-		return postList;
+		if(userList.size()!=0){
+			List<Post> postList = userList.get(0).getPost();
+			return postList;
+		}else{
+			return null;
+		}
 	}
 
 	/*

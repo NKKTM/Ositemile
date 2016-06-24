@@ -155,7 +155,7 @@ public class PostModelService {
 							.getPage(pageNum)
 							.getList();
 		return checkPost(postList);
-	}			
+	}
 
 	/*
 	 *	投稿IDで特定の投稿情報を取得
@@ -166,8 +166,11 @@ public class PostModelService {
 	 */
 	public Post getPostListById( Long postId ){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		Post post = find.where().eq("id", postId).findList().get(0);
-		return checkPost(post);
+		List<Post> postList = find.where().eq("id", postId).findList();
+		if(postList.size() != 0){
+			return checkPost(postList.get(0));
+		}
+		return null;
 	}
 
 	/*
@@ -433,7 +436,7 @@ public class PostModelService {
 									.getPage(pageNum)
 									.getList();
 		return postList;
-	}					
+	}
 
 	/*
 	 *トップページの投稿検索(ページングなし)
@@ -476,7 +479,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		List<Post> postList = find.where().ilike("goods.category",category).orderBy("commentCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
 		return postList;
-	}	
+	}
 
 	/*
 	 *	いいねの多い順に投稿リストを取得
@@ -502,7 +505,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		List<Post> postList = find.where().ilike("goods.category",category).orderBy("iineCnt desc").findPagingList(LIMIT).getPage(pageNum).getList();
 		return postList;
-	}	
+	}
 
 	/*
 	 *	いいねの多い順に投稿リストのうち上位２０件(ランキング用)
