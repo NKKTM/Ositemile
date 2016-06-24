@@ -1,8 +1,8 @@
-/*   
+/*
 *  ログイン認証に関わるクラス
 *  （Authenticatorクラスを継承してオーバーライドする必要がある）
 *  @author Hatsune Kitajima
-*/  
+*/
 
 package models.login;
 
@@ -16,11 +16,11 @@ import models.entity.*;
 
 public class SecuredUpdatePost extends Authenticator {
 
-	/*   
+	/*
 	*  ログイン認証OKとする条件を設定するメソッド
 	*  （この場合はセッションからloginIdが取得できればOKとしている）
 	*  @author Hatsune Kitajima
-	*/  	
+	*/
 	@Override
 	public String getUsername(Context ctx){
 		//ポストを取得
@@ -32,29 +32,29 @@ public class SecuredUpdatePost extends Authenticator {
 		User user = UserModelService.use().getUserByLoginId(loginId);
 		if(user != null){
 		//ユーザーがDBに存在するとき
-			if(user.getId() == post.getUser().getId()){
+			if( user.getId().equals(post.getUser().getId()) ){
 				return user.getLoginId();
 			}else{
-				System.out.println("君はここを編集する資格をもっていない。はよ帰れ。");						
-				return null;				
+				System.out.println("君はここを編集する資格をもっていない。はよ帰れ。");
+				return null;
 			}
 		}else{
 		//ユーザーがDBに存在しないとき
-			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");						
- 	       	ctx.session().clear();			
+			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");
+ 	       	ctx.session().clear();
 			return null;
 		}
 	}
 
 
-	/*   
+	/*
 	*  ログイン認証NGとする場合の処理を設定するメソッド
 	*  （この場合は最終的にlogin()に飛ばすように設定している）
 	*  @author Hatsune Kitajima
-	*/  
+	*/
 	@Override
 	public Result onUnauthorized(Context ctx){
-		System.out.println("認証NG");		
+		System.out.println("認証NG");
 		String returnUrl = ctx.request().uri();
 		if(returnUrl == null){
 			returnUrl="/";
