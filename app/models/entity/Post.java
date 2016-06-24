@@ -4,6 +4,7 @@
  */
 package models.entity;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class Post  extends Model{
 	private List<Iine>	iine;			// コメント
 
 	private String          dateStr;            //画面に表示する日付のString
-	private Date			date;				// 日付
+	private Timestamp			date;				// 日付
 	private int				commentCnt;			// コメント数
 	private int				iineCnt;			// いいね数
 
@@ -69,7 +70,7 @@ public class Post  extends Model{
 		this.goods = null;
 		this.human = null;
 		this.comment = null;
-		this.date = models.Util.getJpDate();
+		this.date = new Timestamp(models.Util.getJpDate().getTime());
 	}
 
 	/*
@@ -83,7 +84,7 @@ public class Post  extends Model{
 				String postComment){
 		this.postTitle = postTitle;
 		this.postComment = postComment;
-		this.date = models.Util.getJpDate();
+		this.date =  new Timestamp(models.Util.getJpDate().getTime());
 	}
 
 	/*
@@ -103,7 +104,7 @@ public class Post  extends Model{
 		this.postComment = postComment;
 		this.goods = goods;
 		this.human = user;
-		this.date = models.Util.getJpDate();
+		this.date =  new Timestamp(models.Util.getJpDate().getTime());
 	}
 
 	/*
@@ -184,10 +185,10 @@ public class Post  extends Model{
 	}
 
 	// 日付
-	public void setDate(Date date){
+	public void setDate(Timestamp date){
 		this.date = date;
 	}
-	public Date getDate(){
+	public Timestamp getDate(){
 		return date;
 	}
 
