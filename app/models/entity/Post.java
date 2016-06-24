@@ -4,11 +4,10 @@
  */
 package models.entity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,7 +20,6 @@ import javax.persistence.Column;
 
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
-import play.data.validation.Constraints.Pattern;
 import play.db.ebean.Model;
 
 @Entity

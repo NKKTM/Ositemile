@@ -495,11 +495,11 @@ public class Application extends Controller {
     	if(!userForm.hasErrors()){
     		System.out.println("ユーザー編集バインド、エラーなし");
 
-    		if( userForm.get().department.isEmpty() ){
+    		if( StringUtils.isBlank(userForm.get().department) ){
     			// 部署が空白
     			userForm.get().department = "未設定";
     		}
-    		if( userForm.get().profile.isEmpty() ){
+    		if( StringUtils.isBlank(userForm.get().profile) ){
     			userForm.get().profile = "よろしくお願いします。";
     		}
 
