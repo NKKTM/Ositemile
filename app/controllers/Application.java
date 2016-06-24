@@ -340,7 +340,7 @@ public class Application extends Controller {
 
     	// ポストの参照
         Post post = PostModelService.use().getPostListById(postId);
-    	if( post.getComment() != null ){
+    	if( post != null ){
     		// コメント情報取得
     		List<Comment> comment = CommentModelService.use().getCommentList(postId);
             Collections.reverse(comment);
@@ -634,20 +634,22 @@ public class Application extends Controller {
         	}
         }else{
             //カテゴリがそれ以外の場合
-            postListSize = PostModelService.use().getPostListByCategory(category).size();
-            switch(sortName){
-            case "日付新しい順":
-                postList = PostModelService.use().getPostListByCategory(page,category);
-                break;
-            case "日付古い順":
-                postList = PostModelService.use().getPostListOld(page,category);
-                break;
-            case "いいね":
-                postList = PostModelService.use().getPostIineSort(page,category);
-                break;
-            case "コメント":
-                postList = PostModelService.use().getPostCommentSort(page,category);
-                break;
+        	if(PostModelService.use().getPostListByCategory(category)!=null){
+	            postListSize = PostModelService.use().getPostListByCategory(category).size();
+	            switch(sortName){
+	            case "日付新しい順":
+	                postList = PostModelService.use().getPostListByCategory(page,category);
+	                break;
+	            case "日付古い順":
+	                postList = PostModelService.use().getPostListOld(page,category);
+	                break;
+	            case "いいね":
+	                postList = PostModelService.use().getPostIineSort(page,category);
+	                break;
+	            case "コメント":
+	                postList = PostModelService.use().getPostCommentSort(page,category);
+	                break;
+	            }
             }
         }
         // indexに必要な値を取得
@@ -658,7 +660,7 @@ public class Application extends Controller {
     }
 
     // 投稿情報の編集
-    @Security.Authenticated(SecuredUpdatePost.class)    
+    @Security.Authenticated(SecuredUpdatePost.class)
     public static Result editPost(Long postId){
     	// 投稿情報取得
     	Post post = PostModelService.use().getPostListById(postId);
