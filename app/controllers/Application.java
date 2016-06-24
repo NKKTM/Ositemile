@@ -302,6 +302,7 @@ public class Application extends Controller {
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
     	 String loginId = session().get("loginId");
+         Collections.reverse(iineList);         
          // いいねが押されているかの判定（postに対して）
          List<Boolean> postBooleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
          // いいねが押されているかの判定（iineに対して）
