@@ -458,7 +458,7 @@ public class Application extends Controller {
     }
 
     //ユーザー情報編集のフォーム画面に遷移する
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(SecuredUpdateUser.class)
     public static Result updateUserForm(Long formatedUserId){
     	String loginId = session().get("loginId");
     	Long userId = formatedUserId-932108L;
@@ -650,6 +650,7 @@ public class Application extends Controller {
     }
 
     // 投稿情報の編集
+    @Security.Authenticated(SecuredUpdatePost.class)    
     public static Result editPost(Long postId){
     	// 投稿情報取得
     	Post post = PostModelService.use().getPostListById(postId);
