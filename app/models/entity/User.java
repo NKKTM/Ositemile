@@ -36,7 +36,7 @@ public class User extends Model{
 	private String			department;	// 部署名
 	private boolean			admin;		// 管理者権限を持つか否か
 
-    @Column(columnDefinition="text")	
+    @Column(columnDefinition="text")
 	private String			imageEncData; //エンコーディング後の画像データ
 	private String			imageName;	// 画像名
 	@Lob
@@ -195,7 +195,9 @@ public class User extends Model{
 
 	// エンコーディング後の画像データー
 	public void setImageEncData(String imageEncData){
+		this.imageEncData = "";
 		this.imageEncData = imageEncData;
+
 	}
 	public String getImageEncData(){
 		return this.imageEncData;

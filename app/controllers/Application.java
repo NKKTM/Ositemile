@@ -302,6 +302,7 @@ public class Application extends Controller {
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
     	 String loginId = session().get("loginId");
+         Collections.reverse(iineList);         
          // いいねが押されているかの判定（postに対して）
          List<Boolean> postBooleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
          // いいねが押されているかの判定（iineに対して）
@@ -469,17 +470,16 @@ public class Application extends Controller {
     							   user.getPassword(),		// パスワード
     							   user.getLoginId(),		// ログインID
     							   user.getAdmin(),			// 管理者かどうか
-    							   profile,		// プロフィール
+    							   profile,					// プロフィール
     							   user.getDepartment(),	// 部署名
     							   null,					// 画像名
     							   user.getImageData(),		// 前回の画像データ
     							   user.getImageName(),		// 前回の画像名
     							   user.getImageEncData());	// エンコーディングされたデータ
     	Form<UserForm> userForm = form(UserForm.class).fill(userFormtemp);
+    	System.out.println(user.getImageData());
 
-    	System.out.println("画像データー："+user.getImageData());
     	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
-    	//Form<User> userForm = form(User.class).fill(user);
 
     	return ok(update_user.render(loginId,userForm,user,false));
     }
@@ -521,8 +521,6 @@ public class Application extends Controller {
 	    	String extensionName = "";		// 拡張子
 	    	if( image != null ){
 	    		// 新しく画像を指定された場合
-
-
 	    		// 拡張子の取得
 	    		newUser.setImageName(image.getFilename());
 	    		int lastDotPosition = image.getFilename().lastIndexOf(".");
@@ -536,7 +534,6 @@ public class Application extends Controller {
 		    			return ok(update_user.render(loginId,userForm,user,true));
 		    		}
 					newUser.setImageData(new MakeImage().getBytesFromImage(read,extensionName));
-					System.out.println(newUser.getImageData());
                     newUser.setImageEncData(Base64.getEncoder().encodeToString(newUser.getImageData()));
 	    		}catch(Exception e){
 
@@ -545,15 +542,12 @@ public class Application extends Controller {
 	    		// 画像指定されず前回の画像がある場合
 	    		newUser.setImageName(userForm.get().imageNameOld);
 	    		String encodingData = userForm.get().encoding;
-	    		System.out.println("************"+encodingData);
-                newUser.setImageEncData(encodingData);
-	    		newUser.setImageData(Base64.getDecoder().decode(encodingData));
-	    		System.out.println(userForm.get().imageDataOld);
+	    		BufferedImage read;
+    			newUser.setImageData(user.getImageData());
+    			newUser.setImageEncData(user.getImageEncData());
 	    	} else{
 	    		// 画像が選択せれず、前回のデーターもなかった場合
 	    	}
-
-
 	    	User editedUser = UserModelService.use().updateUser(user, newUser);
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{

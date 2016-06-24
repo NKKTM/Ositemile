@@ -126,9 +126,9 @@
 
                                 <a href="/introduction/@iine.getPost().getId()"><img class="post-img" src="@iine.getPost().getGoods().getImageUrl()"></a>
                                 <p class="posted-item-name">@iine.getPost().getGoods().getGoodsName()</p>
-                                <div class="up-post-comment">
+                                <p class="post-comment">
                                     @Html(iine.getPost.getPostComment())
-                                </div>
+                                </p>
                                 <a class="category-label" href="@routes.Application.index(1,iine.getPost.getGoods().getCategory())"><span class="label label-default">@iine.getPost().getGoods().getCategory()</span></a>
                             </div>
                             <div class="panel-footer">
