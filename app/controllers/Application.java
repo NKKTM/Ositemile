@@ -65,6 +65,7 @@ import org.apache.commons.lang3.StringUtils;
 
 
 
+
 public class Application extends Controller {
 
     // 定数
@@ -307,10 +308,10 @@ public class Application extends Controller {
     	 Long userId = formatedUserId-932108L;
     	 User user = UserModelService.use().getUserById(userId);
     	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
+         String loginId = session().get("loginId");         
     	 if(user != null){
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
-    	 String loginId = session().get("loginId");
          Collections.reverse(iineList);
          // いいねが押されているかの判定（postに対して）
          List<Boolean> postBooleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
@@ -318,7 +319,7 @@ public class Application extends Controller {
          List<Boolean> iineBooleanList = IineModelService.use().getBooleanListByIineList(iineList,loginId);
          return ok(user_page.render(loginId,user,postList,iineList,postBooleanList,iineBooleanList));
          } else {
-        	 return redirect(controllers.routes.Application.logout());
+             return ok(user_page.render(loginId,null,null,null,null,null));
          }
     }
 

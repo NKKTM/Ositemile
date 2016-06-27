@@ -35,7 +35,7 @@ public class SecuredUpdatePost extends Authenticator {
 			if( user.getId().equals(post.getUser().getId()) ){
 				return user.getLoginId();
 			}else{
-				System.out.println("君はここを編集する資格をもっていない。はよ帰れ。");
+				System.out.println("君はここを編集する資格をもっていない。");
 				return null;
 			}
 		}else{
@@ -49,7 +49,7 @@ public class SecuredUpdatePost extends Authenticator {
 
 	/*
 	*  ログイン認証NGとする場合の処理を設定するメソッド
-	*  （この場合は最終的にlogin()に飛ばすように設定している）
+	*  （この場合は最終的にトップページに飛ばすように設定している）
 	*  @author Hatsune Kitajima
 	*/
 	@Override

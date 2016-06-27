@@ -4,8 +4,12 @@
 <link href="@routes.Assets.at("stylesheets/userpage/userpage.css")" rel="stylesheet">
 
 @main(loginId) {
+
 	<div class="container user-page-wrap">
     <div class="row">
+    @if(user == null){
+            <h3>ユーザーは存在しません。</h3>
+    }else{    
         <!-- ユーザー情報div -->
         <div class="col-xs-12 col-sm-3 user-info-box">
             <div class="user-info">
@@ -167,10 +171,11 @@
             </div>
         </div>
         <!-- /.ユーザー投稿、いいねした記事が入るdiv -->
+    }
     </div>
     <!-- /.row -->
-</div>
-<!-- /.container -->
+    </div>
+    <!-- /.container -->
 
 <script type="text/javascript">
     $('#postCounter').click(function(){
