@@ -32,3 +32,12 @@
 .up-imageMessage{
 	margin-bottom:10px;
 }
+
+.user-page-wrap  h3{
+    color: gray;    
+    padding: .25em 0 .25em .75em;
+    padding-left: 9px;
+    border-left: 6px solid #ffb9a6;
+    font-weight: 500;
+    margin-left: 5%;
+}
