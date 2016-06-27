@@ -248,6 +248,13 @@ public class Application extends Controller {
     		item.setImageUrl(goodsForm.get().getImageUrl());
     		item.setAmazonUrl(goodsForm.get().getAmazonUrl());
     		item.setGenreId(goodsForm.get().getGenreId());
+
+            // 検索して遷移する時にsessionを消す
+            String ps = session("postSession");
+            System.out.println("ps："+ps);
+            session().remove("postSession");
+            System.out.println("psを消去しました："+session("postSession"));
+
     		return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
     	}else{
     		//フォームにエラーあり
@@ -260,12 +267,11 @@ public class Application extends Controller {
     public static Result postCreate() throws Exception{
     	Form<Goods> goodsForm = form(Goods.class).bindFromRequest();
     	Form<Post> postForm = form(Post.class).bindFromRequest();
-    	if(!goodsForm.hasErrors()){
-    		System.out.println("goodsフォームはエラーなし");
+    	if(!goodsForm.hasErrors() && session("postSession") == null){
+    		System.out.println("goodsフォームはエラーなし,sessionがなく連続投稿でもない");
 
     		if(!postForm.hasErrors()){
     			//Goodsのフォームにも、postのフォームにもエラ-がない時
-
         		System.out.println("Goodsのフォームにも、postのフォームにもエラ-がない");
         		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
         		if(StringUtils.isBlank(postForm.get().getPostTitle()) || StringUtils.isBlank(postForm.get().getPostComment())){
@@ -289,6 +295,10 @@ public class Application extends Controller {
         		item.save();
         		post.save();
 
+                // 登録ができたらsession追加
+                session("postSession", "true");
+                System.out.println("ps追加");
+
         	}else{
         		//エラー：postのフォームにのみエラ-がある時
         		System.out.println("postフォームにのみエラーあり！！");
@@ -297,8 +307,8 @@ public class Application extends Controller {
         	}
 
     	}else{
-    		//エラー：Goodsのフォームにエラーがある時
-    		System.out.println("goodsフォームでエラーあり！！");
+    		//エラー：Goodsのフォームにエラーがある時,または連続投稿の時
+    		System.out.println("goodsフォームでエラー or 連続投稿");
     	}
     	return redirect("/");
     }
