@@ -318,6 +318,9 @@ public class Application extends Controller {
     	 Long userId = formatedUserId-932108L;
     	 User user = UserModelService.use().getUserById(userId);
     	 List<Post> postList = PostModelService.use().getPostListByUserId(userId);
+         if(postList == null){
+            postList = new ArrayList<Post>();
+         }
          String loginId = session().get("loginId");         
     	 if(user != null){
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
