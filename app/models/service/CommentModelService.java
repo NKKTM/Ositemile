@@ -53,7 +53,7 @@ public class CommentModelService {
 
 	/*
 	 *	投稿IDと一致した投稿のコメントリスト
-	 *	@param なし
+	 *	@param  postId
 	 *	@return コメントのリスト
 	 *	@author Kotaro Nishida
 	 */
@@ -63,12 +63,12 @@ public class CommentModelService {
 	}
 
 	/*
-	 *	投稿したIDと一致したリスト取得
-	 *	@param Long postId : 投稿ID
+	 *	ユーザーIDと一致したコメントリスト取得
+	 *	@param Long userId : ユーザーID
 	 *	@return Commentのリスト
 	 *	@author Kotaro Nishida
 	 */
-	public List<Comment> getCommetnListByPostId(Long userId){
+	public List<Comment> getCommetnListByUserId(Long userId){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
 		List<Comment> commentList =  find.where().eq("human.id",userId).findList();
 		return commentList;
@@ -107,5 +107,18 @@ public class CommentModelService {
 			return null;
 		}
 		return comment;
+	}
+
+	/*
+	 *	commentIdからcommentを返す
+	 *	@param Commentid
+	 *	@return 成功時：Comment
+	 *			失敗時：null
+	 *	@author yuki kawakami
+	 */
+	public Comment getCommnetById(long commentId){
+		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
+		Comment comment = find.byId(commentId);
+		return checkComment(comment);
 	}
 }

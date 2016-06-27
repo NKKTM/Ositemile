@@ -71,6 +71,10 @@ public class AdminApplication extends Controller {
 		input = input.bindFromRequest(params);
 		String on = input.data().get("orderby");
 		boolean bool = Boolean.valueOf(on);
+		Comment cmt = CommentModelService.use().getCommnetById(id);
+		Post post = cmt.getPost();
+		post.setCommentCnt(post.getCommentCnt()-1);
+		post.update();
 		List<Comment> comment =  AdminCommentModelService.use().delete(id);
 		return ok(commentList.render("",comment,commnetSearchForm,bool));
 	}
@@ -108,9 +112,13 @@ public class AdminApplication extends Controller {
 		boolean bool = Boolean.valueOf(on);
 
 		// コメント削除
-		List<Comment> comment =  CommentModelService.use().getCommetnListByPostId(userId);
+		List<Comment> comment =  CommentModelService.use().getCommetnListByUserId(userId);
 		if( comment != null ){
 			for(int i = 0; i < comment.size(); i++){
+				Comment cmt =comment.get(i);
+				Post post = cmt.getPost();
+				post.setCommentCnt(post.getCommentCnt()-1);
+				post.update();
 				AdminCommentModelService.use().delete(comment.get(i).getId());
 			}
 		}
@@ -134,6 +142,10 @@ public class AdminApplication extends Controller {
 		List<Iine> iine = IineModelService.use().getIineListByUserId(userId);
 		if( iine != null ){
 			for(int i = 0; i < iine.size(); i++){
+				Iine iine1 = iine.get(i);
+				Post postWithIine = iine1.getPost();
+				postWithIine.setIineCnt(postWithIine.getIineCnt()-1);
+				postWithIine.update();
 				AdminIineModelService.use().delete(iine.get(i).getId());
 			}
 		}
