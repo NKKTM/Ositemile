@@ -20,7 +20,7 @@ public class Util {
 	}
 
 	/*
-	 * sqlで検索をかける時用のエスケープ
+	 * 日本時間のdateを取得する
 	 * @param なし
 	 * @return 日本時間のdate型
 	 * @author yuki kawakami
@@ -38,5 +38,21 @@ public class Util {
 			e.printStackTrace();
 		}
     	return date;
+	}
+
+	/*
+	 * urlのpageが正しい値かどうかcheckする
+	 * @param 第一引数 int urlに入力されたpage  第二引数 int 最大ページ
+	 * @return boolean 正しい値が入力されている時はtrue 不正な値の時は false
+	 * @author yuki kawakami
+	 */
+	public static boolean checkPaging(int currentPage, int maxPage){
+		boolean pageCheck = false;
+		if( 0 < currentPage && currentPage <= maxPage){
+			pageCheck = true;
+		}else if( currentPage <= 0 || maxPage < currentPage ){
+			pageCheck = false;
+		}
+		return pageCheck;
 	}
 }

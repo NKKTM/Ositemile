@@ -78,6 +78,14 @@ public class Application extends Controller {
 
 
     public static Result index(Integer page,String category,String sortName) {
+
+    	 //pageが正しい値かどうかチェック
+    	if(PostModelService.use().getPostList(1) != null) {
+	    	if(!models.Util.checkPaging(page, PostModelService.use().getMaxPage(category))){
+	    		 return redirect(routes.Application.index(1,category,sortName));
+	    	}
+    	}
+
         // ポストのリスト取得
         List<Post> postList;
         int postListSize = 0;
@@ -567,9 +575,11 @@ public class Application extends Controller {
 
 
     //投稿のキーワード検索(タイトル、本文、ユーザー、商品名から検索)
-
     public static Result searchPostBykeyword(Integer page,String searchedKeyword,String sortName){
     	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
+
+
+
     	if(!searchForm.hasErrors()){
     		System.out.println("投稿検索バインドエラーなし");
     		String keyword = "";
@@ -581,7 +591,14 @@ public class Application extends Controller {
                 //入力されたキーワードが空のとき
                 return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
 	    	}
+
 	    	keyword = models.Util.replaceString(keyword);
+
+	    	//pageが正しいかチェック
+	        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPageForSearch(keyword))){
+	        	return redirect(controllers.routes.Application.searchPostBykeyword(1,searchedKeyword, sortName));
+	        }
+
             // PostList取得
             List<Post> postList = new ArrayList<Post>();
             switch(sortName){
@@ -602,6 +619,7 @@ public class Application extends Controller {
             String loginId = session().get("loginId");
             List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
             int postListSize = PostModelService.use().searchPostByKeyword(keyword).size();
+
     		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,sortName,postListSize));
     	}else{
     		System.out.println("投稿検索バインドエラーあり!!!");
@@ -611,6 +629,12 @@ public class Application extends Controller {
 
     // 投稿のソート
     public static Result sortPost(Integer page ,String category,String sortName){
+
+    	//pageが正しい値かどうかチェック
+        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPage(category))){
+        	return redirect(controllers.routes.Application.sortPost(1 , category, sortName));
+        }
+
    		List<Post> postList = null;
         int postListSize = 0;
         if(category.equals("ALL")){
@@ -656,6 +680,7 @@ public class Application extends Controller {
         List<String> categoryList = GoodsModelService.use().getGoodsAllCategory();
         String loginId = session().get("loginId");
         List<Boolean> booleanList = IineModelService.use().getBooleanListByPostList(postList,loginId);
+
     	return ok(index.render(loginId,postList,booleanList,categoryList,page,PostModelService.use().getMaxPage(category),category,Form.form(models.form.SearchPostForm.class),sortName,postListSize));
     }
 
