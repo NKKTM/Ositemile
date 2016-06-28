@@ -1,7 +1,7 @@
 #heroku実行URL
 - https://shielded-tundra-21071.herokuapp.com/  
 予備herokuのurl  
--https://young-wave-75666.herokuapp.com/
+- https://young-wave-75666.herokuapp.com/
 
 #楽天API情報
 - アプリID/デベロッパーID(applicationId/developerId)：1084889951156254811
