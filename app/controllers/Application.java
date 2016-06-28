@@ -319,10 +319,14 @@ public class Application extends Controller {
     public static Result userPage(Long formatedUserId){
     	 Long userId = formatedUserId-932108L;
     	 User user = UserModelService.use().getUserById(userId);
-    	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
-         String loginId = session().get("loginId");
+
+    	 List<Post> postList = PostModelService.use().getPostListByUserId(userId);
+         if(postList == null){
+            postList = new ArrayList<Post>();
+         }
+         String loginId = session().get("loginId");         
+
     	 if(user != null){
-    	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
          Collections.reverse(iineList);
          // いいねが押されているかの判定（postに対して）

@@ -270,7 +270,7 @@ public class PostModelService {
 	 */
 	public List<Post> getPostListByUserId(Long userId){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("human.id = " + userId).findList();
+		List<Post> postList = find.where("human.id = " + userId).orderBy("date desc").findList();
 		return checkPost(postList);
 	}
 
