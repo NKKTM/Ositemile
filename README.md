@@ -1,6 +1,6 @@
 #heroku実行URL
 - https://shielded-tundra-21071.herokuapp.com/  
-#####予備herokuのurl
+予備herokuのurl
 -https://young-wave-75666.herokuapp.com/
 
 #楽天API情報
