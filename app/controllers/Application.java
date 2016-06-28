@@ -81,10 +81,12 @@ public class Application extends Controller {
     public static Result index(Integer page,String category,String sortName) {
 
     	 //pageが正しい値かどうかチェック
-    	if(PostModelService.use().getPostList(1) != null) {
+    	if(1 <= PostModelService.use().getMaxPage(category)) {
 	    	if(!models.Util.checkPaging(page, PostModelService.use().getMaxPage(category))){
 	    		 return redirect(routes.Application.index(1,category,sortName));
 	    	}
+    	}else if( PostModelService.use().getMaxPage(category) == 0 && page != 1){
+    		return redirect(routes.Application.index(1,category,sortName));
     	}
 
         // ポストのリスト取得
@@ -318,7 +320,7 @@ public class Application extends Controller {
     	 Long userId = formatedUserId-932108L;
     	 User user = UserModelService.use().getUserById(userId);
     	 List<Post> postList = UserModelService.use().getPostByUserId(userId);
-         String loginId = session().get("loginId");         
+         String loginId = session().get("loginId");
     	 if(user != null){
     	 Collections.reverse(postList);
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
@@ -606,9 +608,15 @@ public class Application extends Controller {
 	    	keyword = models.Util.replaceString(keyword);
 
 	    	//pageが正しいかチェック
-	        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPageForSearch(keyword))){
+	    	if(1 <= PostModelService.use().getMaxPageForSearch(keyword)) {
+		        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPageForSearch(keyword))){
+		        	return redirect(controllers.routes.Application.searchPostBykeyword(1,searchedKeyword, sortName));
+		        }
+	        }else if(0 == PostModelService.use().getMaxPageForSearch(keyword) && page != 1){
 	        	return redirect(controllers.routes.Application.searchPostBykeyword(1,searchedKeyword, sortName));
 	        }
+
+
 
             // PostList取得
             List<Post> postList = new ArrayList<Post>();
@@ -642,7 +650,11 @@ public class Application extends Controller {
     public static Result sortPost(Integer page ,String category,String sortName){
 
     	//pageが正しい値かどうかチェック
-        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPage(category))){
+    	if(1 <= PostModelService.use().getMaxPage(category)){
+	        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPage(category))){
+	        	return redirect(controllers.routes.Application.sortPost(1 , category, sortName));
+	        }
+        }else if( PostModelService.use().getMaxPage(category) == 0 && page != 1){
         	return redirect(controllers.routes.Application.sortPost(1 , category, sortName));
         }
 

@@ -64,10 +64,10 @@ GET   /myProfileEdit:formatedUserId                  controllers.Application.upd
 POST   /myProfileUpdate:formatedUserId               controllers.Application.DoUpdate(formatedUserId: Long)
 
 #ポストの検索
-GET   /search/:page/                  controllers.Application.searchPostBykeyword(page:Integer,keyword:String,sortName:String?="日付新しい順")
+GET   /search                  controllers.Application.searchPostBykeyword(page:Integer?=1,keyword:String,sortName:String?="日付新しい順")
 
 #ソート
-GET		/sortPost			controllers.Application.sortPost(page:Integer,category:String,sortName:String)
+GET		/sortPost			controllers.Application.sortPost(page:Integer?=1,category:String?="ALL",sortName:String)
 
 #ランキング
 GET    /ranking                            controllers.Application.rankingPost(type:String)
