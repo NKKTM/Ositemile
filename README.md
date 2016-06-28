@@ -11,10 +11,10 @@
 
 #コード規約
 
-##Play
+###Play
 
 ####View
-- フォルダをしっかり分ける（要相談）
+- フォルダをしっかり分ける（作るときに要相談）
 
 ####Model
 - aaaaModelService（パッケージで末尾は統一,entityはしなくて良い）
@@ -23,10 +23,10 @@
 - entityのメンバ変数はprivate
 
 ####Controller
-- aaaaController（名前＋Controller）
+- aaaaApplication（名前＋Application）
 
 
-##Java
+###Java
 
 ####コメントの書き方
 <pre><code>
@@ -67,7 +67,7 @@ public void クラス名(){
 - 変数やメソッド,クラスはユニークで分かりやすい名前にする
 
 
-##html,CSS
+###html,CSS
 ####id
 - CSSではなるべく使わない！class属性だけで済ませる
 
