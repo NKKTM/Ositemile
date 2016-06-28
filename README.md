@@ -1,5 +1,7 @@
 #heroku実行URL
 - https://shielded-tundra-21071.herokuapp.com/
+予備herokuのurl
+-https://young-wave-75666.herokuapp.com/
 
 #楽天API情報
 - アプリID/デベロッパーID(applicationId/developerId)：1084889951156254811
@@ -28,24 +30,24 @@
 
 ####コメントの書き方
 <pre><code>
-/\*   
-\*	クラスの説明   
-\*	@author 作者   
-\*/   
-public void クラス名(){   
-	/\*   
-	\*	メソッドの説明   
-	\*	@params 引数   
-	\*	@return 戻り値   
-	\*	@author 作者   
-	\*/	   
-	public void メソッド名(){   
-		if(条件){   
-			//条件の説明   
-		}else{   
-			//elseの条件の説明   
-		}   
-	}   
+/\*
+\*	クラスの説明
+\*	@author 作者
+\*/
+public void クラス名(){
+	/\*
+	\*	メソッドの説明
+	\*	@params 引数
+	\*	@return 戻り値
+	\*	@author 作者
+	\*/
+	public void メソッド名(){
+		if(条件){
+			//条件の説明
+		}else{
+			//elseの条件の説明
+		}
+	}
 }
 </code></pre>
 
