@@ -366,10 +366,23 @@ public class PostModelService {
 	public List<Post> searchPostByKeyword(String keyword,Integer pageNumber){
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
-										+"postComment LIKE '%"+keyword+"%'"+" OR "
-										+"human.userName LIKE '%"+keyword+"%'"+" OR "
-										+"goods.goodsName LIKE '%"+keyword+"%'")
+		// keywordを空白で分割、or検索できるようにsqlに代入
+		String[] keywords = keyword.split("[　 ]", 0);
+		String sql = "";				
+		for(int i=0; i<keywords.length; i++){
+			if(i != keywords.length-1){
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%' OR ";
+			}else{
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+			}
+		}
+		List<Post> postList = find.where(sql)
 									.orderBy("date desc")
 									.findPagingList(LIMIT)
 									.getPage(pageNum)
@@ -386,10 +399,23 @@ public class PostModelService {
 	public List<Post> searchPostOldSortByKeyword(String keyword,Integer pageNumber){
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
-										+"postComment LIKE '%"+keyword+"%'"+" OR "
-										+"human.userName LIKE '%"+keyword+"%'"+" OR "
-										+"goods.goodsName LIKE '%"+keyword+"%'")
+		// keywordを空白で分割、or検索できるようにsqlに代入
+		String[] keywords = keyword.split("[　 ]", 0);
+		String sql = "";				
+		for(int i=0; i<keywords.length; i++){
+			if(i != keywords.length-1){
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%' OR ";
+			}else{
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+			}
+		}		
+		List<Post> postList = find.where(sql)
 									.orderBy("date asc")
 									.findPagingList(LIMIT)
 									.getPage(pageNum)
@@ -406,10 +432,23 @@ public class PostModelService {
 	public List<Post> searchPostIineSortByKeyword(String keyword,Integer pageNumber){
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
-										+"postComment LIKE '%"+keyword+"%'"+" OR "
-										+"human.userName LIKE '%"+keyword+"%'"+" OR "
-										+"goods.goodsName LIKE '%"+keyword+"%'")
+		// keywordを空白で分割、or検索できるようにsqlに代入
+		String[] keywords = keyword.split("[　 ]", 0);
+		String sql = "";				
+		for(int i=0; i<keywords.length; i++){
+			if(i != keywords.length-1){
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%' OR ";
+			}else{
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+			}
+		}		
+		List<Post> postList = find.where(sql)
 									.orderBy("iineCnt desc")
 									.findPagingList(LIMIT)
 									.getPage(pageNum)
@@ -427,10 +466,23 @@ public class PostModelService {
 	public List<Post> searchPostCommentSortByKeyword(String keyword,Integer pageNumber){
 		Integer pageNum = (pageNumber - 1 < 0)? 0 : pageNumber - 1;
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
-										+"postComment LIKE '%"+keyword+"%'"+" OR "
-										+"human.userName LIKE '%"+keyword+"%'"+" OR "
-										+"goods.goodsName LIKE '%"+keyword+"%'")
+		// keywordを空白で分割、or検索できるようにsqlに代入
+		String[] keywords = keyword.split("[　 ]", 0);
+		String sql = "";				
+		for(int i=0; i<keywords.length; i++){
+			if(i != keywords.length-1){
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%' OR ";
+			}else{
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+			}
+		}		
+		List<Post> postList = find.where(sql)
 									.orderBy("commentCnt desc")
 									.findPagingList(LIMIT)
 									.getPage(pageNum)
@@ -446,10 +498,23 @@ public class PostModelService {
 	 */
 	public List<Post> searchPostByKeyword(String keyword){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
-		List<Post> postList = find.where("postTitle LIKE '%"+keyword+"%'"+" OR "
-										+"postComment LIKE '%"+keyword+"%'"+" OR "
-										+"human.userName LIKE '%"+keyword+"%'"+" OR "
-										+"goods.goodsName LIKE '%"+keyword+"%'")
+		// keywordを空白で分割、or検索できるようにsqlに代入
+		String[] keywords = keyword.split("[　 ]", 0);
+		String sql = "";				
+		for(int i=0; i<keywords.length; i++){
+			if(i != keywords.length-1){
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%' OR ";
+			}else{
+				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
+							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
+							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+			}
+		}		
+		List<Post> postList = find.where(sql)
 									.orderBy("date desc")
 									.findList();
 		return postList;
