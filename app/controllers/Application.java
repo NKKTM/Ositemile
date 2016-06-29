@@ -6,18 +6,13 @@ import play.*;
 import play.mvc.*;
 
 import play.data.Form;
-import play.db.ebean.Model.Finder;
 import com.avaje.ebean.*;
 
 import static play.data.Form.*;
-import static play.mvc.Results.badRequest;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.List;
@@ -26,20 +21,14 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 
-import org.w3c.dom.*;
 import org.w3c.dom.Element;
 
 import javax.imageio.ImageIO;
 
 
 import play.libs.Json;
-import play.libs.F.Promise;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import akka.japi.Util;
-
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import play.data.DynamicForm;
 
@@ -52,15 +41,11 @@ import views.html.iine.*;
 import models.entity.*;
 import models.entity.Comment;
 import models.form.*;
-import models.form.admin.AdminCommentForm;
 import models.login.*;
 import models.service.*;
 import models.MakeImage;
 import models.amazon.*;
 
-import views.html.admin.*;
-
-import play.mvc.Http.*;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 
@@ -600,10 +585,7 @@ public class Application extends Controller {
 
     	//ソートネームが不正な場合
     	if( !"日付新しい順".equals(sortName) && !"日付古い順".equals(sortName) && !"いいね".equals(sortName) && !"コメント".equals(sortName)){
-    		System.out.println("クェrくぇr");
-    		return (Result) Promise.<SimpleResult>pure(badRequest(
-    	            views.html.errorpage.render(play.mvc.Controller.session().get("loginId"))
-    		        ));
+    		return badRequest(views.html.errorpage.render(play.mvc.Controller.session().get("loginId")));
     	}
 
     	if(!searchForm.hasErrors()){
@@ -619,7 +601,7 @@ public class Application extends Controller {
 	    	}
 
 	    	keyword = models.Util.replaceString(keyword);
-            
+
 
 	    	//pageが正しいかチェック
 	    	if(1 <= PostModelService.use().getMaxPageForSearch(keyword)) {
@@ -665,9 +647,7 @@ public class Application extends Controller {
 
     	//ソートネームが不正な場合
     	if( !"日付新しい順".equals(sortName) && !"日付古い順".equals(sortName) && !"いいね".equals(sortName) && !"コメント".equals(sortName)){
-    		return (Result) Promise.<SimpleResult>pure(badRequest(
-    	            views.html.errorpage.render(play.mvc.Controller.session().get("loginId"))
-    		        ));
+    		return badRequest(views.html.errorpage.render(play.mvc.Controller.session().get("loginId")));
     	}
     	//pageが正しい値かどうかチェック
     	if(1 <= PostModelService.use().getMaxPage(category)){
