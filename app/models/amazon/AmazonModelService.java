@@ -150,7 +150,6 @@ public class AmazonModelService {
 		//genreNameを取得
 		Element elementGenreName = (Element) elementItem.getElementsByTagName("genreName").item(0);
 		String itemName = elementGenreName.getFirstChild().getNodeValue();
-		System.out.println(itemName);
 		category = itemName;
 		}catch(NullPointerException e){
 			e.printStackTrace();

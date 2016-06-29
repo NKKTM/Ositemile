@@ -150,14 +150,12 @@ public class Application extends Controller {
 				e.printStackTrace();
 			}
             user.save();
-            System.out.println("DB登録に成功しました！");
             //セッションにloginIdを登録
             session().clear();
             session("loginId", user.getLoginId());
             return redirect("/");
         }else{
         	//ユーザー情報がフォームから取得できなかった場合
-            System.out.println("DB登録に失敗しました！");
             return ok(register.render(registerForm,""));
         }
     }
@@ -183,7 +181,6 @@ public class Application extends Controller {
     // 認証成功したらここへ
     @Security.Authenticated(Secured.class)
     public static Result authenticateSuccess() {
-            System.out.println("認証成功");
             return redirect("/");
     }
 
@@ -200,14 +197,12 @@ public class Application extends Controller {
         User user = UserModelService.use().getUserById(id);
         user.setAdmin(true);
         user.save();
-        System.out.println(user.getUserName()+"に管理者権限を付与しました");
         return redirect("/");
     }
 
     // 管理者ログイン
     @Security.Authenticated(SecuredAdmin.class)
     public static Result admin() {
-        System.out.println("管理者ログインできてます。");
         return redirect("/postList");
     }
 
@@ -227,14 +222,12 @@ public class Application extends Controller {
         	}
 	        String searchWordStr = searchForm.get().searchWord;
 	        searchWordStr = URLEncoder.encode(searchWordStr,"utf-8");
-	        System.out.println("searchWordStr:"+searchWordStr);
 	        // URLと結合
 	        String searchUrl = AMAZON_URL + searchWordStr;
 	        Element elementRoot = AmazonModelService.use().getElement(searchUrl);
 	        if(elementRoot == null){
 	        	return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
 	        }
-	        System.out.println("elementRoot:"+elementRoot);
 	        goodsList = AmazonModelService.use().getSearchedGoodsList(elementRoot);
 	        return ok(postSearchItem.render(session().get("loginId"),goodsList,goodsForm,searchForm));
 	    }
@@ -247,7 +240,6 @@ public class Application extends Controller {
     	Form<Post> postForm = Form.form(Post.class);
     	if( !goodsForm.hasErrors() ){
     		//フォームにエラーなし
-    		System.out.println("エラーなし");
     		Goods item = new Goods();
     		item.setGoodsName(goodsForm.get().getGoodsName());
     		item.setImageUrl(goodsForm.get().getImageUrl());
@@ -256,14 +248,11 @@ public class Application extends Controller {
 
             // 検索して遷移する時にsessionを消す
             String ps = session("postSession");
-            System.out.println("ps："+ps);
             session().remove("postSession");
-            System.out.println("psを消去しました："+session("postSession"));
 
     		return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
     	}else{
     		//フォームにエラーあり
-    		System.out.println("エラーあり");
     		return ok(postSearchItem.render(session().get("loginId"),null,form(Goods.class),new Form<>(SearchItemForm.class)));
     	}
     }
@@ -273,11 +262,9 @@ public class Application extends Controller {
     	Form<Goods> goodsForm = form(Goods.class).bindFromRequest();
     	Form<Post> postForm = form(Post.class).bindFromRequest();
     	if(!goodsForm.hasErrors() && session("postSession") == null){
-    		System.out.println("goodsフォームはエラーなし,sessionがなく連続投稿でもない");
 
     		if(!postForm.hasErrors()){
     			//Goodsのフォームにも、postのフォームにもエラ-がない時
-        		System.out.println("Goodsのフォームにも、postのフォームにもエラ-がない");
         		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
         		if(StringUtils.isBlank(postForm.get().getPostTitle()) || StringUtils.isBlank(postForm.get().getPostComment())){
     				return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
@@ -302,18 +289,15 @@ public class Application extends Controller {
 
                 // 登録ができたらsession追加
                 session("postSession", "true");
-                System.out.println("ps追加");
 
         	}else{
         		//エラー：postのフォームにのみエラ-がある時
-        		System.out.println("postフォームにのみエラーあり！！");
         		Goods item = new Goods(goodsForm.get().getGoodsName(),goodsForm.get().getImageUrl(),goodsForm.get().getAmazonUrl(),goodsForm.get().getGenreId());
         		return ok(postInput.render(session().get("loginId"),goodsForm,postForm,item));
         	}
 
     	}else{
     		//エラー：Goodsのフォームにエラーがある時,または連続投稿の時
-    		System.out.println("goodsフォームでエラー or 連続投稿");
     	}
     	return redirect("/");
     }
@@ -455,9 +439,7 @@ public class Application extends Controller {
         if( !commentForm.hasErrors() ){
 
             // エラーがない
-        	System.out.println("入りました！！！");
             if(loginId == null){
-                System.out.println("ログインするか、新規登録をお願いします。");
                 return redirect(controllers.routes.Application.login());
             }
             // コメント登録
@@ -465,7 +447,6 @@ public class Application extends Controller {
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
             comment.setDateStr(PostModelService.use().getDateString());
             CommentModelService.use().save(comment);
-            System.out.println("こめんんんんと："+comment.getComment());
 
             // postにコメント情報を格納
             Post updatePost = PostModelService.use().getPostListById(postId);
@@ -510,7 +491,6 @@ public class Application extends Controller {
 	    							   user.getImageName(),		// 前回の画像名
 	    							   user.getImageEncData());	// エンコーディングされたデータ
 	    	Form<UserForm> userForm = form(UserForm.class).fill(userFormtemp);
-	    	System.out.println(user.getImageData());
 
 	    	user.setProfile(PostModelService.use().reverseSanitize(user.getProfile()));
 
@@ -529,7 +509,6 @@ public class Application extends Controller {
     	Form<UserForm> userForm = new Form(UserForm.class).bindFromRequest();
 
     	if(!userForm.hasErrors()){
-    		System.out.println("ユーザー編集バインド、エラーなし");
 
     		if( StringUtils.isBlank(userForm.get().department) ){
     			// 部署が空白
@@ -587,7 +566,6 @@ public class Application extends Controller {
 	    	User editedUser = UserModelService.use().updateUser(user, newUser);
 	    	return redirect(controllers.routes.Application.userPage(932108L+editedUser.getId()));
     	}else{
-    		System.out.println("ユーザー編集バインド、エラーあり！！！");
 
     		return ok(update_user.render(loginId,userForm,user,false));
     	}
@@ -600,14 +578,12 @@ public class Application extends Controller {
 
     	//ソートネームが不正な場合
     	if( !"日付新しい順".equals(sortName) && !"日付古い順".equals(sortName) && !"いいね".equals(sortName) && !"コメント".equals(sortName)){
-    		System.out.println("クェrくぇr");
     		return (Result) Promise.<SimpleResult>pure(badRequest(
     	            views.html.errorpage.render(play.mvc.Controller.session().get("loginId"))
     		        ));
     	}
 
     	if(!searchForm.hasErrors()){
-    		System.out.println("投稿検索バインドエラーなし");
     		String keyword = "";
 	    	if(searchedKeyword != ""){
                 //入力されたキーワードが空ではないとき
@@ -655,7 +631,6 @@ public class Application extends Controller {
 
     		return ok(index.render(loginId,postList,booleanList,GoodsModelService.use().getGoodsAllCategory(),page,PostModelService.use().getMaxPageForSearch(keyword),"ALL",searchForm,sortName,postListSize));
     	}else{
-    		System.out.println("投稿検索バインドエラーあり!!!");
     		return redirect(controllers.routes.Application.index(1,"ALL","日付新しい順"));
     	}
     }

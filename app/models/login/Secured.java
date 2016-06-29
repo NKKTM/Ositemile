@@ -30,7 +30,6 @@ public class Secured extends Authenticator {
 			return user.getLoginId();
 		}else{
 		//ユーザーがDBに存在しないとき
-			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");						
  	       	ctx.session().clear();			
 			return null;
 		}
@@ -44,7 +43,6 @@ public class Secured extends Authenticator {
 	*/  
 	@Override
 	public Result onUnauthorized(Context ctx){
-		System.out.println("認証NG");		
 		String returnUrl = ctx.request().uri();
 		if(returnUrl == null){
 			returnUrl="/";

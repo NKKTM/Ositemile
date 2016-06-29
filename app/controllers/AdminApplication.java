@@ -256,7 +256,6 @@ public class AdminApplication extends Controller {
 			Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 
 			goods.delete();
-			System.out.println("入った？");
 		}
 
 		// コメント削除
