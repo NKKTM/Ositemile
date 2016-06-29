@@ -1,9 +1,11 @@
+// Ajaxの処理を行うかを決めるフラグ
 var allowAjax = true;
 
 // いいねボタン（ログインしているとき）
 $(function(){
   $(".iineBtnLonined").click( function(){
     if(allowAjax) {
+    // Ajaxが処理中でないとき
       allowAjax = false;        
       //postIdを取得
       var postId = $(this).next().val();
@@ -18,7 +20,7 @@ $(function(){
         this.value = "true";      
       }
 
-      //ajaxの処理
+      //ajaxの処理（連続して押されないために処理間隔を0.1秒あける）
       var jsondata = {'iineBtn': $(this).val()};
       $.post("/iineBtn/"+postId,
         jsondata,
@@ -31,6 +33,7 @@ $(function(){
         "json"
       );
     }else{
+    // Ajaxが処理中の場合
       console.log("処理中です");
     }
   })
@@ -42,9 +45,3 @@ $(function(){
       window.location.href = '/login';
   })
 })
-
-// いいねの変更処理を行う関数
-function iineChange(postId){
-
-
-}

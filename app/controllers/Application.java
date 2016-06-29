@@ -57,7 +57,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Application extends Controller {
 
     // 定数
-    // AmazonAPIにリクエストするURLの固定部分
+    // rakutenAPIにリクエストするURLの固定部分
     //private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=-reviewCount&keyword=";
 	//ソート:standard
 	private static final String AMAZON_URL = "https://app.rakuten.co.jp/services/api/IchibaItem/Search/20140222?applicationId=1084889951156254811&format=xml&sort=standard&keyword=";
