@@ -619,6 +619,7 @@ public class Application extends Controller {
 	    	}
 
 	    	keyword = models.Util.replaceString(keyword);
+            
 
 	    	//pageが正しいかチェック
 	    	if(1 <= PostModelService.use().getMaxPageForSearch(keyword)) {
