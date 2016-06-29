@@ -12,6 +12,7 @@
 
 .rank-item-imgbox{
 	width:80%;
+	overflow: hidden;
 }
 
 .rank-item-info{
