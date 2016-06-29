@@ -38,16 +38,18 @@
 
 .push-item-comment{
 	background-color:#ffb9a6;
-	color:#515151;
+	color:#fcfcfc;
 	margin-top:20px;
 	margin-right:5%;
-	width:60%;
+	width:30%;
 	height:40px;
+	font-size:130%;
+
 }
 
 button.push-item-comment:hover{
 	background-color:#ffb9a6;
-	color:#515151;
+	color:#fcfcfc;
 	opacity:0.7;
 }
 
