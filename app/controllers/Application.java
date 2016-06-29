@@ -10,6 +10,7 @@ import play.db.ebean.Model.Finder;
 import com.avaje.ebean.*;
 
 import static play.data.Form.*;
+import static play.mvc.Results.badRequest;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,6 +33,8 @@ import javax.imageio.ImageIO;
 
 
 import play.libs.Json;
+import play.libs.F.Promise;
+
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import akka.japi.Util;
@@ -324,7 +327,7 @@ public class Application extends Controller {
          if(postList == null){
             postList = new ArrayList<Post>();
          }
-         String loginId = session().get("loginId");         
+         String loginId = session().get("loginId");
 
     	 if(user != null){
          List<Iine> iineList = IineModelService.use().getIineListByUserId(userId);
@@ -595,7 +598,13 @@ public class Application extends Controller {
     public static Result searchPostBykeyword(Integer page,String searchedKeyword,String sortName){
     	Form<SearchPostForm> searchForm = Form.form(SearchPostForm.class).bindFromRequest();
 
-
+    	//ソートネームが不正な場合
+    	if( !"日付新しい順".equals(sortName) && !"日付古い順".equals(sortName) && !"いいね".equals(sortName) && !"コメント".equals(sortName)){
+    		System.out.println("クェrくぇr");
+    		return (Result) Promise.<SimpleResult>pure(badRequest(
+    	            views.html.errorpage.render(play.mvc.Controller.session().get("loginId"))
+    		        ));
+    	}
 
     	if(!searchForm.hasErrors()){
     		System.out.println("投稿検索バインドエラーなし");
@@ -653,6 +662,12 @@ public class Application extends Controller {
     // 投稿のソート
     public static Result sortPost(Integer page ,String category,String sortName){
 
+    	//ソートネームが不正な場合
+    	if( !"日付新しい順".equals(sortName) && !"日付古い順".equals(sortName) && !"いいね".equals(sortName) && !"コメント".equals(sortName)){
+    		return (Result) Promise.<SimpleResult>pure(badRequest(
+    	            views.html.errorpage.render(play.mvc.Controller.session().get("loginId"))
+    		        ));
+    	}
     	//pageが正しい値かどうかチェック
     	if(1 <= PostModelService.use().getMaxPage(category)){
 	        if(!models.Util.checkPaging(page, PostModelService.use().getMaxPage(category))){
