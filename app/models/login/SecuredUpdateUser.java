@@ -25,21 +25,17 @@ public class SecuredUpdateUser extends Authenticator {
 	public String getUsername(Context ctx){
 		String loginId = ctx.session().get("loginId");
 		Long userId = Long.valueOf(ctx.request().path().replaceAll("/myProfileEdit","")) - 932108L;
-		System.out.println("urlから取れてきてるのは："+userId);
 
 		User user = UserModelService.use().getUserByLoginId(loginId);
-		System.out.println("user.getId::"+user.getId());
 		if(user != null){
 		//ユーザーがDBに存在するとき
 			if(user.getId().equals(userId)){
 				return user.getLoginId();
 			}else{
-				System.out.println("君はここを編集する資格をもっていない。");
 				return null;
 			}
 		}else{
 		//ユーザーがDBに存在しないとき
-			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");
  	       	ctx.session().clear();
 			return null;
 		}
@@ -53,7 +49,6 @@ public class SecuredUpdateUser extends Authenticator {
 	*/
 	@Override
 	public Result onUnauthorized(Context ctx){
-		System.out.println("認証NG");
 		String returnUrl = ctx.request().uri();
 		if(returnUrl == null){
 			returnUrl="/";

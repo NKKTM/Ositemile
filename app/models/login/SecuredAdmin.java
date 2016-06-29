@@ -48,7 +48,6 @@ public class SecuredAdmin extends Authenticator {
 	*/  
 	@Override
 	public Result onUnauthorized(Context ctx){
-		System.out.println("認証NG");		
 		String returnUrl = ctx.request().uri();
 		if(returnUrl == null){
 			returnUrl="/";

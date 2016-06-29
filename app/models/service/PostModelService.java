@@ -86,7 +86,6 @@ public class PostModelService {
 		}else{
 			maxPage = postList.size()/LIMIT + 1;
 		}
-		System.out.println("maxPage："+maxPage);
 		return maxPage;
 	}
 
@@ -105,7 +104,6 @@ public class PostModelService {
 		}else{
 			maxPage = postList.size()/LIMIT + 1;
 		}
-		System.out.println("maxPage："+maxPage);
 		return maxPage;
 	}
 

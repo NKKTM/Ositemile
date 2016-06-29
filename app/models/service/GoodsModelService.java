@@ -60,9 +60,7 @@ public class GoodsModelService {
 	 *	@author Kotaro Nishida
 	 */
 	public Goods getGoodsByPostId(Long postId){
-		System.out.println("postId："+postId);
 		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
-		System.out.println(find.all());
 		Goods goods = find.where("post.id = ' "+postId +"'").findUnique();
 		return goods;
 	}
@@ -91,7 +89,6 @@ public class GoodsModelService {
 	    List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
 	    List<String> categoryList = new ArrayList<String>();
 	    for(SqlRow sq: sqlRows){
-	    	System.out.println(sq.getString("category"));
 	    	categoryList.add(sq.getString("category"));
 	    }
 		return categoryList;

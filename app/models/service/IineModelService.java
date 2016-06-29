@@ -82,10 +82,6 @@ public class IineModelService {
 				}
 			}			
 		}
-
-		for(Boolean boo:booleanList){
-			System.out.println(boo);
-		}
 		return booleanList;
 	}
 
@@ -109,10 +105,6 @@ public class IineModelService {
 					booleanList.add(false);
 				}
 			}			
-		}
-
-		for(Boolean boo:booleanList){
-			System.out.println(boo);
 		}
 		return booleanList;
 	}	 		 	

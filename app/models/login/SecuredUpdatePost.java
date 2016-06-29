@@ -35,12 +35,10 @@ public class SecuredUpdatePost extends Authenticator {
 			if( user.getId().equals(post.getUser().getId()) ){
 				return user.getLoginId();
 			}else{
-				System.out.println("君はここを編集する資格をもっていない。");
 				return null;
 			}
 		}else{
 		//ユーザーがDBに存在しないとき
-			System.out.println("そんなユーザーはDBに存在しません！セッションも消しますね。");
  	       	ctx.session().clear();
 			return null;
 		}
@@ -54,7 +52,6 @@ public class SecuredUpdatePost extends Authenticator {
 	*/
 	@Override
 	public Result onUnauthorized(Context ctx){
-		System.out.println("認証NG");
 		String returnUrl = ctx.request().uri();
 		if(returnUrl == null){
 			returnUrl="/";
