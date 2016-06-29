@@ -1,3 +1,8 @@
+/*
+ *	いろいろな場面で使うメソッドを集めたクラス
+ *
+ *	@author yuki kawakami
+ */
 package models;
 
 import java.text.ParseException;
