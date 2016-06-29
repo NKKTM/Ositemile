@@ -7,29 +7,18 @@ package models.amazon;
 import java.util.ArrayList;
 import java.util.List;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URLEncoder;
 import java.io.InputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.stream.StreamSource;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import models.entity.Goods;
 
-import javax.xml.transform.stream.StreamResult;
 
 public class AmazonModelService {
 	/*

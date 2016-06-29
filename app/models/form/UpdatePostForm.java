@@ -5,10 +5,9 @@
 package models.form;
 
 import javax.persistence.Column;
-
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
-import play.data.validation.Constraints.Pattern;
+
 
 public class UpdatePostForm {
 	@Constraints.Required(message="必須項目です。")

@@ -9,7 +9,6 @@ package models.login;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security.Authenticator;
-
 import models.service.*;
 import models.entity.*;
 

@@ -6,7 +6,6 @@ package models.service;
 
 import java.util.List;
 import java.lang.Exception;
-
 import models.entity.Post;
 import models.entity.User;
 import play.db.ebean.Model.Finder;
