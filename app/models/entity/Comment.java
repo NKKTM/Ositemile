@@ -70,7 +70,6 @@ public class Comment  extends Model{
 	 *	@param  String comment： コメントの内容
 	 *			User user：コメントしたユーザー情報
 	 *			Post post：投稿情報
-	 *			：
 	 *	@return Commentオブジェクト
 	 *	@author Kotaro Nishida
 	 */

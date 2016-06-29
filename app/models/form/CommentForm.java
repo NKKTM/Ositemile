@@ -1,3 +1,7 @@
+/*
+ *	コメント入力フォーム
+ *	@author Kotaro Nishida
+ */
 package models.form;
 
 import play.data.validation.*;

@@ -44,6 +44,7 @@ public class AdminCommentModelService {
 						. findList();
 			}
 			else if( comment != null && !comment.isEmpty()){
+				// コメント
 				commentList = find.where("comment LIKE '%"+comment+"%'").orderBy(orderby)
 						.orderBy(orderby)
 						. findList();
@@ -68,6 +69,7 @@ public class AdminCommentModelService {
 	public List<Comment> delete(Long commentId){
 		Finder<Long, Comment> find = new Finder<Long, Comment>(Long.class, Comment.class);
 		if( !find.all().isEmpty() ){
+			// 中身が空
 			Comment comment = find.ref(commentId);
 			comment.delete();
 			return find.all();

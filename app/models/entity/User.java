@@ -72,6 +72,8 @@ public class User extends Model{
 	 *	@param  String userName：ユーザー名
 	 *			String password：パスワード
 	 *			String loginId：ログインID
+	 *			String profile:プロフィール
+	 *			String department:部署
 	 *	@return
 	 *	@author Kotaro Nishida
 	 */

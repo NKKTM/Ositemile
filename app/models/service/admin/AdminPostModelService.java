@@ -67,6 +67,7 @@ public class AdminPostModelService {
 	public List<Post> delete(Long postId){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		if( !find.all().isEmpty() ){
+			// 中身が空
 			Post post = find.ref(postId);
 			post.delete();
 			return find.all();

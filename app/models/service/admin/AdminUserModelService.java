@@ -69,6 +69,7 @@ public class AdminUserModelService {
 	public List<User> delete(Long userId){
 		Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 		if( !find.all().isEmpty() ){
+			// 中身が空
 			User user = find.ref(userId);
 			user.delete();
 			return find.all();

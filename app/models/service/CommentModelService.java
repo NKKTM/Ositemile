@@ -53,7 +53,7 @@ public class CommentModelService {
 
 	/*
 	 *	投稿IDと一致した投稿のコメントリスト
-	 *	@param  postId
+	 *	@param  Logn postId :投稿ID
 	 *	@return コメントのリスト
 	 *	@author Kotaro Nishida
 	 */
