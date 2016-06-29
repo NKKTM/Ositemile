@@ -4,11 +4,8 @@
  */
 package models.entity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Id;

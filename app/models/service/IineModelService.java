@@ -6,12 +6,10 @@ package models.service;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import models.entity.Iine;
 import models.entity.User;
 import models.entity.Post;
 import models.service.UserModelService;
-
 import play.db.ebean.Model.Finder;
 
 public class IineModelService {
@@ -66,7 +64,7 @@ public class IineModelService {
 	 *	@param String , List<Post> ：ポストID
 	 *	@return List<Boolean>
 	 *	@author Hatsune Kitajima
-	 */	
+	 */
 	public List<Boolean> getBooleanListByPostList(List<Post> postList, String loginId){
 		List<Boolean> booleanList  = new ArrayList<Boolean>();
 		User user = UserModelService.use().getUserByLoginId(loginId);
@@ -80,7 +78,7 @@ public class IineModelService {
 					//いいねが押されていない場合
 					booleanList.add(false);
 				}
-			}			
+			}
 		}
 		return booleanList;
 	}
@@ -90,7 +88,7 @@ public class IineModelService {
 	 *	@param String , List<Iine> ：ポストID
 	 *	@return List<Boolean>
 	 *	@author Hatsune Kitajima
-	 */	
+	 */
 	public List<Boolean> getBooleanListByIineList(List<Iine> iineList, String loginId){
 		List<Boolean> booleanList  = new ArrayList<Boolean>();
 		User user = UserModelService.use().getUserByLoginId(loginId);
@@ -104,10 +102,10 @@ public class IineModelService {
 					//いいねが押されていない場合
 					booleanList.add(false);
 				}
-			}			
+			}
 		}
 		return booleanList;
-	}	 		 	
+	}
 
-	
+
 }

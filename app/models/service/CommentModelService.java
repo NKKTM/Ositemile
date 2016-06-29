@@ -5,7 +5,6 @@
 package models.service;
 
 import java.util.List;
-
 import models.entity.Comment;
 import play.db.ebean.Model.Finder;
 

@@ -6,10 +6,7 @@ package models.service;
 
 import java.util.List;
 import java.util.ArrayList;
-
-
 import com.avaje.ebean.*;
-
 import models.entity.Goods;
 import play.db.ebean.Model.Finder;
 
