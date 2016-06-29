@@ -68,7 +68,7 @@ public class UserModelService {
 	 *	@return 投稿リスト
 	 *	@author Kotaro Nishida
 	 */
-	public List<Post> getPostByUserId(Long userId){
+	public List<Post> getPostListByUserId(Long userId){
 		Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 		List<User> userList = find.where().eq("id", userId).findList();
 		if(userList.size()!=0){

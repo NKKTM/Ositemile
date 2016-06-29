@@ -130,7 +130,7 @@ public class AdminApplication extends Controller {
 				// AdminPostModelService.use().delete(post.get(i).getId());
 				//ここでGoodsを消す
 				// 商品削除
-				Goods item = GoodsModelService.use().getGoodsListByPostId(post.get(i).getId());
+				Goods item = GoodsModelService.use().getGoodsByPostId(post.get(i).getId());
 				if( item != null ){
 					item.delete();
 				}
@@ -190,7 +190,7 @@ public class AdminApplication extends Controller {
 		boolean bool = Boolean.valueOf(on);
 
 		// 商品削除
-		Goods item = GoodsModelService.use().getGoodsListByPostId(postId);
+		Goods item = GoodsModelService.use().getGoodsByPostId(postId);
 		if( item != null ){
 			Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 			item.delete();
@@ -251,7 +251,7 @@ public class AdminApplication extends Controller {
 		boolean bool = Boolean.valueOf(on);
 
 		// 商品削除
-		Goods goods = GoodsModelService.use().getGoodsListByPostId(postId);
+		Goods goods = GoodsModelService.use().getGoodsByPostId(postId);
 		if( goods != null ){
 			Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 

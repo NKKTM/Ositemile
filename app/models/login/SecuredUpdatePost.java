@@ -25,7 +25,7 @@ public class SecuredUpdatePost extends Authenticator {
 	public String getUsername(Context ctx){
 		//ポストを取得
 		Long postId = Long.parseLong(ctx.request().path().replaceAll("/editPost/",""));
-		Post post = PostModelService.use().getPostListById(postId);
+		Post post = PostModelService.use().getPostById(postId);
 
 		//今ログインしてるユーザー
 		String loginId = ctx.session().get("loginId");
