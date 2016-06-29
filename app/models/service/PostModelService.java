@@ -164,7 +164,7 @@ public class PostModelService {
 	 *			失敗時；null
 	 *	@author Kotaro Nishida
 	 */
-	public Post getPostListById( Long postId ){
+	public Post getPostById( Long postId ){
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		List<Post> postList = find.where().eq("id", postId).findList();
 		if(postList.size() != 0){

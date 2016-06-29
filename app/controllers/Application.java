@@ -367,7 +367,7 @@ public class Application extends Controller {
         }
 
     	// ポストの参照
-        Post post = PostModelService.use().getPostListById(postId);
+        Post post = PostModelService.use().getPostById(postId);
     	if( post != null ){
     		// コメント情報取得
     		List<Comment> comment = CommentModelService.use().getCommentList(postId);
@@ -388,7 +388,7 @@ public class Application extends Controller {
         String loginId = session().get("loginId");
         //ユーザーとPOSTを取得
         User user = UserModelService.use().getUserByLoginId(loginId);
-        Post post = PostModelService.use().getPostListById(postId);
+        Post post = PostModelService.use().getPostById(postId);
 
         if (iineBtn != null) {
             // いいねボタンの値が取得できた時
@@ -448,7 +448,7 @@ public class Application extends Controller {
         DynamicForm input = Form.form();
         input = input.bindFromRequest(params);
         Long postId = Long.parseLong(input.data().get("postId"));
-        Post post = PostModelService.use().getPostListById(postId);
+        Post post = PostModelService.use().getPostById(postId);
         // commentform取得
         Form<CommentForm> commentForm = form(CommentForm.class).bindFromRequest();
 
@@ -468,9 +468,9 @@ public class Application extends Controller {
             System.out.println("こめんんんんと："+comment.getComment());
 
             // postにコメント情報を格納
-            Post updatePost = PostModelService.use().getPostListById(postId);
+            Post updatePost = PostModelService.use().getPostById(postId);
             updatePost.getComment().add(comment);
-            updatePost.setCommentCnt(PostModelService.use().getPostListById(postId).getComment().size());	// コメント数の保存
+            updatePost.setCommentCnt(PostModelService.use().getPostById(postId).getComment().size());	// コメント数の保存
             updatePost.update();
 
             return redirect(controllers.routes.Application.introduction(comment.getPost().getId()));
@@ -730,7 +730,7 @@ public class Application extends Controller {
     @Security.Authenticated(SecuredUpdatePost.class)
     public static Result editPost(Long postId){
     	// 投稿情報取得
-    	Post post = PostModelService.use().getPostListById(postId);
+    	Post post = PostModelService.use().getPostById(postId);
 
     	// フォームの初期化
     	UpdatePostForm postFormtemp = new UpdatePostForm();
@@ -748,7 +748,7 @@ public class Application extends Controller {
     // 投稿情報の更新
     public static Result updatePost(Long postId){
     	// 投稿情報取得
-    	Post post = PostModelService.use().getPostListById(postId);
+    	Post post = PostModelService.use().getPostById(postId);
     	Form<UpdatePostForm> updatePostForm = Form.form(UpdatePostForm.class).bindFromRequest();
     	if( !updatePostForm.hasErrors() ){
 

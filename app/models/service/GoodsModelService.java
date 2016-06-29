@@ -59,7 +59,7 @@ public class GoodsModelService {
 	 *	@return goodsのリスト
 	 *	@author Kotaro Nishida
 	 */
-	public Goods getGoodsListByPostId(Long postId){
+	public Goods getGoodsByPostId(Long postId){
 		System.out.println("postId："+postId);
 		Finder<Long, Goods> find = new Finder<Long, Goods>(Long.class, Goods.class);
 		System.out.println(find.all());
