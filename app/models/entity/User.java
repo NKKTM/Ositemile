@@ -5,8 +5,6 @@
 package models.entity;
 
 import java.util.List;
-
-
 import javax.persistence.Column;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -14,11 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import play.db.ebean.Model;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
-import play.db.ebean.*;
+
 
 
 @Entity
@@ -72,6 +69,8 @@ public class User extends Model{
 	 *	@param  String userName：ユーザー名
 	 *			String password：パスワード
 	 *			String loginId：ログインID
+	 *			String profile:プロフィール
+	 *			String department:部署
 	 *	@return
 	 *	@author Kotaro Nishida
 	 */

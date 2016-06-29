@@ -5,7 +5,6 @@
 package models.service.admin;
 
 import java.util.List;
-
 import models.entity.Iine;
 import play.db.ebean.Model.Finder;
 

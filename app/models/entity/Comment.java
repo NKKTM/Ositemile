@@ -4,11 +4,8 @@
  */
 package models.entity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -70,7 +67,6 @@ public class Comment  extends Model{
 	 *	@param  String comment： コメントの内容
 	 *			User user：コメントしたユーザー情報
 	 *			Post post：投稿情報
-	 *			：
 	 *	@return Commentオブジェクト
 	 *	@author Kotaro Nishida
 	 */

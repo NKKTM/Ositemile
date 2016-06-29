@@ -5,7 +5,6 @@
 package models.service;
 
 import java.util.List;
-
 import models.entity.Comment;
 import play.db.ebean.Model.Finder;
 
@@ -53,7 +52,7 @@ public class CommentModelService {
 
 	/*
 	 *	投稿IDと一致した投稿のコメントリスト
-	 *	@param  postId
+	 *	@param  Logn postId :投稿ID
 	 *	@return コメントのリスト
 	 *	@author Kotaro Nishida
 	 */

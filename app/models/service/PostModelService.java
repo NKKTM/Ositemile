@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
-
 import models.entity.Post;
 import play.db.ebean.Model.Finder;
 
@@ -109,7 +107,7 @@ public class PostModelService {
 
 	/*
 	 *	１ページあたりの投稿リストを取得
-	 *	@param 取得したいページ数
+	 *	@param  Integer pageNumber : 取得したいページ数
 	 *	@return Postのリスト
 	 *			失敗時：null
 	 *	@author Kotaro Nishida
@@ -157,7 +155,7 @@ public class PostModelService {
 
 	/*
 	 *	投稿IDで特定の投稿情報を取得
-	 *	@param 投稿ID
+	 *	@param  Long postId :投稿ID
 	 *	@return 投稿情報
 	 *			失敗時；null
 	 *	@author Kotaro Nishida
@@ -274,7 +272,7 @@ public class PostModelService {
 
 	/*
 	 *	引数のリストがnullまたは空かどうかのチェック
-	 *	@param Postのリスト
+	 *	@param  List<Post> postList : Postのリスト
 	 *	@return 成功時：Postのリスト
 	 *			失敗時：null
 	 *	@author Kotaro Nishida
@@ -366,7 +364,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		// keywordを空白で分割、or検索できるようにsqlに代入
 		String[] keywords = keyword.split("[　 ]", 0);
-		String sql = "";				
+		String sql = "";
 		for(int i=0; i<keywords.length; i++){
 			if(i != keywords.length-1){
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
@@ -377,7 +375,7 @@ public class PostModelService {
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
 							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
 							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
-							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";
 			}
 		}
 		List<Post> postList = find.where(sql)
@@ -399,7 +397,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		// keywordを空白で分割、or検索できるようにsqlに代入
 		String[] keywords = keyword.split("[　 ]", 0);
-		String sql = "";				
+		String sql = "";
 		for(int i=0; i<keywords.length; i++){
 			if(i != keywords.length-1){
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
@@ -410,9 +408,9 @@ public class PostModelService {
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
 							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
 							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
-							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";
 			}
-		}		
+		}
 		List<Post> postList = find.where(sql)
 									.orderBy("date asc")
 									.findPagingList(LIMIT)
@@ -432,7 +430,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		// keywordを空白で分割、or検索できるようにsqlに代入
 		String[] keywords = keyword.split("[　 ]", 0);
-		String sql = "";				
+		String sql = "";
 		for(int i=0; i<keywords.length; i++){
 			if(i != keywords.length-1){
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
@@ -443,9 +441,9 @@ public class PostModelService {
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
 							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
 							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
-							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";
 			}
-		}		
+		}
 		List<Post> postList = find.where(sql)
 									.orderBy("iineCnt desc")
 									.findPagingList(LIMIT)
@@ -466,7 +464,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		// keywordを空白で分割、or検索できるようにsqlに代入
 		String[] keywords = keyword.split("[　 ]", 0);
-		String sql = "";				
+		String sql = "";
 		for(int i=0; i<keywords.length; i++){
 			if(i != keywords.length-1){
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
@@ -477,9 +475,9 @@ public class PostModelService {
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
 							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
 							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
-							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";
 			}
-		}		
+		}
 		List<Post> postList = find.where(sql)
 									.orderBy("commentCnt desc")
 									.findPagingList(LIMIT)
@@ -498,7 +496,7 @@ public class PostModelService {
 		Finder<Long, Post> find = new Finder<Long, Post>(Long.class, Post.class);
 		// keywordを空白で分割、or検索できるようにsqlに代入
 		String[] keywords = keyword.split("[　 ]", 0);
-		String sql = "";				
+		String sql = "";
 		for(int i=0; i<keywords.length; i++){
 			if(i != keywords.length-1){
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
@@ -509,9 +507,9 @@ public class PostModelService {
 				sql += 	"postTitle LIKE '%"+keywords[i]+"%'"+" OR "
 							+"postComment LIKE '%"+keywords[i]+"%'"+" OR "
 							+"human.userName LIKE '%"+keywords[i]+"%'"+" OR "
-							+"goods.goodsName LIKE '%"+keywords[i]+"%'";				
+							+"goods.goodsName LIKE '%"+keywords[i]+"%'";
 			}
-		}		
+		}
 		List<Post> postList = find.where(sql)
 									.orderBy("date desc")
 									.findList();
@@ -533,7 +531,8 @@ public class PostModelService {
 
 	/*
 	 *	コメントの多い順の投稿リストを取得（カテゴリ付き）
-	 *	@param Integer pageNumber : ページング, String category：カテゴリ
+	 *	@param  Integer pageNumber : ページング
+	 *			String category：カテゴリ
 	 *	@return Postのリスト
 	 *	@author Kotaro Nishida
 	 */

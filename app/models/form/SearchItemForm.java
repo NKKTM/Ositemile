@@ -3,7 +3,6 @@ package models.form;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.MaxLength;
 import play.data.validation.Constraints.MinLength;
-import play.data.validation.Constraints.Pattern;
 
 public class SearchItemForm {
 	@Constraints.Required(message="できるだけ商品が特定できるキーワードを入力してください。")

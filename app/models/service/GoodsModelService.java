@@ -6,10 +6,7 @@ package models.service;
 
 import java.util.List;
 import java.util.ArrayList;
-
-
 import com.avaje.ebean.*;
-
 import models.entity.Goods;
 import play.db.ebean.Model.Finder;
 
@@ -96,7 +93,7 @@ public class GoodsModelService {
 
 	/*
 	 *	引数のリストがnullまたは空かどうかのチェック
-	 *	@param Goodsのリスト
+	 *	@param  List<Goods> goodsList :Goodsのリスト
 	 *	@return 成功時：Goodsのリスト
 	 *			失敗時：null
 	 *	@author Kotaro Nishida
@@ -115,7 +112,7 @@ public class GoodsModelService {
 
 	/*
 	 *	引数のオブジェクトがnullまたは空かどうかのチェック
-	 *	@param Goodsのリスト
+	 *	@param  Goods : goods : Goodsのリスト
 	 *	@return 成功時：Goodsのリスト
 	 *			失敗時：null
 	 *	@author Kotaro Nishida

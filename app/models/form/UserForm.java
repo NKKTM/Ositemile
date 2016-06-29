@@ -10,7 +10,7 @@ import play.data.validation.Constraints.Pattern;
 
 public class UserForm {
 	@Required(message="必須項目です。")
-	@Pattern(value = "^[一-龠a-zA-Zァ-ヶぁ-ゞー]+$", message = "使用できるのは英,ひら,全角カナ,漢字のみです。")	
+	@Pattern(value = "^[一-龠a-zA-Zァ-ヶぁ-ゞー]+$", message = "使用できるのは英,ひら,全角カナ,漢字のみです。")
 	@MaxLength(value = 16, message = "16文字以下で入力してください。")
 	public String			userName;		// ユーザー名
 	public String			password;		// パスワード
