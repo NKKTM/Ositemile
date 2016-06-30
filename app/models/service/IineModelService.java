@@ -32,7 +32,7 @@ public class IineModelService {
 	 */
 	public List<Iine> getIineListByPostId(Long postId){
 		Finder<Long, Iine> find = new Finder<Long, Iine>(Long.class, Iine.class);
-		return find.where().eq("post.id",postId).findList();
+		return find.where().eq("post.id",postId).orderBy("date desc").findList();
 	}
 
 	/*
