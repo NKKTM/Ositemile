@@ -18,7 +18,11 @@
 		@*商品表示*@
 		<div class="col-xs-12 col-sm-5 col-md-5 item-info-box">
 			<div class="post-item-info">
+			@if(post.getGoods().getImageUrl()isEmpty){
+				<img  alt="..." src="@routes.Assets.at("images/noimage150x150.png")">
+			}else{
 				<img class="post-item-image" alt="..." src="@post.getGoods().getImageUrl()">
+			}
 				<h5 class="item-name">@post.getGoods().getGoodsName()</h5>
 				<a class="btn btn-default rakuten-button" target="_blank" href="@post.getGoods().getAmazonUrl()" role="button">楽天の商品ページへ</a>
 			</div>

@@ -63,7 +63,7 @@
                             @if(sortName.equals("いいね") || sortName.equals("コメント")){
                                 <span class="sort-name"><span>　@sortName</span>順</span>
                             }else{
-                                <span class="sort-name">　@sortName</span>                            
+                                <span class="sort-name">　@sortName</span>
                             }
                             <span class="hit-number">：@postListSize 件</span>
                         </div>
@@ -81,7 +81,11 @@
 									<a href="/introduction/@post.getId()"></a>
 								</div>
 								<div class="panel-body">
+								@if(post.getGoods().getImageUrl()isEmpty){
+									<a href="/introduction/@post.getId()"><img class="post-img" src="@routes.Assets.at("images/noimage150x150.png")"></a>
+								}else{
 									<a href="/introduction/@post.getId()"><img class="post-img" src="@post.getGoods().getImageUrl()"></a>
+								}
 									<p class="posted-item-name">@post.getGoods().getGoodsName()</p>
 									<p class="post-comment">@Html(post.getPostComment())</p>
 									<a class="category-label" href="@routes.Application.index(1,post.getGoods().getCategory())"><span class="label label-default">@post.getGoods().getCategory()</span></a>

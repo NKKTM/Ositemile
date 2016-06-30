@@ -427,6 +427,10 @@ public class Application extends Controller {
             if(loginId == null){
                 return redirect(controllers.routes.Application.login());
             }
+          //入力値がスペースの時
+            if(StringUtils.isBlank(commentForm.get().comment)){
+            	return redirect(controllers.routes.Application.introduction(postId));
+            }
             // コメント登録
             commentForm.get().comment = PostModelService.use().sanitizeString(commentForm.get().comment);
             Comment comment = new Comment(commentForm.get().comment,UserModelService.use().getUserByLoginId(loginId),post);
