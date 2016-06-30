@@ -9,7 +9,11 @@
 	<div class="row sampleRow">
 		<div class="col-xs-12 col-sm-5 col-md-5 item-info-box">
 			<div class="post-item-info">
+			@if(item.getImageUrl()isEmpty){
+				<img alt="..." src="@routes.Assets.at("images/noimage150x150.png")">
+			}else{
 				<img class="post-item-image" alt="..." src="@item.getImageUrl()">
+			}
 				<h5 class="item-name">@item.getGoodsName()</h5>
 				<a class="btn btn-default rakuten-button" target="_blank" href="@item.getAmazonUrl()" role="button">楽天の商品ページへ</a>
 			</div>
